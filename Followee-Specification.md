@@ -3,8 +3,8 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.5**
-**4 August 2026**
+**Draft v0.6**
+**5 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -440,10 +440,18 @@ A service entry is:
 | `0` | `id` | Yes | 1–256 ASCII `unreserved` characters; unique within the document |
 | `1` | `type` | Yes | Initial type token or absolute URI |
 | `2` | `endpoint` | Yes | Absolute URI |
-| `3` | `mediaType` | No | ASCII media type, maximum 256 bytes |
+| `3` | `mediaType` | No | RFC 6838 type and subtype, maximum 256 ASCII bytes |
 | `4` | `label` | No | UTF-8 text, maximum 256 bytes |
-| `5` | `language` | No | BCP 47 language tag, maximum 64 ASCII bytes |
-| `6` | `rel` | No | Registered link-relation token or absolute URI, maximum 256 bytes |
+| `5` | `language` | No | Well-formed RFC 5646 language tag, maximum 64 ASCII bytes |
+| `6` | `rel` | No | RFC 8288 `reg-rel-type` or absolute URI, maximum 256 bytes |
+
+`mediaType` MUST consist exactly of an RFC 6838 `type-name`, the `/` character, and an RFC 6838 `subtype-name`. Each name MUST satisfy the `restricted-name` grammar in Section 4.2 of that RFC. Media-type parameters are not permitted in this field.
+
+`language` MUST satisfy the `Language-Tag` ABNF in Section 2.1 of RFC 5646, including its fixed grandfathered productions. Verification is case-insensitive as required by that RFC, but the exact signed text is retained. A verifier MUST NOT require subtags to appear in the IANA Language Subtag Registry, replace deprecated subtags with preferred values, or otherwise canonicalize the field.
+
+The token form of `rel` MUST satisfy RFC 8288 `reg-rel-type` exactly: one lowercase ASCII letter followed by zero or more lowercase ASCII letters, digits, `.`, or `-`. Any other relation value MUST be an absolute URI under Section 7.2. A verifier MUST NOT require a token to appear in the IANA Link Relations registry.
+
+These fields are verified against fixed syntax only. Media-type, language-subtag, and link-relation registry contents are not inputs to Identity Record validity; a registry update MUST NOT change whether existing signed bytes verify.
 
 The initial case-sensitive service-type tokens are:
 
@@ -1148,6 +1156,8 @@ Controllers who want a bridge to remain useful SHOULD keep the old DID's linking
 
 The aggregate record and Contact Document caps are binding even when individual fields are within their maxima. A parser MUST enforce outer byte limits before allocating from declared inner lengths.
 
+The 64-entry service limit is an independent collection guard, not a promise that 64 services fit within a complete v1 record. Each minimally populated service contributes one array member and three map members. After the required record, Authority Descriptor, public-key, and Contact Document members are counted, the 256-member aggregate permits at most 61 minimal services in a Root record and 60 in a RootRevoked record. Optional fields may lower those effective maxima further. Implementations MUST enforce both the collection limit and the aggregate limit.
+
 ### 15.2 Relay-message limits
 
 | Item | Hard maximum |
@@ -1362,6 +1372,7 @@ A conforming Record Verifier MUST pass published positive and negative vectors c
 - descriptor substitution;
 - every target/body/descriptor identity-binding permutation specified in Appendix B.7 item 1;
 - root and RootRevoked records;
+- valid and invalid `mediaType`, `language`, and `rel` syntax at their exact boundaries;
 - future timestamps and stale records;
 - equal-time lower-digest ordering; and
 - every aggregate record limit.
@@ -1830,9 +1841,11 @@ A client receiving these bytes as a `Full` candidate MUST discard that candidate
 12. IETF, [RFC 3986: Uniform Resource Identifier Syntax](https://www.rfc-editor.org/rfc/rfc3986).
 13. IETF, [RFC 7517: JSON Web Key](https://www.rfc-editor.org/rfc/rfc7517).
 14. IETF, [RFC 4648: Base Encodings](https://www.rfc-editor.org/rfc/rfc4648).
-15. IETF, [BCP 47: Language Tags](https://www.rfc-editor.org/info/bcp47).
+15. IETF, [RFC 5646: Tags for Identifying Languages](https://www.rfc-editor.org/rfc/rfc5646) (BCP 47).
 16. Multiformats, [multibase registry](https://github.com/multiformats/multibase) and [multicodec table](https://github.com/multiformats/multicodec/blob/master/table.csv).
 17. IETF, [RFC 5890: Internationalized Domain Names for Applications](https://www.rfc-editor.org/rfc/rfc5890).
+18. IETF, [RFC 6838: Media Type Specifications and Registration Procedures](https://www.rfc-editor.org/rfc/rfc6838).
+19. IETF, [RFC 8288: Web Linking](https://www.rfc-editor.org/rfc/rfc8288).
 
 ---
 
