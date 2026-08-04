@@ -3,7 +3,7 @@
 ## A Relay Protocol for Following People, Not Platforms
 
 **Author: Mats Helander**
-**Whitepaper draft v0.6**
+**Whitepaper draft v0.7**
 **4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
@@ -172,11 +172,11 @@ Followee DID =
     "did:flw:" || multibase(multihash(SHA-256, descriptorInput))
 ```
 
-The normative specification will freeze the exact domain-separation bytes and multiformat encodings. The important properties are that the DID commits to the entire descriptor, the hash encoding is self-describing but constrained by the Followee method profile, and every full Identity Record carries the descriptor inline. The descriptor is not a genesis record and requires no historical or registry lookup.
+The normative method specification freezes the exact v1 domain-separation bytes and multiformat encodings. The important properties are that the DID commits to the entire descriptor, the hash encoding is self-describing but constrained by the Followee method profile, and every full Identity Record carries the descriptor inline. The descriptor is not a genesis record and requires no historical or registry lookup.
 
 This design deliberately does **not** expose the root key from the DID string alone. A verifier resolving contact state already has an Identity Record; it obtains the descriptor there, reproduces the DID, and then verifies the record signature. Hashing the descriptor roughly halves the durable identifier compared with embedding both root material and a revocation commitment in the DID, at the bounded cost of carrying the descriptor in each full record. That is favourable because DIDs appear in following lists, indexes and repeated lookups far more often than controllers publish new full records.
 
-Followee v1 permits exactly the multihash `sha2-256` code with a 32-byte digest. A verifier MUST reject every other algorithm code or digest length, irrespective of whether it is registered by multiformats. This one-entry profile prevents a subject from selecting a weaker binding while retaining an unambiguous encoding for future specification versions. A later version may permit another algorithm for newly defined Authority Descriptor versions; it never reinterprets an existing Followee DID under a different algorithm.
+Followee v1 permits exactly the multihash `sha2-256` code with a 32-byte digest. A verifier MUST reject every other algorithm code or digest length, irrespective of whether it is registered by multiformats. The method specification distinguishes a malformed multibase or multihash encoding from a structurally well-formed multihash using an unsupported code or digest length, so implementations can report interoperable errors without treating an unsupported profile as valid. This one-entry profile prevents a subject from selecting a weaker binding while retaining an unambiguous encoding for future specification versions. A later version may permit another algorithm for newly defined Authority Descriptor versions; it never reinterprets an existing Followee DID under a different algorithm.
 
 Multihash agility cannot rescue an existing DID after its hash function becomes unsafe, because changing the commitment necessarily changes the DID. It can only provide a clean encoding for newly created DIDs. A future specification that deprecates a function SHOULD distinguish refusing to create new DIDs from refusing to verify existing ones: the latter destroys continuity and is justified only when the old function no longer satisfies the required verification security. Migration of an affected identity follows the explicit fresh-DID bridge described in Section 5.4.
 
@@ -188,7 +188,13 @@ The method can be implemented experimentally without central permission. Before 
 
 ### 5.2 Authority binding
 
-A verifier parses the method-specific identifier, decodes its multihash, reads the Authority Descriptor carried by the record, and recomputes the domain-separated descriptor digest. The record belongs to the Followee DID only if the result matches. The verifier then obtains the initial cryptographic suite and root public key from that bound descriptor. No registry or earlier record is required.
+A verifier parses the method-specific identifier, decodes its multihash, reads the signed body `id` and the Authority Descriptor carried by the record, and recomputes the domain-separated descriptor digest. The complete binding invariant is:
+
+```text
+signed body id = requested target DID = DID(authorityDescriptor)
+```
+
+The record belongs to the Followee DID only if all three values agree. Treating every failure of this invariant as one descriptor-binding error makes the result independent of whether an implementation checks the inexpensive body-to-target comparison or hashes the descriptor first. The verifier then obtains the initial cryptographic suite and root public key from that bound descriptor. No registry or earlier record is required.
 
 For a root-revoked record, the record also supplies the revocation public key. The verifier hashes its canonical suite-and-key encoding using the descriptor's fixed commitment procedure, compares the result with `revocationCommitment`, and verifies the signature with the revealed key. A valid revocation-key record changes authority state irreversibly: the root is thereafter revoked and the revealed key is the DID's permanent active key.
 
@@ -198,7 +204,7 @@ This is called **root revocation** because the decisive security fact is that th
 
 The Followee method profile fixes its permitted descriptor-hash algorithms separately from its signature suites. In v1 the hash profile contains only full-length SHA-256, as specified in Section 5.1.
 
-Followee should maintain a small signature-suite registry rather than allow arbitrary algorithms. The first implementation profile SHOULD require Ed25519 and MAY add P-256 when implementation and hardware-wallet interoperability justify it. Root keys and revocation keys each carry or imply a registered suite. Each suite definition fixes:
+Followee v1 permits exactly one signature suite: fully specified Ed25519 with COSE algorithm value `-19`. The deprecated polymorphic EdDSA value `-8` is not accepted. This mandatory one-suite profile ensures that any two v1 implementations can exchange every v1 identity rather than each supporting an optional subset. Root keys and revocation keys carry the suite value. The suite definition fixes:
 
 - public-key encoding;
 - COSE algorithm identifier;
@@ -206,7 +212,7 @@ Followee should maintain a small signature-suite registry rather than allow arbi
 - verification procedure; and
 - maximum key and signature lengths.
 
-The Ed25519 profile MUST follow [RFC 8032](https://www.rfc-editor.org/rfc/rfc8032) and state exact verification behaviour, including rejection of non-canonical encodings and disallowed small-order points and the required cofactor handling. Naming an algorithm is not a complete interoperability or malleability profile.
+The Ed25519 profile follows [RFC 8032](https://www.rfc-editor.org/rfc/rfc8032) and states exact verification behaviour, including rejection of non-canonical encodings and disallowed small-order points and the required cofactor handling. Naming an algorithm is not a complete interoperability or malleability profile. A later Authority Descriptor version may add a fully specified P-256 suite when hardware integration justifies it without changing the interpretation of any v1 DID.
 
 Unknown suites are unsupported, not malformed. A relay cannot validate such a record and therefore MUST NOT admit it into its current-record map. An implementation may retain unsupported bytes in a separate bounded diagnostic cache, but that cache is outside the relay protocol and cannot affect resolution or synchronization.
 
@@ -732,7 +738,7 @@ A synchronization cursor is relay-local and opaque to peers. Conceptually it con
 Cursor = (relayUpdateGeneration, updateNumber)
 ```
 
-`updateNumber` may be a bounded `uint64`. The relay chooses a new random update generation when it resets, restores incompatible state, compacts in a way that invalidates cursors, or approaches counter exhaustion. A peer presenting an unknown generation receives `ResetRequired` and performs a fresh bounded synchronization.
+`updateNumber` may be a bounded `uint64`. The relay chooses a new random update generation when it resets, restores incompatible state, compacts in a way that invalidates cursors, or approaches counter exhaustion. A peer presenting an unknown generation receives `ResetRequired` and performs a fresh bounded synchronization. The v1 reset response intentionally contains only the protocol version and `ResetRequired` status: it carries no entries, next cursor, pagination flag, directory generation, or separate error code. The new generation arrives in the subsequent successful null-cursor enumeration, where it is usable.
 
 This is safe because the cursor orders observations from one relay instance; it is not an identity timestamp and is never compared across relays.
 
@@ -750,9 +756,11 @@ Output:
 
 ```text
 {
+  status: Success,
   entries: [(Followee DID, Full | Ref, lastUpdated)],
   nextCursor,
-  hasMore
+  hasMore,
+  directoryGeneration
 }
 ```
 
@@ -1014,14 +1022,14 @@ The first proof of concept should test the loose componentâ€”the relay networkâ€
 7. **Behind-clock relay.** A relay set to an old date rejects current records and does not poison peers.
 8. **Handle migration.** A follower discovers a Followee DID through one domain, that mapping disappears, and the follower still discovers a new verified handle through the Followee DID record and another domain.
 9. **Reference traversal.** A full relay is replaced by a direct reference; the browser follows a multi-hop path with cycle protection.
-10. **Cursor reset.** A relay changes update generation and peers perform a controlled resynchronization.
+10. **Cursor reset.** A relay changes update generation, returns the exact two-field `ResetRequired` response without success or error payload fields, and peers perform a controlled null-cursor resynchronization.
 11. **Capacity pressure.** Full-record and reference caps are exercised without unbounded allocation.
 12. **Optional history.** One relay exports its own accepted history without implying a network-wide chain.
 13. **Root-revocation sandwich.** A compromised root publishes one bad current record and one pre-signed future record; a valid root-revoked full record makes both permanently ineligible.
 14. **Withheld revocation.** A fresh client shown only root state behaves consistently with the documented availability limitation, while any client that learned revocation never rolls back.
 15. **Validity horizon.** An expired record remains verifiable but is reported as stale according to client policy.
 16. **Multi-device collision.** Two offline signers produce the same timestamp and deterministic ordering reconverges all relays.
-17. **Descriptor substitution.** A record carrying a modified, non-canonical, or unrelated Authority Descriptor fails to reproduce the target Followee DID and is rejected before its signature can affect relay state.
+17. **Identity-binding and descriptor substitution.** An unchanged valid envelope checked against another target, a legitimately re-signed body-`id` mutation checked against either target, and a record carrying a modified, non-canonical, or unrelated Authority Descriptor all fail the same three-way identity-binding invariant before affecting relay state.
 18. **Reciprocal migration.** Old DID A names new DID B and B names A; clients verify both current records and offer, but never perform, a deliberate re-follow. Removing either direction, substituting an invalid record, or revoking A's root makes the corresponding link unverified until valid reciprocal current state is available.
 19. **Migration decay, states, and budgets.** A verified link ceases to verify when either side is unavailable or stale. Budget exhaustion produces **Not checked**, not a failed reciprocity result; a separate explicit check receives fresh aggregate budgets. A completed mismatch produces **Checked but unverified**, an unreciprocated predecessor claim remains suppressed in the ordinary UI, and cyclic or long chains remain within the shared two-hop, byte, relay, and deadline budgets.
 
@@ -1047,7 +1055,7 @@ The architecture is sufficiently settled for implementation, but the following a
 
 1. the exact `did:flw` full-hash encoding and publication of the DID Method specification;
 2. the Authority Descriptor, revocation-key commitment, domain separation, and integer authority-state encoding;
-3. the v1 descriptor-hash profile, initial signature-suite registry, strict verification rules, and test vectors;
+3. the v1 descriptor-hash and single-signature-suite profiles, strict verification rules, and test vectors;
 4. the normative CDDL record and Contact Document schema, including bounded reciprocal migration fields;
 5. deterministic CBOR, body-digest, and COSE profile details;
 6. exact media types and domain-separation value;

@@ -3,7 +3,7 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.2**
+**Draft v0.3**
 **4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
@@ -120,12 +120,14 @@ The method-specific identifier MUST:
 
 1. begin with the multibase base58btc prefix `z`;
 2. decode using the Bitcoin base58 alphabet without padding;
-3. produce exactly 34 bytes;
+3. decode to exactly one structurally well-formed multihash consisting of a minimally encoded unsigned-varint code, a minimally encoded unsigned-varint digest length, exactly that many digest bytes, and no trailing bytes;
 4. contain multihash code `0x12` (`sha2-256`), encoded as the one-byte unsigned varint `12` hexadecimal;
 5. contain digest-length value `0x20`, encoded as the one-byte unsigned varint `20` hexadecimal; and
-6. contain exactly 32 digest bytes.
+6. contain exactly 32 digest bytes, making the supported v1 multihash exactly 34 bytes.
 
-Every other multibase, multihash code, digest length, alternate spelling, percent-encoding, or non-minimal varint is invalid in Followee v1. The method-specific identifier is case-sensitive because base58btc is case-sensitive. The `did:flw:` prefix MUST be lowercase.
+Malformed multibase or base58btc encoding, a missing or non-minimal varint, disagreement between the declared digest length and the bytes present, trailing bytes, alternate spelling, or percent-encoding produces `invalidDid`. A structurally well-formed multihash that names a code other than `0x12` or a digest length other than `0x20` instead produces `unsupportedHash`; it remains unacceptable to a v1 verifier and MUST NOT be reinterpreted as the v1 profile. This syntax-versus-profile distinction is solely an error-classification rule and does not enlarge the set of Followee v1 DIDs that can be created or successfully resolved.
+
+The method-specific identifier is case-sensitive because base58btc is case-sensitive. The `did:flw:` prefix MUST be lowercase.
 
 Generic DID URL path, query, and fragment syntax remains available under DID Core. This specification assigns the fragment `#active` to the currently applicable projected verification method and fragments beginning `#service-` to projected service entries. The native relay API resolves bare Followee DIDs, not DID URLs.
 
@@ -496,10 +498,10 @@ Given expected Followee DID `target`, complete envelope bytes `candidate`, recip
 3. Require the exact COSE profile in Section 6.2.
 4. Parse the payload as one deterministic `record-body`; reject trailing bytes.
 5. Require `protocolVersion = 1` and the exact v1 schema.
-6. Parse `target` under Section 3.1.
-7. Require the body `id` to equal `target` byte for byte.
+6. Parse `target` under Section 3.1, returning `invalidDid` for malformed syntax or encoding and `unsupportedHash` for a structurally well-formed but unsupported hash profile.
+7. Require the body `id` to equal `target` byte for byte; otherwise return `descriptorMismatch`.
 8. Validate the Authority Descriptor schema and deterministic encoding.
-9. Recompute the descriptor digest and require it to reproduce `target`.
+9. Recompute the descriptor digest and require it to reproduce `target`; otherwise return `descriptorMismatch`.
 10. Enforce the authority-dependent presence or absence of `revocationKey`.
 11. For `authority = 0`, select the descriptor root key.
 12. For `authority = 1`, recompute the revocation-key commitment, require equality, and select the revealed key.
@@ -513,6 +515,8 @@ Given expected Followee DID `target`, complete envelope bytes `candidate`, recip
 20. Classify the selected result as fresh or stale.
 
 An implementation MUST NOT allow a valid signature to bypass descriptor binding, schema limits, or authority-state rules.
+
+Steps 7 and 9 deliberately use the same error. The complete identity-binding invariant is `body id = target = DID(authorityDescriptor)`; `descriptorMismatch` reports any failure of that invariant. Consequently, an unchanged internally consistent envelope checked against another target, a re-signed body-`id` mutation checked against the original target, and that same mutation checked against the mutated target all fail with `descriptorMismatch`, regardless of the permitted ordering of independent checks.
 
 ### 8.2 Authority precedence
 
@@ -981,7 +985,7 @@ The response is:
 }
 ```
 
-Status `0` means success, status `1` means `ResetRequired`, and status `2` means another error identified by `errorCode`. On success, entries, `nextCursor`, `hasMore`, and `directoryGeneration` are required and `errorCode` MUST be absent. On reset, entries and `errorCode` MUST be absent; status `1` is the sole v1 wire encoding of `ResetRequired`. On status `2`, `errorCode` is required and entries, `nextCursor`, `hasMore`, and `directoryGeneration` MUST be absent. A change entry is:
+Status `0` means success, status `1` means `ResetRequired`, and status `2` means another error identified by `errorCode`. On success, entries, `nextCursor`, `hasMore`, and `directoryGeneration` are required and `errorCode` MUST be absent. On reset, entries, `nextCursor`, `hasMore`, `directoryGeneration`, and `errorCode` MUST all be absent; status `1` is the sole v1 wire encoding of `ResetRequired`, and the response therefore contains exactly labels `0` and `1`. On status `2`, `errorCode` is required and entries, `nextCursor`, `hasMore`, and `directoryGeneration` MUST be absent. A change entry is:
 
 ```cbor
 [
@@ -1162,14 +1166,14 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 
 | Code | Name | Meaning |
 | ---: | --- | --- |
-| `0` | `invalidDid` | DID syntax or encoding is invalid |
-| `1` | `unsupportedHash` | Hash profile is not supported by this version |
+| `0` | `invalidDid` | DID syntax, multibase encoding, or multihash structure is malformed |
+| `1` | `unsupportedHash` | A structurally well-formed multihash names a hash code or digest length unsupported by this version |
 | `2` | `unsupportedSuite` | Signature suite is not supported |
 | `3` | `recordTooLarge` | Envelope exceeds the hard or advertised cap |
 | `4` | `invalidCbor` | CBOR cannot be parsed safely |
 | `5` | `nonDeterministicCbor` | Encoding violates Section 6.1 |
 | `6` | `schemaViolation` | Parsed object violates its v1 schema or limits |
-| `7` | `descriptorMismatch` | Descriptor does not reproduce the target DID |
+| `7` | `descriptorMismatch` | Body `id`, target DID, and Authority Descriptor do not bind to the same identifier |
 | `8` | `invalidRevocationKey` | Revealed key does not match the commitment or key profile |
 | `9` | `invalidSignature` | COSE or Ed25519 verification fails |
 | `10` | `premature` | Timestamp exceeds the recipient's future bound |
@@ -1345,12 +1349,14 @@ A Relay MAY expose its own append-only admitted history through a separate speci
 A conforming Record Verifier MUST pass published positive and negative vectors covering:
 
 - DID decoding and exact multihash profile;
+- distinct `invalidDid` and `unsupportedHash` classification for malformed and unsupported multihashes;
 - Authority Descriptor derivation;
 - revocation-key commitment;
 - deterministic and non-deterministic CBOR encodings;
 - exact COSE protected headers and external AAD;
 - strict Ed25519 verification;
 - descriptor substitution;
+- every target/body/descriptor identity-binding permutation specified in Appendix B.7 item 1;
 - root and RootRevoked records;
 - future timestamps and stale records;
 - equal-time lower-digest ordering; and
@@ -1369,7 +1375,7 @@ A conforming Relay MUST additionally pass tests covering:
 - batch alignment and response splitting;
 - distinction between Absent and a retained Full record that becomes premature under a backwards clock correction;
 - coalesced `changes` output;
-- every status-dependent required and forbidden `changes` field combination, including status `1` as the sole ResetRequired signal;
+- every status-dependent required and forbidden `changes` field combination, including the exact two-field status `1` ResetRequired response;
 - cursor pagination without gaps;
 - cursor-generation reset;
 - restore-time behaviour; and
@@ -1710,10 +1716,19 @@ At equal authority and timestamp, `Alice A` wins because `6f` is lexicographical
 
 ### B.7 Required negative mutations
 
-Implementations MUST reject variants of the positive vectors with any one of these mutations:
+Implementations MUST reject variants of the positive vectors with any one of these mutations. Where this appendix assigns an error, that error is normative:
 
-1. descriptor digest or DID byte changed;
-2. multihash code other than `0x12` or length other than `0x20`;
+1. an identity-binding mismatch, exercised in each of these forms:
+   - an unchanged, internally consistent envelope verified against a different syntactically valid target DID;
+   - a body `id` changed to a different syntactically valid DID and then re-signed by the applicable legitimate key, verified against the original target; and
+   - that same re-signed mutation verified against the mutated target.
+
+   All three cases produce `descriptorMismatch`. The first fails the body-to-target relation, the second also fails that relation without relying on an invalid signature, and the third passes that relation but fails descriptor-to-target binding.
+2. a target DID containing:
+   - a structurally well-formed multihash code other than `0x12`, with its declared digest length matching the bytes present; or
+   - code `0x12` with a structurally well-formed declared digest length other than `0x20`, again matching the bytes present.
+
+   Both cases produce `unsupportedHash`. A separate case with a missing or non-minimal varint, a declared length that disagrees with the bytes present, or trailing bytes produces `invalidDid`. These target-DID cases do not mutate the signed envelope.
 3. protected algorithm `-8` instead of `-19`;
 4. missing COSE tag `18`;
 5. non-empty unprotected headers;
