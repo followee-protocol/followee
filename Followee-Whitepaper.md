@@ -3,7 +3,7 @@
 ## A Relay Protocol for Following People, Not Platforms
 
 **Author: Mats Helander**
-**Whitepaper draft v0.7**
+**Whitepaper draft v0.8**
 **4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
@@ -194,7 +194,7 @@ A verifier parses the method-specific identifier, decodes its multihash, reads t
 signed body id = requested target DID = DID(authorityDescriptor)
 ```
 
-The record belongs to the Followee DID only if all three values agree. Treating every failure of this invariant as one descriptor-binding error makes the result independent of whether an implementation checks the inexpensive body-to-target comparison or hashes the descriptor first. The verifier then obtains the initial cryptographic suite and root public key from that bound descriptor. No registry or earlier record is required.
+The record belongs to the Followee DID only if all three values agree. Treating every failure of this invariant as one `identityBindingMismatch` error makes the result independent of whether an implementation checks the inexpensive body-to-target comparison or hashes the descriptor first. The name deliberately covers all three relations: the Authority Descriptor may be perfectly correct when only the signed body `id` differs from the requested target. The verifier then obtains the initial cryptographic suite and root public key from that bound descriptor. No registry or earlier record is required.
 
 For a root-revoked record, the record also supplies the revocation public key. The verifier hashes its canonical suite-and-key encoding using the descriptor's fixed commitment procedure, compares the result with `revocationCommitment`, and verifies the signature with the revealed key. A valid revocation-key record changes authority state irreversibly: the root is thereafter revoked and the revealed key is the DID's permanent active key.
 
@@ -679,7 +679,7 @@ Full(recordBytes)
 
 Batch resolution MUST be available to a conforming Resolver, with bounded item and response-byte limits. Batching is important both for following-list startup cost and for avoiding one network round trip per identity; it does not remove the need for privacy-aware query shaping.
 
-The response contains candidate bytes, a routing hint, local absence, or a per-DID error. It contains no relay-supplied validity or verification flag. A stored Full record that has become premature under the Relay's current clock produces `Error(premature)` unless a usable Ref is returned; Absent remains distinct from that known but presently unservable state.
+The response contains candidate bytes, a routing hint, local absence, or a per-DID error. It contains no relay-supplied validity or verification flag. A stored Full record that has become premature under the Relay's current clock produces `Error(premature)` unless a usable Ref is returned; Absent remains distinct from that known but presently unservable state. Both results describe only the reporting Relay: neither is a global resolution answer, a validity assurance, or an instruction about candidates obtained elsewhere.
 
 ### 11.4 `publish`
 
@@ -795,12 +795,16 @@ Given a Followee DID, a client:
 2. queries one or more configured relays;
 3. follows references subject to hop, relay, time, and byte budgets;
 4. verifies every full record independently;
-5. ignores malformed, unsupported, bad-signature, oversized, or premature records;
+5. ignores malformed, unsupported, bad-signature, oversized, or locally classified premature records;
 6. if any valid root-revoked record is known, permanently excludes every root-signed record;
 7. within the applicable authority state, selects the greatest admissible timestamp; and
 8. at an equal timestamp, selects the lexicographically lowest locally computed body digest.
 
-The client may return cached state with a freshness warning if no relay answers. Absence from one or many relays is not proof that the Followee DID does not exist.
+An Absent or Error result supplies neither a candidate nor a reference to follow and consumes the ordinary shared operation budgets. It MUST NOT terminate resolution while another relay selected for the operation remains unqueried and the shared budgets permit the request. It does not change cached identity state or sticky authority state.
+
+In particular, `Error(premature)` reports the serving relay's clock-dependent decision. The client MUST NOT transfer that classification to the DID or to a Full candidate obtained from that or another relay. Every Full candidate is verified and classified independently using the client's own clock and sticky authority state.
+
+The client may return cached state with a freshness warning if no relay answers. Absence from one or many relays, or an error from one relay, is not proof that the Followee DID does not exist.
 
 ### 13.2 Suggested traversal limits
 
@@ -1029,9 +1033,10 @@ The first proof of concept should test the loose componentâ€”the relay networkâ€
 14. **Withheld revocation.** A fresh client shown only root state behaves consistently with the documented availability limitation, while any client that learned revocation never rolls back.
 15. **Validity horizon.** An expired record remains verifiable but is reported as stale according to client policy.
 16. **Multi-device collision.** Two offline signers produce the same timestamp and deterministic ordering reconverges all relays.
-17. **Identity-binding and descriptor substitution.** An unchanged valid envelope checked against another target, a legitimately re-signed body-`id` mutation checked against either target, and a record carrying a modified, non-canonical, or unrelated Authority Descriptor all fail the same three-way identity-binding invariant before affecting relay state.
+17. **Identity-binding and descriptor substitution.** An unchanged valid envelope checked against another target, a legitimately re-signed body-`id` mutation checked against either target, and a record carrying a modified, non-canonical, or unrelated Authority Descriptor all fail with `identityBindingMismatch` under the same three-way invariant before affecting relay state.
 18. **Reciprocal migration.** Old DID A names new DID B and B names A; clients verify both current records and offer, but never perform, a deliberate re-follow. Removing either direction, substituting an invalid record, or revoking A's root makes the corresponding link unverified until valid reciprocal current state is available.
 19. **Migration decay, states, and budgets.** A verified link ceases to verify when either side is unavailable or stale. Budget exhaustion produces **Not checked**, not a failed reciprocity result; a separate explicit check receives fresh aggregate budgets. A completed mismatch produces **Checked but unverified**, an unreciprocated predecessor claim remains suppressed in the ordinary UI, and cyclic or long chains remain within the shared two-hop, byte, relay, and deadline budgets.
+20. **Non-authoritative relay results.** One relay returns Absent and another returns `Error(premature)` while a further selected relay holds a valid Full record. The client continues within its existing budgets, verifies the Full record using its own clock, and does not let either earlier response suppress or classify that candidate.
 
 ### 20.3 Success criteria
 
@@ -1041,6 +1046,7 @@ The proof of concept succeeds if:
 - a new relay can validate a current record without record history;
 - no Authority Descriptor can be substituted without changing the Followee DID;
 - healthy clients reject bad signatures and implausible future timestamps;
+- no relay can suppress resolution or export its clock merely by returning Absent or Error while another selected relay remains reachable within budget;
 - root revocation removes every root-signed record from selection without a blacklist;
 - existing followers remain attached to a Followee DID after handle migration;
 - reciprocal migration can be verified without granting either DID authority over the other or changing a following list automatically;

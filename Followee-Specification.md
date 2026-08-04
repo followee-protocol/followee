@@ -3,7 +3,7 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.3**
+**Draft v0.4**
 **4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
@@ -499,9 +499,9 @@ Given expected Followee DID `target`, complete envelope bytes `candidate`, recip
 4. Parse the payload as one deterministic `record-body`; reject trailing bytes.
 5. Require `protocolVersion = 1` and the exact v1 schema.
 6. Parse `target` under Section 3.1, returning `invalidDid` for malformed syntax or encoding and `unsupportedHash` for a structurally well-formed but unsupported hash profile.
-7. Require the body `id` to equal `target` byte for byte; otherwise return `descriptorMismatch`.
+7. Require the body `id` to equal `target` byte for byte; otherwise return `identityBindingMismatch`.
 8. Validate the Authority Descriptor schema and deterministic encoding.
-9. Recompute the descriptor digest and require it to reproduce `target`; otherwise return `descriptorMismatch`.
+9. Recompute the descriptor digest and require it to reproduce `target`; otherwise return `identityBindingMismatch`.
 10. Enforce the authority-dependent presence or absence of `revocationKey`.
 11. For `authority = 0`, select the descriptor root key.
 12. For `authority = 1`, recompute the revocation-key commitment, require equality, and select the revealed key.
@@ -516,7 +516,7 @@ Given expected Followee DID `target`, complete envelope bytes `candidate`, recip
 
 An implementation MUST NOT allow a valid signature to bypass descriptor binding, schema limits, or authority-state rules.
 
-Steps 7 and 9 deliberately use the same error. The complete identity-binding invariant is `body id = target = DID(authorityDescriptor)`; `descriptorMismatch` reports any failure of that invariant. Consequently, an unchanged internally consistent envelope checked against another target, a re-signed body-`id` mutation checked against the original target, and that same mutation checked against the mutated target all fail with `descriptorMismatch`, regardless of the permitted ordering of independent checks.
+Steps 7 and 9 deliberately use the same error. The complete identity-binding invariant is `body id = target = DID(authorityDescriptor)`; `identityBindingMismatch` reports any failure of that invariant. Consequently, an unchanged internally consistent envelope checked against another target, a re-signed body-`id` mutation checked against the original target, and that same mutation checked against the mutated target all fail with `identityBindingMismatch`, regardless of the permitted ordering of independent checks. The broader name is deliberate: the Authority Descriptor may be correct when only the signed body `id` differs from the requested target.
 
 ### 8.2 Authority precedence
 
@@ -1078,6 +1078,10 @@ A following list stores canonical Followee DIDs as its durable keys. It MAY cach
 
 A client begins with configured relays, accepts Full candidates for local verification, and follows Ref results by resolving the corresponding directory entry. It MUST share aggregate limits across the complete user operation.
 
+An Absent or Error result yields neither a Full candidate nor a reference target. It consumes the same applicable contacted-relay, response-byte, concurrency, and deadline budgets as any other response. A client MUST NOT treat either result from one Relay as a conclusive answer for the DID or as a reason to terminate resolution while an unqueried Relay already selected for the operation remains and the shared operation budgets permit contacting it. Neither result changes locally cached identity state or sticky authority state.
+
+An Error result is diagnostic information about the reporting Relay only. In particular, `Error(premature)` reflects that Relay's clock and serving decision. A client MUST NOT import that classification into another candidate, defer a DID because of it, or use it to reject a Full candidate obtained from the same or another Relay. Every Full candidate is verified and classified independently under Sections 5.4 and 8.1 using the client's own `now_ms` and local sticky authority state.
+
 Suggested v1 defaults are:
 
 | Budget | Default |
@@ -1173,7 +1177,7 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `4` | `invalidCbor` | CBOR cannot be parsed safely |
 | `5` | `nonDeterministicCbor` | Encoding violates Section 6.1 |
 | `6` | `schemaViolation` | Parsed object violates its v1 schema or limits |
-| `7` | `descriptorMismatch` | Body `id`, target DID, and Authority Descriptor do not bind to the same identifier |
+| `7` | `identityBindingMismatch` | Body `id`, target DID, and Authority Descriptor do not bind to the same identifier |
 | `8` | `invalidRevocationKey` | Revealed key does not match the commitment or key profile |
 | `9` | `invalidSignature` | COSE or Ed25519 verification fails |
 | `10` | `premature` | Timestamp exceeds the recipient's future bound |
@@ -1386,6 +1390,8 @@ A conforming Relay MUST additionally pass tests covering:
 A conforming DID Resolver or Followee client MUST additionally pass tests covering:
 
 - multi-relay candidate selection;
+- continuation past Absent and per-DID Error results while an unqueried Relay selected for the operation and sufficient shared budget remain;
+- independent local classification of every Full candidate without importing another Relay's `premature` diagnosis;
 - withheld and stale records;
 - shared traversal budgets;
 - handle mapping and inverse verification;
@@ -1723,7 +1729,7 @@ Implementations MUST reject variants of the positive vectors with any one of the
    - a body `id` changed to a different syntactically valid DID and then re-signed by the applicable legitimate key, verified against the original target; and
    - that same re-signed mutation verified against the mutated target.
 
-   All three cases produce `descriptorMismatch`. The first fails the body-to-target relation, the second also fails that relation without relying on an invalid signature, and the third passes that relation but fails descriptor-to-target binding.
+   All three cases produce `identityBindingMismatch`. The first fails the body-to-target relation, the second also fails that relation without relying on an invalid signature, and the third passes that relation but fails descriptor-to-target binding.
 2. a target DID containing:
    - a structurally well-formed multihash code other than `0x12`, with its declared digest length matching the bytes present; or
    - code `0x12` with a structurally well-formed declared digest length other than `0x20`, again matching the bytes present.
@@ -1746,7 +1752,7 @@ Implementations MUST reject variants of the positive vectors with any one of the
 
 ### B.8 Descriptor substitution with a valid signature
 
-This vector uses two additional deterministic attacker seeds. It is the only negative vector in this appendix for which COSE parsing, schema validation, the body `id` check, and strict Ed25519 verification all succeed. It MUST nevertheless be rejected at Section 8.1 step 9 with `descriptorMismatch`.
+This vector uses two additional deterministic attacker seeds. It is the only negative vector in this appendix for which COSE parsing, schema validation, the body `id` check, and strict Ed25519 verification all succeed. It MUST nevertheless be rejected at Section 8.1 step 9 with `identityBindingMismatch`.
 
 The record claims Alice's DID in body label `1`, but carries an attacker's Authority Descriptor and is correctly signed by the attacker's root key. A verifier that checks the body `id` against the requested DID but does not independently hash the carried descriptor would accept it and give the attacker apparent control of Alice's identifier.
 
@@ -1800,7 +1806,7 @@ Section 8.1 step 3  (COSE profile)          PASS
 Section 8.1 step 5  (v1 schema)             PASS
 Section 8.1 step 7  (body id == target)     PASS
 Section 8.1 step 8  (descriptor schema)     PASS
-Section 8.1 step 9  (descriptor digest)     FAIL -> descriptorMismatch
+Section 8.1 step 9  (descriptor digest)     FAIL -> identityBindingMismatch
 Section 8.1 step 14 (strict Ed25519)        would PASS
 ```
 
