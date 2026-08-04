@@ -3,7 +3,7 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.4**
+**Draft v0.5**
 **4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
@@ -1812,7 +1812,7 @@ Section 8.1 step 14 (strict Ed25519)        would PASS
 
 A conforming Record Verifier MUST reject the candidate and MUST NOT admit it, serve it, assign it a relay-local update number, or expose it as a resolution result.
 
-A client receiving these bytes as a `Full` candidate MUST discard that candidate as invalid, MUST NOT display its Contact Document, and MAY continue resolution using other candidates within the existing operation budgets. The invalid candidate is not equivalent to a valid `Absent` relay response. If no valid candidate is found, the operation's final resolution result is determined normally under Sections 11 and 13.
+A client receiving these bytes as a `Full` candidate MUST discard that candidate as invalid, MUST NOT display its Contact Document, and MAY continue resolution using other candidates within the existing operation budgets. The invalid candidate is not equivalent to a valid `Absent` relay response. If no valid candidate is found, the operation's final resolution result is determined normally under the result taxonomy in Section 12.3 and the client-resolution rules in Section 14.
 
 ## Appendix C. References
 
