@@ -2,9 +2,9 @@
 
 ## A Relay Protocol for Following People, Not Platforms
 
-**Author: Mats Helander**\
-**Whitepaper draft v0.5**\
-**1 August 2026**\
+**Author: Mats Helander**
+**Whitepaper draft v0.6**
+**4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 > Followee is a protocol for resolving a permanent, self-certifying identifier to its owner's current public contact information through an open network of independently operated relays.
@@ -20,6 +20,8 @@ Followee separates the durable act of following a subject from the temporary loc
 There is no global ledger, shared blockchain, consensus group, proof-of-work competition, token, canonical relay, or mandatory history. Each relay is simply a partial replicated map from Followee DIDs to signed records or references to other relays. Relay-local update cursors permit efficient exchange of current state without turning the network into a shared event chain.
 
 Human-readable handles remain federated in the useful sense of email: a domain controls names under that domain. `alice@example.com` is resolved by `example.com`, preferably through WebFinger. Once a client has obtained and followed Alice's Followee DID, the client keeps the Followee DID—not the handle—and can continue resolving Alice's signed contact record even if the old domain later forgets her.
+
+Followee can therefore launch before a relay network exists. One blogger controlling one domain can expose a WebFinger handle mapping and a link to the current signed Identity Record; a reader verifies that record locally and follows the resulting DID. Relays add replication, DID-only lookup, and independence from the original domain later. This zero-relay bootstrap makes deployment incremental rather than requiring new global infrastructure before the first useful follow.
 
 Followee is transport- and platform-neutral. Relays may run on conventional servers, peer-to-peer nodes, smart-contract networks, or any other environment capable of storing and serving the protocol objects.
 
@@ -365,7 +367,7 @@ A recipient MUST NOT treat a record as currently admissible when:
 record.timestamp_ms > recipient.current_time_ms + MAX_FUTURE_SKEW
 ```
 
-Such a record is **premature**, rather than cryptographically invalid. An ingress relay SHOULD reject it rather than retain an unbounded future queue. It may be submitted again after time advances. A resolver MUST apply the same check when selecting a result. A relay SHOULD repeat the check when serving a record so that a clock corrected backwards does not continue exporting state that its present clock considers premature.
+Such a record is **premature**, rather than cryptographically invalid. An ingress relay SHOULD reject it rather than retain an unbounded future queue. It may be submitted again after time advances. A resolver MUST apply the same check when selecting a result. A relay MUST repeat the check when serving a record so that a clock corrected backwards does not continue exporting state that its present clock considers premature. If it retains such a record, it returns a usable relay reference or a per-DID `premature` error rather than Full or Absent; this serving decision does not itself change stored identity state.
 
 Consequences:
 
@@ -510,6 +512,8 @@ alice@example.com
 ```
 
 As with email, `alice@example.com` and `alice@another.example` are distinct names. The domain controls its own namespace. There is no global registrar for the local part and no requirement that all domains use the same account system.
+
+Local parts remain case-sensitive protocol strings, but a handle authority SHOULD NOT assign ASCII-case variants under one domain to different Followee DIDs. It SHOULD reject the variant or map it as an alias to the same DID. This keeps exact WebFinger verification while avoiding spoken handles whose ownership changes with capitalization.
 
 ### 9.2 WebFinger resolution
 
@@ -664,12 +668,12 @@ Output:
 Full(recordBytes)
 | Ref(relayIndex, directoryGeneration)
 | Absent
-| Unsupported(reason)
+| Error(reason)
 ```
 
 Batch resolution MUST be available to a conforming Resolver, with bounded item and response-byte limits. Batching is important both for following-list startup cost and for avoiding one network round trip per identity; it does not remove the need for privacy-aware query shaping.
 
-The response contains candidate bytes or a routing hint. It contains no relay-supplied validity or verification flag.
+The response contains candidate bytes, a routing hint, local absence, or a per-DID error. It contains no relay-supplied validity or verification flag. A stored Full record that has become premature under the Relay's current clock produces `Error(premature)` unless a usable Ref is returned; Absent remains distinct from that known but presently unservable state.
 
 ### 11.4 `publish`
 

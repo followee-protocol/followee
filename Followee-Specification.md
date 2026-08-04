@@ -2,9 +2,9 @@
 
 ## `did:flw` DID Method and Relay Protocol Specification
 
-**Author: Mats Helander**\
-**Draft v0.1**\
-**1 August 2026**\
+**Author: Mats Helander**
+**Draft v0.2**
+**4 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -58,46 +58,46 @@ Every Relay, Ingress Relay, and DID Resolver MUST also conform as a Record Verif
 
 ## 2. Terminology
 
-**Followee DID**\
+**Followee DID**
 A DID using the `flw` method, whose method-specific identifier commits to an immutable Authority Descriptor.
 
-**Authority Descriptor**\
+**Authority Descriptor**
 The immutable deterministic-CBOR object containing the initial root public key and a commitment to one revocation public key.
 
-**root key**\
+**root key**
 The initial signing key for a Followee DID.
 
-**revocation key**\
+**revocation key**
 The precommitted key that can irreversibly revoke the root and thereafter becomes the DID's permanent active signing key.
 
-**Identity Record**\
+**Identity Record**
 A tagged COSE Sign1 object whose payload is a complete deterministic-CBOR record body.
 
-**Contact Document**\
+**Contact Document**
 The complete current set of self-authored public profile fields and service endpoints carried by an Identity Record.
 
-**full record**\
+**full record**
 The complete COSE Identity Record bytes. A full record is locally verifiable without history.
 
-**reference**\
+**reference**
 An unverified routing hint to another relay. A reference says where a full record may be found; it says nothing authoritative about the record.
 
-**admissible record**\
+**admissible record**
 A schema-conforming, descriptor-bound, signature-valid record whose timestamp is not premature under the recipient's clock and whose authority state is not excluded by sticky root revocation.
 
-**fresh record**\
+**fresh record**
 An admissible record whose optional `validUntil_ms` has not passed.
 
-**stale record**\
+**stale record**
 An admissible record whose optional `validUntil_ms` has passed. Staleness affects freshness and presentation, not signature authenticity or activation of root revocation.
 
-**winning record**\
+**winning record**
 The record selected by authority precedence, timestamp, and body-digest ordering from the admissible candidates known to the selecting participant.
 
-**handle authority**\
+**handle authority**
 The HTTPS domain responsible for resolving a name under that domain to a Followee DID.
 
-**relay-local update number**\
+**relay-local update number**
 A number assigned by one relay when its current map changes. It is never an Identity Record version and is never compared across relays.
 
 ## 3. Identifier and cryptographic profile
@@ -307,7 +307,9 @@ A record is premature for a recipient when:
 record.timestamp_ms > recipient.now_ms + MAX_FUTURE_SKEW_MS
 ```
 
-The addition MUST use overflow-safe comparison. A premature record is not currently admissible. An Ingress Relay SHOULD reject it rather than retain a future queue. A Relay Resolver SHOULD repeat the check before serving a full record. Every DID Resolver MUST repeat the check during candidate selection.
+The addition MUST use overflow-safe comparison. A premature record is not currently admissible. An Ingress Relay SHOULD reject it rather than retain a future queue. A Relay Resolver MUST repeat the check before serving a full record. Every DID Resolver MUST repeat the check during candidate selection.
+
+If a Relay Resolver retains a Full record that has become premature under its current clock—for example after a backwards clock correction—it MUST NOT return that record as Full. It MAY return a usable Ref instead; otherwise it returns the Section 12.3 Error result with `premature`. This serving-time classification does not remove the stored record, alter its `lastUpdated`, or assign a relay-local update number. Once the record is no longer premature, it may again be served as Full if it remains the Relay's current entry.
 
 ### 5.5 Optional validity horizon
 
@@ -704,7 +706,7 @@ For interoperable v1 lookup:
 3. `domain` is a valid DNS domain transformed to its lowercase ASCII IDNA form under [IDNA2008](https://www.rfc-editor.org/rfc/rfc5890); and
 4. the canonical WebFinger resource is `acct:local@domain`.
 
-A handle authority may offer aliases or case-insensitive user interfaces, but each returned mapping is verified for the exact canonical resource requested. Handles that require a broader email local-part syntax may be supported by a later profile.
+A handle authority may offer aliases or case-insensitive user interfaces, but each returned mapping is verified for the exact canonical resource requested. A handle authority SHOULD NOT assign ASCII-case variants of one local part under one domain to different Followee DIDs. It SHOULD either reject the later variant or map every accepted variant as an alias of the same DID. Lookup remains exact: each successful response still names the exact canonical `acct:` resource requested. Handles that require a broader email local-part syntax may be supported by a later profile.
 
 ### 10.2 WebFinger mapping
 
@@ -896,10 +898,12 @@ Each result is exactly one of:
 { 0: 0, 1: h'...' }       / Full: complete application/cose bytes /
 { 0: 1, 1: 42 }           / Ref: relay index in response generation /
 { 0: 2 }                  / Absent /
-{ 0: 3, 2: 2 }            / Unsupported: error code /
+{ 0: 3, 2: 2 }            / Error: error code /
 ```
 
 A Full response carries the exact admitted complete envelope bytes as a candidate, not a validity assertion. A Relay MUST NOT edit, annotate, or inject data into those bytes. A Ref result is interpreted only with the response's directory generation. An Absent result is local absence, not global non-existence.
+
+An Error result reports a per-DID error from Section 15.3 while preserving batch alignment. In particular, a Relay Resolver that retains a Full record but cannot serve it because its present clock classifies it as premature returns `{ 0: 3, 2: 10 }` unless it returns a usable Ref. It MUST NOT use Absent for that condition. A per-DID Error result is diagnostic information from that Relay, not an assurance that other Relays will report the same condition.
 
 If the Relay's directory generation changes before the client obtains the matching directory, the reference is unusable. The client MUST refetch or repeat resolution; it MUST NOT interpret the same integer index under the newer generation.
 
@@ -977,7 +981,7 @@ The response is:
 }
 ```
 
-Status `0` means success, status `1` means `ResetRequired`, and status `2` means another error identified by `errorCode`. On success, entries, `nextCursor`, `hasMore`, and `directoryGeneration` are required. On reset or error, entries MUST be absent. A change entry is:
+Status `0` means success, status `1` means `ResetRequired`, and status `2` means another error identified by `errorCode`. On success, entries, `nextCursor`, `hasMore`, and `directoryGeneration` are required and `errorCode` MUST be absent. On reset, entries and `errorCode` MUST be absent; status `1` is the sole v1 wire encoding of `ResetRequired`. On status `2`, `errorCode` is required and entries, `nextCursor`, `hasMore`, and `directoryGeneration` MUST be absent. A change entry is:
 
 ```cbor
 [
@@ -1174,17 +1178,16 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `13` | `duplicate` | Body digest is already current |
 | `14` | `policyRejected` | Local admission policy rejected the request |
 | `15` | `rateLimited` | Local rate or resource limit was reached |
-| `16` | `resetRequired` | Synchronization cursor generation is no longer valid |
-| `17` | `responseTooLarge` | Requested response cannot fit the negotiated bound |
-| `18` | `temporarilyUnavailable` | Operation cannot presently complete |
-| `19` | `invalidCursor` | Cursor is malformed or unknown for reasons other than reset |
-| `20` | `internalError` | Unexpected server failure |
+| `16` | `responseTooLarge` | Requested response cannot fit the negotiated bound |
+| `17` | `temporarilyUnavailable` | Operation cannot presently complete |
+| `18` | `invalidCursor` | Cursor is malformed or unknown for reasons other than reset |
+| `19` | `internalError` | Unexpected server failure |
 
 Stale is result metadata, not an error. Absent is a resolve result, not `invalidDid` or proof of non-existence.
 
 ### 15.4 HTTP status use
 
-Successful protocol processing, including Absent, Unsupported, valid no-change publication, and `ResetRequired`, SHOULD return HTTP `200` with the protocol body. Servers SHOULD use `400` for malformed outer requests, `413` for an HTTP entity rejected before protocol parsing, `415` for unsupported media type, `429` for transport-level rate limiting, and `500` or `503` for failures that prevent a protocol response.
+Successful protocol processing, including Absent, per-DID Error results, valid no-change publication, and `ResetRequired`, SHOULD return HTTP `200` with the protocol body. Servers SHOULD use `400` for malformed outer requests, `413` for an HTTP entity rejected before protocol parsing, `415` for unsupported media type, `429` for transport-level rate limiting, and `500` or `503` for failures that prevent a protocol response.
 
 Clients MUST inspect the protocol body on HTTP `200` and MUST bound any error response body before parsing or displaying it.
 
@@ -1364,7 +1367,9 @@ A conforming Relay MUST additionally pass tests covering:
 - full-to-reference conversion without authority rollback;
 - reference misdirection and cycles;
 - batch alignment and response splitting;
+- distinction between Absent and a retained Full record that becomes premature under a backwards clock correction;
 - coalesced `changes` output;
+- every status-dependent required and forbidden `changes` field combination, including status `1` as the sole ResetRequired signal;
 - cursor pagination without gaps;
 - cursor-generation reset;
 - restore-time behaviour; and
@@ -1595,6 +1600,8 @@ remote-sign-response = {
   1: bstr
 }
 ```
+
+The optional markers in the `changes-response` CDDL express the union of fields used across all statuses; they do not make those fields discretionary within a status. The status-conditional required and forbidden fields in Section 12.6 are normative and MUST be enforced in addition to CDDL acceptance.
 
 The conditional relationship between record-body labels `3` and `5` is normative text in Section 5.1. CDDL acceptance alone is never sufficient record validation.
 
