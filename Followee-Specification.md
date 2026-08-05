@@ -3,7 +3,7 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.6**
+**Draft v0.7**
 **5 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
@@ -321,7 +321,7 @@ Staleness does not invalidate the signature, remove the record from same-authori
 
 ### 5.6 Record extensions
 
-The optional record extension map uses absolute URI strings as keys. Each key names a public extension specification. Extension values are limited to the CBOR types in Appendix A and remain subject to all aggregate depth, member, string, and byte limits.
+The optional record extension map uses URI strings satisfying Section 7.2 as keys. Each key names a public extension specification. Extension values are limited to the CBOR types in Appendix A and remain subject to all aggregate depth, member, string, and byte limits.
 
 Extension integers are limited to the basic CBOR integer range: unsigned values from `0` through `2^64 - 1`, and negative values from `-2^64` through `-1`. Bignum tags are forbidden.
 
@@ -342,6 +342,8 @@ Authority Descriptors, public-key objects, Identity Record bodies, Contact Docum
 7. bignum tags are forbidden; all integers fit the ranges stated by their schema;
 8. text strings MUST be valid UTF-8; no Unicode normalization is applied or implied; and
 9. a decoder MUST reject, rather than normalize and accept, a non-deterministic encoding.
+
+Every non-negative integer map label written numerically in this specification or in Appendix A denotes a CBOR unsigned-integer key of major type `0` with that exact value. CBOR simple values are different data items: in particular, `false` and `true` MUST NOT be accepted as labels `0` and `1`, even if an implementation language compares those values as equal. Implementations MUST enforce the CBOR key type before applying host-language map lookup or set-equality operations.
 
 The bytes received on the wire are the bytes verified. A verifier MUST NOT decode a non-deterministic body and then re-encode it into a different body for signature verification.
 
@@ -415,8 +417,8 @@ The Contact Document is one bounded map:
 | ---: | --- | --- | ---: |
 | `0` | `displayName` | text | 256 UTF-8 bytes |
 | `1` | `summary` | text | 2,048 UTF-8 bytes |
-| `2` | `avatar` | absolute URI | 2,048 UTF-8 bytes |
-| `3` | `alsoKnownAs` | array of absolute URIs | 32 entries |
+| `2` | `avatar` | URI satisfying Section 7.2 | 2,048 UTF-8 bytes |
+| `3` | `alsoKnownAs` | array of URIs satisfying Section 7.2 | 32 entries |
 | `4` | `services` | array of service maps | 64 entries |
 | `5` | `migration` | migration map | one predecessor and one successor |
 | `6` | `extensions` | extension map | aggregate limits apply |
@@ -427,7 +429,9 @@ Every field is optional, and an empty Contact Document is valid. The Contact Doc
 
 ### 7.2 URI requirements
 
-Every field described as a URI MUST be an absolute URI under [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986), encoded as a CBOR text string. Relative references are malformed. Scheme comparison follows the applicable URI specification; Followee performs no general URI canonicalization.
+Every field described as a URI MUST match the `URI` production in Section 3 of [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986), encoded as a CBOR text string. This production requires a scheme and permits its optional query and fragment components. A `relative-ref`, including a network-path reference, absolute-path reference, relative-path reference, query-only reference, or fragment-only reference, is malformed. For example, `https://example.com/profile#about` and `did:web:example.com#key-1` are valid URI forms, while `/profile`, `?view=full`, and `#about` are not. Scheme comparison and all other component comparison follow the applicable URI specification; Followee performs no general URI canonicalization.
+
+RFC 3986 uses ABNF, whose quoted string literals are case-insensitive under [RFC 5234](https://www.rfc-editor.org/rfc/rfc5234). Consequently, both lowercase `v` and uppercase `V` introduce the `IPvFuture` alternative in an IP-literal host. Implementations MUST NOT reject an otherwise valid `IPvFuture` address merely because that letter is uppercase.
 
 Clients MUST treat dereferenced URI content as untrusted external content. A signature over an avatar or service URI does not sign the bytes later served by that URI.
 
@@ -438,18 +442,18 @@ A service entry is:
 | Label | Name | Required | Rule |
 | ---: | --- | --- | --- |
 | `0` | `id` | Yes | 1–256 ASCII `unreserved` characters; unique within the document |
-| `1` | `type` | Yes | Initial type token or absolute URI |
-| `2` | `endpoint` | Yes | Absolute URI |
+| `1` | `type` | Yes | Initial type token or URI satisfying Section 7.2 |
+| `2` | `endpoint` | Yes | URI satisfying Section 7.2 |
 | `3` | `mediaType` | No | RFC 6838 type and subtype, maximum 256 ASCII bytes |
 | `4` | `label` | No | UTF-8 text, maximum 256 bytes |
 | `5` | `language` | No | Well-formed RFC 5646 language tag, maximum 64 ASCII bytes |
-| `6` | `rel` | No | RFC 8288 `reg-rel-type` or absolute URI, maximum 256 bytes |
+| `6` | `rel` | No | RFC 8288 `reg-rel-type` or URI satisfying Section 7.2, maximum 256 bytes |
 
 `mediaType` MUST consist exactly of an RFC 6838 `type-name`, the `/` character, and an RFC 6838 `subtype-name`. Each name MUST satisfy the `restricted-name` grammar in Section 4.2 of that RFC. Media-type parameters are not permitted in this field.
 
 `language` MUST satisfy the `Language-Tag` ABNF in Section 2.1 of RFC 5646, including its fixed grandfathered productions. Verification is case-insensitive as required by that RFC, but the exact signed text is retained. A verifier MUST NOT require subtags to appear in the IANA Language Subtag Registry, replace deprecated subtags with preferred values, or otherwise canonicalize the field.
 
-The token form of `rel` MUST satisfy RFC 8288 `reg-rel-type` exactly: one lowercase ASCII letter followed by zero or more lowercase ASCII letters, digits, `.`, or `-`. Any other relation value MUST be an absolute URI under Section 7.2. A verifier MUST NOT require a token to appear in the IANA Link Relations registry.
+The token form of `rel` MUST satisfy RFC 8288 `reg-rel-type` exactly: one lowercase ASCII letter followed by zero or more lowercase ASCII letters, digits, `.`, or `-`. Any other relation value MUST be a URI satisfying Section 7.2. A verifier MUST NOT require a token to appear in the IANA Link Relations registry.
 
 These fields are verified against fixed syntax only. Media-type, language-subtag, and link-relation registry contents are not inputs to Identity Record validity; a registry update MUST NOT change whether existing signed bytes verify.
 
@@ -466,7 +470,7 @@ Payment
 Other
 ```
 
-A type outside this list MUST be an absolute URI naming its specification. Service array order is presentation order; a client may reorder or filter it.
+A type outside this list MUST be a URI satisfying Section 7.2 and naming its specification. Service array order is presentation order; a client may reorder or filter it.
 
 ### 7.4 Reciprocal migration fields
 
@@ -1373,6 +1377,8 @@ A conforming Record Verifier MUST pass published positive and negative vectors c
 - every target/body/descriptor identity-binding permutation specified in Appendix B.7 item 1;
 - root and RootRevoked records;
 - valid and invalid `mediaType`, `language`, and `rel` syntax at their exact boundaries;
+- URI fields with schemes, queries, and fragments; rejection of every relative-reference form; and both lowercase and uppercase `IPvFuture` introducers;
+- exact CBOR unsigned-integer label typing, including rejection of `false` and `true` substituted for labels `0` and `1` in Authority Descriptors and public-key objects;
 - future timestamps and stale records;
 - equal-time lower-digest ordering; and
 - every aggregate record limit.
@@ -1759,7 +1765,10 @@ Implementations MUST reject variants of the positive vectors with any one of the
 13. signature changed by one bit;
 14. `S >= L`, a non-canonical point, or a small-order public key;
 15. `validUntil_ms < timestamp_ms`; and
-16. any aggregate hard limit exceeded.
+16. any aggregate hard limit exceeded; and
+17. a CBOR simple value `false` or `true` substituted for an unsigned-integer label `0` or `1` in an Authority Descriptor or nested public-key object.
+
+The item 17 suite MUST include an otherwise internally consistent, descriptor-bound, correctly signed record so that rejection demonstrates schema enforcement rather than a coincidental signature or identity-binding failure. Such a record produces `schemaViolation`.
 
 ### B.8 Descriptor substitution with a valid signature
 
@@ -1846,6 +1855,7 @@ A client receiving these bytes as a `Full` candidate MUST discard that candidate
 17. IETF, [RFC 5890: Internationalized Domain Names for Applications](https://www.rfc-editor.org/rfc/rfc5890).
 18. IETF, [RFC 6838: Media Type Specifications and Registration Procedures](https://www.rfc-editor.org/rfc/rfc6838).
 19. IETF, [RFC 8288: Web Linking](https://www.rfc-editor.org/rfc/rfc8288).
+20. IETF, [RFC 5234: Augmented BNF for Syntax Specifications](https://www.rfc-editor.org/rfc/rfc5234).
 
 ---
 
