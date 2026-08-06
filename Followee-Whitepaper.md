@@ -3,8 +3,8 @@
 ## A Relay Protocol for Following People, Not Platforms
 
 **Author: Mats Helander**
-**Whitepaper draft v0.8**
-**4 August 2026**
+**Whitepaper draft v0.9**
+**6 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 > Followee is a protocol for resolving a permanent, self-certifying identifier to its owner's current public contact information through an open network of independently operated relays.
@@ -951,8 +951,11 @@ Followee does not guarantee:
 - recovery after loss or compromise of the precommitted revocation key;
 - truth of profile statements or linked content;
 - permanent handle ownership;
-- permanence, continued availability, or continued verifiability of a migration link; or
+- permanence, continued availability, or continued verifiability of a migration link;
+- eventual acquisition of every temporarily inadmissible record through incremental cursor synchronization alone; or
 - censorship resistance against every relay simultaneously.
+
+Cursor progress deliberately isolates liveness failures. A receiving relay advances a valid peer cursor even when it rejects a locally premature candidate, so one bad item cannot stall synchronization of every later identity. If the sender's current tuple never changes, that record may not appear again in the incremental stream. Recovery then depends on a later pull, a bounded full enumeration, another relay, or a subsequent source update; none is guaranteed by cursor synchronization itself.
 
 Its guarantee is narrower and useful: any supplied full record can be checked independently, independently discovered admissible records can be ordered without a global ledger, and a learned root revocation permanently excludes the compromised root state.
 
@@ -1047,6 +1050,7 @@ The proof of concept succeeds if:
 - no Authority Descriptor can be substituted without changing the Followee DID;
 - healthy clients reject bad signatures and implausible future timestamps;
 - no relay can suppress resolution or export its clock merely by returning Absent or Error while another selected relay remains reachable within budget;
+- one rejected or locally premature candidate cannot stall a receiving relay's synchronization of later identities from that peer;
 - root revocation removes every root-signed record from selection without a blacklist;
 - existing followers remain attached to a Followee DID after handle migration;
 - reciprocal migration can be verified without granting either DID authority over the other or changing a following list automatically;
