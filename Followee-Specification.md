@@ -3,8 +3,8 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.7**
-**5 August 2026**
+**Draft v0.8**
+**6 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -22,6 +22,8 @@ Followee has no canonical registry, global ledger, shared history, consensus gro
 ### 1.1 Status
 
 This is the first implementer's draft of the Followee specification. It is intended to be complete enough for independent proof-of-concept implementations and adversarial interoperability testing. The `flw` method name, relation URIs, media-type usage, extension context, and registries described here remain subject to the relevant registration processes before a production interoperability claim is made.
+
+Draft v0.8 clarifies CBOR well-formedness, basic validity, deterministic-profile, and schema-error boundaries after independent implementations exposed a classification ambiguity. It also makes relay batch alignment, opaque-candidate isolation, and synchronization cursor progress explicit. These changes do not alter DID construction, signature bytes, authority precedence, or record ordering.
 
 The design rationale is given separately in the *Followee: A Relay Protocol for Following People, Not Platforms* whitepaper. If the two documents differ on wire behaviour, this specification governs implementations of the version it defines.
 
@@ -329,19 +331,50 @@ Core implementations MUST ignore unknown well-formed extensions after enforcing 
 
 ## 6. Deterministic CBOR and COSE envelope
 
-### 6.1 Deterministic CBOR profile
+### 6.1 CBOR validity and deterministic profile
 
-Authority Descriptors, public-key objects, Identity Record bodies, Contact Documents, and relay-protocol messages use [RFC 8949](https://www.rfc-editor.org/rfc/rfc8949) CBOR with the core deterministic encoding requirements in Section 4.2.1 of that RFC, further restricted as follows:
+Authority Descriptors, public-key objects, Identity Record bodies, Contact Documents, and relay-protocol messages use [RFC 8949](https://www.rfc-editor.org/rfc/rfc8949) CBOR. Conforming decoders enforce three successive layers: CBOR well-formedness and basic validity, the Followee deterministic profile, and the applicable Followee schema. The distinctions in this section determine the wire error classification in Section 15.3.
+
+#### 6.1.1 Well-formedness and basic validity
+
+An encoded object MUST contain exactly one well-formed CBOR data item within its enclosing byte boundary. Truncation, reserved additional-information values, incomplete containers, and trailing bytes where exactly one item is required are not well-formed.
+
+Followee requires basic validity checking under RFC 8949 Sections 5.3 and 5.6:
+
+1. every map MUST contain unique keys under the key-equivalence rules applicable to the Followee data model; and
+2. every text string MUST contain valid UTF-8 as defined by [RFC 3629](https://www.rfc-editor.org/rfc/rfc3629).
+
+For this rule, two map keys are equivalent when they denote the same value in RFC 8949's generic data model; different serializations of one value do not create distinct keys. For example, unsigned integer `0` encoded as `00` and the same integer encoded non-minimally as `18 00` are equivalent keys. After an item has passed the deterministic-profile checks in Section 6.1.2, an implementation may equivalently compare the received deterministic encodings of permitted keys, because v1 admits only one such encoding for each key value. CBOR values of different generic data-model types, such as unsigned integer `0` and simple value `false`, are not equivalent merely because a host language compares them as equal.
+
+UTF-8 validation MUST reject overlong encodings, surrogate code points U+D800 through U+DFFF, values above U+10FFFF, incomplete code-point sequences, and every other byte sequence excluded by RFC 3629. No Unicode normalization is applied or implied.
+
+Basic-validity checking is recursive through every CBOR array and map, including unknown extension values and relay-protocol messages. It applies even when the recipient does not otherwise interpret a field. A decoder MUST reject the containing CBOR item rather than discard a duplicate entry, replace invalid text, or expose a partially normalized value.
+
+Recursion stops at byte-string boundaries. A byte string's length and encoding are validated, but its contents are opaque to the enclosing CBOR item and MUST NOT be recursively interpreted as CBOR merely because they happen to contain CBOR bytes. Identity Record bytes carried by a relay `Full` result or change entry are validated separately as candidates under Section 8.1. Failure of one such candidate does not invalidate an otherwise conforming relay response.
+
+Input that is not well-formed CBOR, or is well-formed but fails these basic-validity requirements, produces `invalidCbor`.
+
+#### 6.1.2 Followee deterministic profile
+
+Every basically valid CBOR item then MUST satisfy the core deterministic encoding requirements in Section 4.2.1 of RFC 8949, further restricted as follows:
 
 1. all arrays, maps, text strings, and byte strings use definite lengths;
 2. integers, lengths, and tags use their shortest permitted encodings;
 3. map entries are ordered by bytewise lexicographic order of their deterministic encoded keys;
-4. duplicate map keys are forbidden;
-5. floating-point values, CBOR simple value `undefined`, and CBOR tags are forbidden inside protocol data;
-6. the only permitted tag in a complete Identity Record is the required outer COSE Sign1 tag `18`;
-7. bignum tags are forbidden; all integers fit the ranges stated by their schema;
-8. text strings MUST be valid UTF-8; no Unicode normalization is applied or implied; and
-9. a decoder MUST reject, rather than normalize and accept, a non-deterministic encoding.
+4. floating-point values, CBOR simple value `undefined`, and CBOR tags are forbidden inside protocol data;
+5. the only permitted tag in a complete Identity Record is the required outer COSE Sign1 tag `18`;
+6. bignum tags are forbidden; all integers fit the ranges stated by their schema; and
+7. a decoder MUST reject, rather than normalize and accept, a non-deterministic or profile-forbidden encoding.
+
+A basically valid item that violates this subsection produces `nonDeterministicCbor`.
+
+Followee does not use generic CBOR tag validity to classify its envelope. Inner tags are forbidden by the Followee profile and therefore produce `nonDeterministicCbor`. The required outer tag `18` and the structure it encloses are validated under the COSE schema in Section 6.2; a violation uses the specifically assigned error from Section 15.3, or `schemaViolation` where no more specific error applies.
+
+#### 6.1.3 Schema and multiple faults
+
+After an item passes Sections 6.1.1 and 6.1.2, implementations apply the applicable Followee schema and verification rules. They return the specific error assigned by the relevant normative rule, such as `unsupportedSuite`, `invalidDid`, `unsupportedHash`, `recordTooLarge`, or `invalidRevocationKey`. `schemaViolation` is the fallback for a schema or limit failure with no more specific assigned error.
+
+When one input independently violates more than one rule, the exact error is unspecified unless this specification or a normative vector assigns precedence. Implementations MAY reorder cheap independent checks under Section 8.1 and remain conforming if they reject the input with an applicable error. Exact error assertions therefore require fault-isolated inputs.
 
 Every non-negative integer map label written numerically in this specification or in Appendix A denotes a CBOR unsigned-integer key of major type `0` with that exact value. CBOR simple values are different data items: in particular, `false` and `true` MUST NOT be accepted as labels `0` and `1`, even if an implementation language compares those values as equal. Implementations MUST enforce the CBOR key type before applying host-language map lookup or set-equality operations.
 
@@ -497,7 +530,7 @@ A verified migration link does not transfer authority, merge DIDs, retire either
 
 ### 7.5 Contact extensions
 
-Contact extensions use the same absolute-URI-keyed extension map as record extensions. Unknown well-formed fields are ignored. Extensions cannot alter the core interpretation of `alsoKnownAs`, `services`, or `migration`.
+Contact extensions use the same Section 7.2 URI-keyed extension map as record extensions. Unknown well-formed fields are ignored. Extensions cannot alter the core interpretation of `alsoKnownAs`, `services`, or `migration`.
 
 ## 8. Verification, authority state, and ordering
 
@@ -506,9 +539,9 @@ Contact extensions use the same absolute-URI-keyed extension map as record exten
 Given expected Followee DID `target`, complete envelope bytes `candidate`, recipient time `now_ms`, and local sticky authority state, a Record Verifier MUST perform the following checks. It may reorder cheap independent checks for denial-of-service resistance, but the final result MUST be equivalent.
 
 1. Reject `candidate` if it exceeds 16 KiB.
-2. Parse exactly one tagged COSE Sign1 object within the depth and member limits.
+2. Parse exactly one tagged COSE Sign1 object within the depth and member limits, applying the well-formedness, basic-validity, and deterministic-profile classifications in Section 6.1.
 3. Require the exact COSE profile in Section 6.2.
-4. Parse the payload as one deterministic `record-body`; reject trailing bytes.
+4. Parse the payload as one basically valid, deterministic `record-body`; reject trailing bytes and recursively enforce Section 6.1 even in unknown extension values.
 5. Require `protocolVersion = 1` and the exact v1 schema.
 6. Parse `target` under Section 3.1, returning `invalidDid` for malformed syntax or encoding and `unsupportedHash` for a structurally well-formed but unsupported hash profile.
 7. Require the body `id` to equal `target` byte for byte; otherwise return `identityBindingMismatch`.
@@ -527,6 +560,8 @@ Given expected Followee DID `target`, complete envelope bytes `candidate`, recip
 20. Classify the selected result as fresh or stale.
 
 An implementation MUST NOT allow a valid signature to bypass descriptor binding, schema limits, or authority-state rules.
+
+The outer COSE item and attached record-body item have separate CBOR boundaries. The payload byte string is opaque while the outer COSE structure is parsed, then its contents are validated as the record body in step 4. An invalid record body invalidates that candidate; when the candidate was carried in an otherwise valid relay response, it does not retroactively invalidate the relay-response wrapper or neighbouring candidates.
 
 Steps 7 and 9 deliberately use the same error. The complete identity-binding invariant is `body id = target = DID(authorityDescriptor)`; `identityBindingMismatch` reports any failure of that invariant. Consequently, an unchanged internally consistent envelope checked against another target, a re-signed body-`id` mutation checked against the original target, and that same mutation checked against the mutated target all fail with `identityBindingMismatch`, regardless of the permitted ordering of independent checks. The broader name is deliberate: the Authority Descriptor may be correct when only the signed body `id` differs from the requested target.
 
@@ -846,6 +881,12 @@ Equivalent transports MAY be implemented, but an implementation claiming the v1 
 
 All API CBOR messages MUST satisfy Section 6.1. A v1 request parser MUST reject unknown top-level integer labels rather than guess their semantics. A response parser MUST ignore unknown labels only when a negotiated later protocol version defines them; under protocol version `1`, unknown core labels are a schema violation.
 
+CBOR well-formedness, basic validity, and deterministic-profile validation applies to each outer relay request and response as a complete item. Byte strings within that wrapper remain opaque under Section 6.1.1. In particular, a candidate Identity Record carried as a Full byte string is not part of wrapper validity and is verified separately under Section 8.1.
+
+A CBOR-layer fault in an outer request means that protocol item processing did not begin. The Relay MUST reject the complete request with HTTP `400` and MUST NOT return per-item results. By contrast, a valid batch request containing an invalid DID is protocol-level input: the Relay returns HTTP `200` and an aligned per-DID Error result under Section 12.3.
+
+A client receiving an outer response that is not well-formed, basically valid, deterministic, or schema-conforming MUST reject that complete relay response. It MUST NOT interpret rejection as Absent for any requested DID. Opaque Full candidates inside an accepted response are handled independently and do not affect wrapper acceptance.
+
 ### 12.2 Relay information
 
 `GET v1/info` returns one `relay-info` object containing:
@@ -918,6 +959,10 @@ Each result is exactly one of:
 ```
 
 A Full response carries the exact admitted complete envelope bytes as a candidate, not a validity assertion. A Relay MUST NOT edit, annotate, or inject data into those bytes. A Ref result is interpreted only with the response's directory generation. An Absent result is local absence, not global non-existence.
+
+The request DID array MAY contain the same DID more than once. Each occurrence counts separately against the batch limit and has its own position in the response. A Relay MUST NOT deduplicate, reorder, combine, or omit occurrences. The response result array MUST contain exactly as many entries as the request DID array, in the same order. A client MUST reject the complete relay response if the counts differ.
+
+Each result is interpreted against the DID at the same request index. Full-result bytes are opaque during response-wrapper validation and are subsequently verified under Section 8.1 with that indexed DID as `target`. If one Full candidate fails, the client discards only that candidate and continues processing every other result at its original index. It MUST NOT shift later results, invalidate the accepted wrapper, or treat the failed candidate as Absent. A Ref is followed for the DID at its original request index.
 
 An Error result reports a per-DID error from Section 15.3 while preserving batch alignment. In particular, a Relay Resolver that retains a Full record but cannot serve it because its present clock classifies it as premature returns `{ 0: 3, 2: 10 }` unless it returns a usable Ref. It MUST NOT use Absent for that condition. A per-DID Error result is diagnostic information from that Relay, not an assurance that other Relays will report the same condition.
 
@@ -1011,6 +1056,8 @@ The cursor is an opaque byte string of at most 128 bytes. A null cursor requests
 
 `itemLimit` and `byteLimit` MUST both be greater than zero and no greater than the Relay's advertised or protocol hard maximum.
 
+On success, the number of returned entries MUST NOT exceed `itemLimit`. A receiver that obtains more entries MUST reject the complete response and MUST NOT use its `nextCursor`.
+
 `nextCursor` advances through exactly the returned range. If no entry is returned, it represents the supplied position. A Relay MUST NOT advance past omitted eligible entries. If the next single entry cannot fit within `byteLimit`, it returns `responseTooLarge` rather than an unchanged success cursor loop.
 
 `hasMore` reports whether further entries were known when the response was assembled. Concurrent updates may create later work after `hasMore = false`.
@@ -1066,7 +1113,13 @@ A Relay may maintain a separate storage-generation mechanism for housekeeping ch
 
 ### 13.3 Synchronization receiver
 
-A receiving Relay treats each Full change entry as untrusted candidate bytes and runs its own ingress algorithm. It treats each Ref as an unverified routing hint and MUST NOT import the sender's authority state. A receiver may path-compress a reference after consulting the sender's directory.
+A receiving Relay treats each Full change entry as untrusted candidate bytes and runs its own ingress algorithm. It treats each Ref as an unverified routing hint and MUST NOT import the sender's authority state. A receiver may path-compress a reference after consulting the sender's directory. An unusable Ref is discarded without identity-state or local-update-number change.
+
+After accepting a well-formed, basically valid, deterministic, and schema-conforming success response, the receiver processes each Full candidate independently. Rejection or deferral affects only that candidate. It MUST NOT prevent processing of other entries, alter another DID's stored entry or sticky authority state, or increment the local update number.
+
+The receiver MUST store and use the returned opaque `nextCursor` regardless of how many Full candidates it admitted or Ref hints it retained, including zero. Candidate rejection or an unusable Ref MUST NOT prevent cursor advancement, cause the same range to be requested again, or cause the receiver to derive a replacement cursor from entry contents. This rule does not apply when the outer response itself is rejected, because such a response supplies no trustworthy cursor.
+
+A locally premature candidate also MUST NOT stall the peer cursor. The receiver MAY retain it in a bounded pending area or pull it again later, but v1 imposes no pending-cache or retry obligation. If the sender's current tuple never changes, the candidate may not appear again in that incremental stream after the receiver advances.
 
 Relay histories need not be consulted. Synchronization exchanges current state, not an event chain.
 
@@ -1093,6 +1146,8 @@ A client begins with configured relays, accepts Full candidates for local verifi
 An Absent or Error result yields neither a Full candidate nor a reference target. It consumes the same applicable contacted-relay, response-byte, concurrency, and deadline budgets as any other response. A client MUST NOT treat either result from one Relay as a conclusive answer for the DID or as a reason to terminate resolution while an unqueried Relay already selected for the operation remains and the shared operation budgets permit contacting it. Neither result changes locally cached identity state or sticky authority state.
 
 An Error result is diagnostic information about the reporting Relay only. In particular, `Error(premature)` reflects that Relay's clock and serving decision. A client MUST NOT import that classification into another candidate, defer a DID because of it, or use it to reject a Full candidate obtained from the same or another Relay. Every Full candidate is verified and classified independently under Sections 5.4 and 8.1 using the client's own `now_ms` and local sticky authority state.
+
+A rejected outer relay response is neither Absent nor Error and yields no candidates or reference targets. It consumes the same applicable contacted-relay, response-byte, concurrency, and deadline budgets as any other attempted response, changes no cached identity state or sticky authority state, and MUST NOT terminate resolution while an unqueried Relay already selected for the operation remains and the shared budgets permit contacting it. When an accepted response contains an invalid opaque Full candidate, only that candidate is discarded; other indexed results remain usable.
 
 Suggested v1 defaults are:
 
@@ -1188,8 +1243,8 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `1` | `unsupportedHash` | A structurally well-formed multihash names a hash code or digest length unsupported by this version |
 | `2` | `unsupportedSuite` | Signature suite is not supported |
 | `3` | `recordTooLarge` | Envelope exceeds the hard or advertised cap |
-| `4` | `invalidCbor` | CBOR cannot be parsed safely |
-| `5` | `nonDeterministicCbor` | Encoding violates Section 6.1 |
+| `4` | `invalidCbor` | Input is not well-formed CBOR, or is well-formed but not basically valid under RFC 8949, including invalid UTF-8 text strings and duplicate map keys |
+| `5` | `nonDeterministicCbor` | Basically valid CBOR violates the deterministic or restricted Followee profile in Section 6.1.2 |
 | `6` | `schemaViolation` | Parsed object violates its v1 schema or limits |
 | `7` | `identityBindingMismatch` | Body `id`, target DID, and Authority Descriptor do not bind to the same identifier |
 | `8` | `invalidRevocationKey` | Revealed key does not match the commitment or key profile |
@@ -1209,7 +1264,9 @@ Stale is result metadata, not an error. Absent is a resolve result, not `invalid
 
 ### 15.4 HTTP status use
 
-Successful protocol processing, including Absent, per-DID Error results, valid no-change publication, and `ResetRequired`, SHOULD return HTTP `200` with the protocol body. Servers SHOULD use `400` for malformed outer requests, `413` for an HTTP entity rejected before protocol parsing, `415` for unsupported media type, `429` for transport-level rate limiting, and `500` or `503` for failures that prevent a protocol response.
+Successful protocol processing, including Absent, per-DID Error results, valid no-change publication, and `ResetRequired`, SHOULD return HTTP `200` with the protocol body. Servers MUST use `400` when the outer request fails Section 6.1 well-formedness, basic validity, deterministic-profile, or top-level schema validation and therefore cannot safely enter per-item processing. Such a response has no normative per-item CBOR body. Servers SHOULD use `413` for an HTTP entity rejected before protocol parsing, `415` for unsupported media type, `429` for transport-level rate limiting, and `500` or `503` for failures that prevent a protocol response.
+
+An invalid item inside an otherwise valid batch request is not an outer-request failure. In particular, a syntactically malformed DID carried as a basically valid UTF-8 text string receives an aligned per-DID `Error(invalidDid)` in an HTTP `200` resolve response. Invalid UTF-8 instead makes the enclosing request basically invalid under Section 6.1.1. A server MUST NOT reject the entire batch merely because one requested DID is syntactically invalid.
 
 Clients MUST inspect the protocol body on HTTP `200` and MUST bound any error response body before parsing or displaying it.
 
@@ -1305,6 +1362,12 @@ The most dangerous implementation failures include checking only the signed `id`
 
 Conformance tests MUST exercise each of these failures.
 
+### 16.16 Incremental synchronization convergence
+
+Cursor synchronization alone does not guarantee that a Relay eventually acquires every temporarily inadmissible record. A receiver that rejects a locally premature Full candidate still advances the valid response's peer cursor under Section 13.3. If the sender's current tuple for that DID never changes, the same record may not appear again in that incremental stream.
+
+Recovery may occur through later pull under Section 13.4, a new bounded full enumeration, another Relay, or a subsequent source update. None is guaranteed by cursor synchronization itself. This liveness trade prevents one bad or premature candidate from permanently stalling synchronization of every later identity from that peer.
+
 ## 17. Privacy considerations
 
 Followee records are public and stable DIDs are correlatable. Controllers SHOULD publish links rather than secrets or unnecessary personal data. Separate personas SHOULD use separate DIDs when correlation would be harmful.
@@ -1370,7 +1433,8 @@ A conforming Record Verifier MUST pass published positive and negative vectors c
 - distinct `invalidDid` and `unsupportedHash` classification for malformed and unsupported multihashes;
 - Authority Descriptor derivation;
 - revocation-key commitment;
-- deterministic and non-deterministic CBOR encodings;
+- CBOR well-formedness, basic validity, deterministic-profile, and schema classifications;
+- exact `invalidCbor` rejection of adjacent duplicate keys and invalid RFC 3629 UTF-8, including overlong, surrogate, above-U+10FFFF, and incomplete code-point sequences inside otherwise ignored extension values;
 - exact COSE protected headers and external AAD;
 - strict Ed25519 verification;
 - descriptor substitution;
@@ -1394,8 +1458,15 @@ A conforming Relay MUST additionally pass tests covering:
 - full-to-reference conversion without authority rollback;
 - reference misdirection and cycles;
 - batch alignment and response splitting;
+- duplicate requested DIDs without deduplication or reordering, exact response cardinality, and rejection of count mismatches;
+- HTTP `400` for outer request CBOR faults, including adjacent duplicate keys;
+- HTTP `200` with positionally aligned per-DID results when a valid batch request contains a syntactically malformed DID as valid UTF-8;
+- complete rejection of a non-deterministically encoded outer response without interpreting it as Absent;
+- opaque Full byte-string isolation in resolve and `changes` responses, including preservation of valid entries after an earlier invalid candidate;
 - distinction between Absent and a retained Full record that becomes premature under a backwards clock correction;
 - coalesced `changes` output;
+- synchronization cursor advancement to the exact returned `nextCursor` despite rejected Full candidates, without record, authority-state, `lastUpdated`, or update-number mutation for the rejected DID;
+- complete rejection of a `changes` success response containing more entries than the request's `itemLimit`, without processing entries, changing state, or using `nextCursor`;
 - every status-dependent required and forbidden `changes` field combination, including the exact two-field status `1` ResetRequired response;
 - cursor pagination without gaps;
 - cursor-generation reset;
@@ -1408,6 +1479,8 @@ A conforming DID Resolver or Followee client MUST additionally pass tests coveri
 
 - multi-relay candidate selection;
 - continuation past Absent and per-DID Error results while an unqueried Relay selected for the operation and sufficient shared budget remain;
+- continuation past a rejected outer relay response under the same shared budgets;
+- positional isolation of an invalid Full candidate without shifting or discarding later results from an accepted batch response;
 - independent local classification of every Full candidate without importing another Relay's `premature` diagnosis;
 - withheld and stale records;
 - shared traversal budgets;
@@ -1420,6 +1493,8 @@ A conforming DID Resolver or Followee client MUST additionally pass tests coveri
 ### 20.4 Interoperability criterion
 
 At least two independent implementations MUST produce byte-identical Authority Descriptors and record bodies from the same structured input, verify the same envelopes, derive the same DIDs and body digests, select the same winners from candidates delivered in different orders, and exchange state through the HTTP/CBOR profile before v1 is described as interoperable.
+
+The complete conformance suite MUST be rerun after a normative CBOR-classification or relay-wrapper change. Reports SHOULD separately count acceptance/rejection disagreements, symbolic differences permitted by unspecified multi-fault precedence, and genuine unresolved specification ambiguities. A raw symbolic difference under an explicitly unspecified assertion is not itself an interoperability failure, but it MUST remain visible in the report.
 
 ## 21. Registration and extension considerations
 
@@ -1445,7 +1520,7 @@ Followee v1 freezes:
 - SHA-256 descriptor and revocation commitments;
 - base58btc multihash DID encoding;
 - Ed25519 COSE algorithm `-19`;
-- CBOR labels and deterministic profile;
+- CBOR labels, basic-validity classification, deterministic profile, and byte-string opacity boundary;
 - the one-way Root → RootRevoked authority rule; and
 - the v1 relay wire schemas.
 
@@ -1634,6 +1709,10 @@ The optional markers in the `changes-response` CDDL express the union of fields 
 
 The conditional relationship between record-body labels `3` and `5` is normative text in Section 5.1. CDDL acceptance alone is never sufficient record validation.
 
+CDDL does not express the positional relationship between `resolve-request` and `resolve-response`. Duplicate DIDs are permitted in the request array, every occurrence counts separately, and Section 12.3 requires an equal-length result array in the same order.
+
+The `.cbor` control on the Identity Record payload describes its required interpretation once candidate verification begins. It does not override Section 6.1.1's byte-string opacity rule for an enclosing relay message. Full-result and change-entry byte strings are ordinary opaque `bstr` values until separately submitted to Section 8.1.
+
 ## Appendix B. Normative test vectors
 
 ### B.1 Warning
@@ -1766,9 +1845,14 @@ Implementations MUST reject variants of the positive vectors with any one of the
 14. `S >= L`, a non-canonical point, or a small-order public key;
 15. `validUntil_ms < timestamp_ms`; and
 16. any aggregate hard limit exceeded; and
-17. a CBOR simple value `false` or `true` substituted for an unsigned-integer label `0` or `1` in an Authority Descriptor or nested public-key object.
+17. a CBOR simple value `false` or `true` substituted for an unsigned-integer label `0` or `1` in an Authority Descriptor or nested public-key object; and
+18. an invalid RFC 3629 UTF-8 text string, including an overlong encoding, a surrogate code point, a value above U+10FFFF, or an incomplete code-point sequence.
 
 The item 17 suite MUST include an otherwise internally consistent, descriptor-bound, correctly signed record so that rejection demonstrates schema enforcement rather than a coincidental signature or identity-binding failure. Such a record produces `schemaViolation`.
+
+When item 9 is constructed by replacing the required empty COSE unprotected-header map with a map containing duplicate keys, it independently violates both Section 6.1.1 basic validity and Section 6.2 rule 4. Its fault profile is therefore multiple and its exact error is unspecified. Section B.10 provides the fault-isolated adjacent-duplicate case that normatively produces `invalidCbor`.
+
+Every item 18 mutation changes signed body bytes and therefore MUST be re-signed by the applicable legitimate key before it can carry an exact non-signature assertion. The fault-isolated vectors in Section B.10 produce `invalidCbor`.
 
 ### B.8 Descriptor substitution with a valid signature
 
@@ -1834,6 +1918,349 @@ A conforming Record Verifier MUST reject the candidate and MUST NOT admit it, se
 
 A client receiving these bytes as a `Full` candidate MUST discard that candidate as invalid, MUST NOT display its Contact Document, and MAY continue resolution using other candidates within the existing operation budgets. The invalid candidate is not equivalent to a valid `Absent` relay response. If no valid candidate is found, the operation's final resolution result is determined normally under the result taxonomy in Section 12.3 and the client-resolution rules in Section 14.
 
+### B.9 Independent Bob identity
+
+This second complete identity is normative test material for cross-DID state isolation and relay batches. Migration vectors are intentionally deferred to the additive v0.8.1 vector release.
+
+```text
+Bob root seed:
+808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f
+
+Bob root public key:
+cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa
+
+Bob revocation seed:
+a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf
+
+Bob revocation public key:
+4fd099ccd47d7893dfe9ec24414ecb0d9b5420232aad30d91c465be33cbe65c4
+
+Bob revocation public-key CBOR:
+a200320158204fd099ccd47d7893dfe9ec24414ecb0d9b5420232aad30d91c465be33cbe65c4
+
+Bob revocation commitment:
+46ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c41
+
+Bob Authority Descriptor CBOR:
+a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c41
+
+Bob descriptor digest:
+ddc23bec60a7a9dad831d8c52439b9f3f30e17012da4d948233ece41154817ba
+
+Bob multihash bytes:
+1220ddc23bec60a7a9dad831d8c52439b9f3f30e17012da4d948233ece41154817ba
+
+Bob Followee DID:
+did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy
+```
+
+Bob's timestamp is `1785589201123`. His Contact Document contains a display name, summary, handle claim, and Atom feed.
+
+```text
+Bob record body CBOR:
+a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e67
+
+Bob COSE Sig_structure length:
+321
+
+Bob COSE Sig_structure bytes:
+846a5369676e61747572653143a10132581a466f6c6c6f7765652f4964656e746974795265636f72642f7631590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e67
+
+Bob body digest:
+c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8
+
+Bob signature:
+958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202
+
+Bob complete tagged COSE Identity Record:
+d28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202
+```
+
+Alice and Bob have independent sticky authority state. Admitting or revoking one MUST NOT modify the other's current entry, authority state, ordering metadata, or update metadata.
+
+### B.10 Fault-isolated basic-validity records
+
+Each vector in this section starts from the B.4 Alice record body, changes the initial map head from `a6` to `a7`, and appends record label `8` followed by the exact extension-map bytes shown. The extension key is the otherwise valid URI `https://example.com/ext`. The resulting raw body is signed with Alice's legitimate B.2 root seed without decoding or normalizing the invalid value.
+
+The duplicate-key vector uses two adjacent deterministic encodings of integer key `0` inside a nested extension object. Both keys and values are individually allowed, and their equality is not an independent map-order reversal. Duplicate-key basic validity is its only fault.
+
+```text
+duplicate-key appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f657874a200000001
+
+body digest:
+128fec939e1273f890be281a82f7bfac1134e3bab9bc0651022f3a6000698dd2
+
+COSE Sig_structure length:
+358
+
+signature:
+afba8e1577abd9c6383b8df9a5c05913df217b3f1c4dc0c4c0027f9a44629d1a397dd4ad36f6e01028a3060a8481690cc589e2f9525e597f0a6a0cf60c9cb404
+
+expected result:
+invalidCbor
+```
+
+The four UTF-8 vectors place an invalid text-string value—not a key—inside the same unknown extension. The extension namespace is otherwise well-formed and unknown core extensions are ignored after structural validation, so invalid UTF-8 is the only fault.
+
+```text
+overlong U+002E appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f65787462c0ae
+
+body digest:
+4b8cc526c781c6b9ba707b6393f392f1132b0e5d18a7e7611a583d1013278f70
+
+COSE Sig_structure length:
+356
+
+signature:
+738365f103b6f943311c4f339bcd4889e405129e2643d57f2fd3698adc50d8da8df529b886252b62727233a828769dabcac7c0add28f442e72c325905844a50e
+
+expected result:
+invalidCbor
+
+lone U+D800 surrogate appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f65787463eda080
+
+body digest:
+fd9cbe63338d1a3a1791c596db9a3824376070a7126aab2064d90bd62333afe8
+
+COSE Sig_structure length:
+357
+
+signature:
+7fcefa0e654da023a71dc8ed5e2cb988ac4111a9b3a75e88c5757e2b59d792e965ff004eae3c26c13e29fe56c7addec04fad04e4f18e5ba375a827c02028e103
+
+expected result:
+invalidCbor
+
+U+110000 above the RFC 3629 maximum appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f65787464f4908080
+
+body digest:
+95bfb5eb8a921a0b7ceeff63a81ccd6404cf7e64945d9d888805f208b49e4204
+
+COSE Sig_structure length:
+358
+
+signature:
+28ecb7c9e471940d077cd3d24f1e348aaac855be352523ae9867ef2839bbdf6d8794f110e0d4a79055009dd803afdd259729c16c70746acab0ad620d190e0607
+
+expected result:
+invalidCbor
+
+incomplete three-byte code point in a complete two-byte text string appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f65787462e282
+
+body digest:
+60e93b06213c6038ab697b796f8264cc854dc12442efbf15f2abd35eae165e09
+
+COSE Sig_structure length:
+356
+
+signature:
+e7cd9850280f108e8caf550cdff381765c957dc53993b28a57d8f4b362f5e624105d83ffe12b22df2d3ca8d54c833030f1fa1617cd1e4b8697f670aa41d7c601
+
+expected result:
+invalidCbor
+```
+
+For the final case, the text-string head is deliberately `62`, declaring exactly the two bytes `e2 82`. The containing CBOR body is complete and well-formed; only the UTF-8 code point is incomplete. Using head `63` without a third byte would instead test truncated CBOR well-formedness.
+
+For every vector, the complete envelope is constructed exactly as in Section 6.2 from the mutated raw body and listed signature. A verifier MUST reject it before exposing decoded extension content. A verifier that reports `invalidSignature` has failed to use the listed re-signature or has altered the received body bytes.
+
+### B.11 Relay-wrapper and candidate-isolation vectors
+
+The relay vectors use directory generation `000102030405060708090a0b0c0d0e0f`. Complete Full byte strings are the exact B.4, B.8, and B.9 envelopes. Wrapper validators MUST treat those byte strings as opaque; candidate verification occurs only after the wrapper is accepted.
+
+#### B.11.1 Invalid outer request
+
+This otherwise structured resolve request contains adjacent duplicate top-level label `1` entries. Its exact bytes are:
+
+```text
+a30001018178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d018178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579
+
+length:
+121
+
+SHA-256:
+0f3aa1e98de0c1d63a2dd740e04542be326e550e75a133ade1ac045694bfb790
+```
+
+The Relay MUST reject the complete request with HTTP `400`. It MUST NOT choose either duplicate value, combine the arrays, or return per-DID results.
+
+#### B.11.2 Invalid outer response
+
+This resolve response is otherwise equivalent to `{ 0: 1, 1: h'000102030405060708090a0b0c0d0e0f', 2: [{ 0: 2 }] }`, but protocol version `1` is non-minimally encoded as `18 01`:
+
+```text
+a30018010150000102030405060708090a0b0c0d0e0f0281a10002
+
+length:
+27
+
+SHA-256:
+251497e0a44248c6099c5851e0c6668c0731d2b7f1f610f28c6f3c42254475cf
+```
+
+A client MUST reject the complete response as `nonDeterministicCbor`, obtain no candidate or Absent result from it, change no cached or sticky identity state, consume the ordinary operation budgets, and continue with another already-selected Relay when Section 14.1 permits.
+
+#### B.11.3 Resolve candidate isolation
+
+The request is `{ 0: 1, 1: [Alice-DID, Bob-DID] }`:
+
+```text
+a20001018278376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579
+
+length:
+119
+
+SHA-256:
+a2d1d1944182db0f42468bdcaeb086d1987ee3570b892811a378f0ec3bbbca78
+```
+
+The response is the deterministic encoding of:
+
+```cbor
+{
+  0: 1,
+  1: h'000102030405060708090a0b0c0d0e0f',
+  2: [
+    { 0: 0, 1: h'B.8 complete envelope bytes' },
+    { 0: 0, 1: h'B.9 complete envelope bytes' }
+  ]
+}
+```
+
+Its encoded length is `743` and its SHA-256 digest is:
+
+```text
+62246877adbd56be2996ea37d05475d88c0e7932ff9b042f8ddbb9a809f8f4ca
+```
+
+The client MUST accept the response wrapper, process results positionally, discard the B.8 candidate at index `0`, and retain the valid Bob candidate at index `1`. Index `0` receives no candidate from this Relay; that is not a final Absent result and later results MUST NOT shift left.
+
+#### B.11.4 Duplicate requested DIDs and cardinality
+
+This canonical request contains `[Alice-DID, Alice-DID, Bob-DID]`:
+
+```text
+a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579
+
+length:
+176
+
+SHA-256:
+ea2c9422529945ce78406f486c80ad633a1e90726cd493dedfa4347df373cf73
+```
+
+The conforming response contains `[Full(B.4), Full(B.4), Full(B.9)]` under the same directory generation. Its encoded length is `1106` and SHA-256 digest is:
+
+```text
+203e22e2d913359b08070c289d60889770bcdeee0584187dee25e1c8e05fdfe8
+```
+
+A Relay MUST return three results. A client MUST reject a two-result response, even if both returned Full records independently verify. It MUST NOT infer Absent for the omitted occurrence or tail.
+
+#### B.11.5 Changes isolation and cursor progress
+
+Seed the receiving Relay with Alice's exact B.4 envelope as current Root state, Alice `lastUpdated = 41`, and local update counter `41`. Bob is absent. Use recipient time `now_ms = 1785589201123`.
+
+The request uses opaque cursor `v08-0000`, `itemLimit = 2`, and `byteLimit = 1048576`:
+
+```text
+a4000101487630382d303030300202031a00100000
+
+length:
+21
+
+SHA-256:
+e65ad99bab6cd0eefba501a8e65ecfb30ad8ad453da9e554346e2becaab339df
+```
+
+The response is the deterministic encoding of:
+
+```cbor
+{
+  0: 1,
+  1: 0,
+  2: [
+    [ Alice-DID, { 0: 0, 1: h'B.8 complete envelope bytes' }, 1001 ],
+    [ Bob-DID,   { 0: 0, 1: h'B.9 complete envelope bytes' }, 1002 ]
+  ],
+  3: h'7630382d30303032',  / "v08-0002" /
+  4: false,
+  5: h'000102030405060708090a0b0c0d0e0f'
+}
+```
+
+Its encoded length is `879` and SHA-256 digest is:
+
+```text
+3337aa0be1d6b8cbf856a31657490398a4b778de586e0b292da68c5c26c200f2
+```
+
+After processing the accepted wrapper:
+
+1. Alice's complete local entry MUST remain byte-for-byte and field-for-field unchanged: B.4 envelope bytes, Root authority state, `lastUpdated = 41`, and all local update metadata;
+2. Bob's B.9 record MUST be admitted as current Root state and receive the sole new local update number, `42`;
+3. the local update counter MUST equal `42`;
+4. the stored peer cursor MUST equal the exact returned bytes `7630382d30303032`; and
+5. the B.8 rejection MUST NOT cause the range to be requested again or alter either Alice's or Bob's state beyond the successful Bob admission.
+
+Sender `lastUpdated` values `1001` and `1002` are not receiver update numbers and MUST NOT be copied into local entry metadata.
+
+#### B.11.6 Malformed DID inside a valid batch
+
+Seed the Relay with Alice's B.4 record and Bob's B.9 record. This deterministic request contains Alice's DID, the syntactically malformed but valid-UTF-8 string `did:flw:not-a-multibase`, and Bob's DID, in that order:
+
+```text
+a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d776469643a666c773a6e6f742d612d6d756c74696261736578376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579
+
+length:
+143
+
+SHA-256:
+8276648c9938dcc57a004695414bc7bd6776186b8df1626210667abf1c9ccf38
+```
+
+The Relay returns HTTP `200` and the deterministic response `{ 0: 1, 1: directory-generation, 2: [Full(B.4), Error(invalidDid), Full(B.9)] }`, where `directory-generation` is `000102030405060708090a0b0c0d0e0f`. Its encoded length is `748` and SHA-256 digest is:
+
+```text
+d8a36364ed62a8fabb905f6c20c04304fe1803df10fa1680840c5c7cd1af96fa
+```
+
+The malformed middle DID MUST NOT cause HTTP `400`, terminate the batch, shift either neighbouring result, or suppress Bob's result. The client receives exactly three positionally aligned results and independently verifies the Full candidates at indices `0` and `2` against Alice's and Bob's requested DIDs.
+
+#### B.11.7 `changes` item-limit overflow
+
+Reuse the B.11.5 request and initial receiver state, including `itemLimit = 2`, peer cursor `v08-0000`, Alice's exact B.4 entry at local update `41`, and Bob absent. Assume directory generation `000102030405060708090a0b0c0d0e0f` contains a usable Relay at index `0`.
+
+The invalid response is the deterministic encoding of:
+
+```cbor
+{
+  0: 1,
+  1: 0,
+  2: [
+    [ Alice-DID,    { 0: 0, 1: h'B.8 complete envelope bytes' }, 1001 ],
+    [ Bob-DID,      { 0: 0, 1: h'B.9 complete envelope bytes' }, 1002 ],
+    [ Attacker-DID, { 0: 1, 1: 0 },                              1003 ]
+  ],
+  3: h'7630382d30303033',  / "v08-0003" /
+  4: false,
+  5: h'000102030405060708090a0b0c0d0e0f'
+}
+```
+
+`Attacker-DID` is the attacker's own legitimate DID from Section B.8.1. The response is otherwise well-formed, basically valid, deterministic, and schema-conforming, but contains three entries when the request permitted two. Its encoded length is `945` and SHA-256 digest is:
+
+```text
+334740ea2ce15b4b70dfcdd88f4cfc7f31bfd53f1b7615aa08df1c4137f4d795
+```
+
+The receiver MUST reject the complete response before processing any entry. Alice's full local entry and update metadata remain unchanged, Bob remains absent, the local update counter remains `41`, and the stored peer cursor remains the exact request cursor `7630382d30303030`. The receiver MUST NOT store or use `v08-0003`, even though it is a plausible cursor and the first two entries would fit the requested count if the third were silently ignored.
+
 ## Appendix C. References
 
 1. W3C, [Decentralized Identifiers (DIDs) v1.0](https://www.w3.org/TR/did-core/).
@@ -1856,6 +2283,7 @@ A client receiving these bytes as a `Full` candidate MUST discard that candidate
 18. IETF, [RFC 6838: Media Type Specifications and Registration Procedures](https://www.rfc-editor.org/rfc/rfc6838).
 19. IETF, [RFC 8288: Web Linking](https://www.rfc-editor.org/rfc/rfc8288).
 20. IETF, [RFC 5234: Augmented BNF for Syntax Specifications](https://www.rfc-editor.org/rfc/rfc5234).
+21. IETF, [RFC 3629: UTF-8, a transformation format of ISO 10646](https://www.rfc-editor.org/rfc/rfc3629).
 
 ---
 
