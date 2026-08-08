@@ -3,8 +3,8 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.8**
-**6 August 2026**
+**Draft v0.8.1**
+**8 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -24,6 +24,8 @@ Followee has no canonical registry, global ledger, shared history, consensus gro
 This is the first implementer's draft of the Followee specification. It is intended to be complete enough for independent proof-of-concept implementations and adversarial interoperability testing. The `flw` method name, relation URIs, media-type usage, extension context, and registries described here remain subject to the relevant registration processes before a production interoperability claim is made.
 
 Draft v0.8 clarifies CBOR well-formedness, basic validity, deterministic-profile, and schema-error boundaries after independent implementations exposed a classification ambiguity. It also makes relay batch alignment, opaque-candidate isolation, and synchronization cursor progress explicit. These changes do not alter DID construction, signature bytes, authority precedence, or record ordering.
+
+Draft v0.8.1 clarifies one consequence of that layered CBOR model: a well-formed, basically valid, deterministically encoded simple value that no v1 schema admits produces `schemaViolation`, not `nonDeterministicCbor`. It adds fault-isolated signed vectors for both CBOR simple-value encoding forms. No wire encoding, cryptographic rule, authority rule, ordering rule, or relay behaviour changes.
 
 The design rationale is given separately in the *Followee: A Relay Protocol for Following People, Not Platforms* whitepaper. If the two documents differ on wire behaviour, this specification governs implementations of the version it defines.
 
@@ -367,6 +369,8 @@ Every basically valid CBOR item then MUST satisfy the core deterministic encodin
 7. a decoder MUST reject, rather than normalize and accept, a non-deterministic or profile-forbidden encoding.
 
 A basically valid item that violates this subsection produces `nonDeterministicCbor`.
+
+CBOR simple values other than `false`, `true`, `null`, and `undefined` are not admitted by any v1 schema in Appendix A. Their shortest encodings are nevertheless well-formed, basically valid, and deterministic. An otherwise conforming protocol item containing such a simple value therefore passes Sections 6.1.1 and 6.1.2 and produces `schemaViolation` under Section 6.1.3. It MUST NOT be classified as `nonDeterministicCbor` merely because the applicable v1 schema assigns it no meaning. Registration of semantics for that simple value outside Followee, whether before or after publication of this specification, does not alter the closed v1 schemas. This does not alter rule 4: the simple value `undefined` remains forbidden by the Followee profile and produces `nonDeterministicCbor`.
 
 Followee does not use generic CBOR tag validity to classify its envelope. Inner tags are forbidden by the Followee profile and therefore produce `nonDeterministicCbor`. The required outer tag `18` and the structure it encloses are validated under the COSE schema in Section 6.2; a violation uses the specifically assigned error from Section 15.3, or `schemaViolation` where no more specific error applies.
 
@@ -1245,7 +1249,7 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `3` | `recordTooLarge` | Envelope exceeds the hard or advertised cap |
 | `4` | `invalidCbor` | Input is not well-formed CBOR, or is well-formed but not basically valid under RFC 8949, including invalid UTF-8 text strings and duplicate map keys |
 | `5` | `nonDeterministicCbor` | Basically valid CBOR violates the deterministic or restricted Followee profile in Section 6.1.2 |
-| `6` | `schemaViolation` | Parsed object violates its v1 schema or limits |
+| `6` | `schemaViolation` | Parsed object violates its v1 schema or limits, including use of a well-formed, basically valid, deterministically encoded data-item type that the applicable schema does not admit |
 | `7` | `identityBindingMismatch` | Body `id`, target DID, and Authority Descriptor do not bind to the same identifier |
 | `8` | `invalidRevocationKey` | Revealed key does not match the commitment or key profile |
 | `9` | `invalidSignature` | COSE or Ed25519 verification fails |
@@ -1435,6 +1439,7 @@ A conforming Record Verifier MUST pass published positive and negative vectors c
 - revocation-key commitment;
 - CBOR well-formedness, basic validity, deterministic-profile, and schema classifications;
 - exact `invalidCbor` rejection of adjacent duplicate keys and invalid RFC 3629 UTF-8, including overlong, surrogate, above-U+10FFFF, and incomplete code-point sequences inside otherwise ignored extension values;
+- exact `schemaViolation` rejection of both one-byte and two-byte deterministically encoded CBOR simple values not admitted by the v1 schema, inside otherwise ignored extension values;
 - exact COSE protected headers and external AAD;
 - strict Ed25519 verification;
 - descriptor substitution;
@@ -1843,16 +1848,19 @@ Implementations MUST reject variants of the positive vectors with any one of the
 12. revealed revocation key changed by one bit;
 13. signature changed by one bit;
 14. `S >= L`, a non-canonical point, or a small-order public key;
-15. `validUntil_ms < timestamp_ms`; and
-16. any aggregate hard limit exceeded; and
-17. a CBOR simple value `false` or `true` substituted for an unsigned-integer label `0` or `1` in an Authority Descriptor or nested public-key object; and
-18. an invalid RFC 3629 UTF-8 text string, including an overlong encoding, a surrogate code point, a value above U+10FFFF, or an incomplete code-point sequence.
+15. `validUntil_ms < timestamp_ms`;
+16. any aggregate hard limit exceeded;
+17. a CBOR simple value `false` or `true` substituted for an unsigned-integer label `0` or `1` in an Authority Descriptor or nested public-key object;
+18. an invalid RFC 3629 UTF-8 text string, including an overlong encoding, a surrogate code point, a value above U+10FFFF, or an incomplete code-point sequence; and
+19. a deterministically encoded CBOR simple value other than `false`, `true`, `null`, or `undefined`, including both a one-byte encoding and a two-byte encoding, used where the applicable v1 schema admits no such type.
 
 The item 17 suite MUST include an otherwise internally consistent, descriptor-bound, correctly signed record so that rejection demonstrates schema enforcement rather than a coincidental signature or identity-binding failure. Such a record produces `schemaViolation`.
 
 When item 9 is constructed by replacing the required empty COSE unprotected-header map with a map containing duplicate keys, it independently violates both Section 6.1.1 basic validity and Section 6.2 rule 4. Its fault profile is therefore multiple and its exact error is unspecified. Section B.10 provides the fault-isolated adjacent-duplicate case that normatively produces `invalidCbor`.
 
 Every item 18 mutation changes signed body bytes and therefore MUST be re-signed by the applicable legitimate key before it can carry an exact non-signature assertion. The fault-isolated vectors in Section B.10 produce `invalidCbor`.
+
+Every item 19 mutation likewise changes signed body bytes and MUST be re-signed by the applicable legitimate key. The fault-isolated vectors in Section B.12 place the simple value inside an otherwise valid unknown extension and produce `schemaViolation`.
 
 ### B.8 Descriptor substitution with a valid signature
 
@@ -2260,6 +2268,46 @@ The invalid response is the deterministic encoding of:
 ```
 
 The receiver MUST reject the complete response before processing any entry. Alice's full local entry and update metadata remain unchanged, Bob remains absent, the local update counter remains `41`, and the stored peer cursor remains the exact request cursor `7630382d30303030`. The receiver MUST NOT store or use `v08-0003`, even though it is a plausible cursor and the first two entries would fit the requested count if the third were silently ignored.
+
+### B.12 Fault-isolated schema-disallowed-simple-value records
+
+Each vector in this section starts from the B.4 Alice record body, changes the initial map head from `a6` to `a7`, and appends record label `8` followed by an extension map whose key is the valid URI `https://example.com/ext`. The extension value is a deterministically encoded CBOR simple value not admitted by the v1 extension-value schema. Unknown core extensions are otherwise ignored after structural validation.
+
+Both values are well-formed and basically valid. `f0` is the shortest one-byte encoding of simple value 16; `f8 20` is the shortest two-byte encoding of simple value 32. Neither is forbidden by Section 6.1.2, but neither is admitted by `extension-value` in Appendix A. Schema type is therefore the only fault.
+
+```text
+simple value 16 appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f657874f0
+
+body digest:
+0f08c916dbe92d5bebe06804f4e3bf5a1e23c7f32360638cd7d10a9b15cca1cf
+
+COSE Sig_structure length:
+354
+
+signature:
+6984d30e32b516e59450cd22c14b7bb6c93b83dad2ce9850e70691a4b76363bfd9823f60151c1c77dfe41f476e4183e28f4e676bbff536d558b96abc2c8e8c0d
+
+expected result:
+schemaViolation
+
+simple value 32 appended bytes:
+08a17768747470733a2f2f6578616d706c652e636f6d2f657874f820
+
+body digest:
+2687c33152622b00dad17f6389a6d781d6065fe3a19e5bf98575d15440e3ff49
+
+COSE Sig_structure length:
+355
+
+signature:
+1a30f8094723a03835429225a43c500c6cf7b68bbee3fb4e98145215fef849e680e091bae1fec9f07288c7d4ef9c1f235a5272f25260a0e49425036215a4cc06
+
+expected result:
+schemaViolation
+```
+
+For each vector, the complete envelope is constructed exactly as in Section 6.2 from the mutated raw body and listed signature. The signature is produced with Alice's legitimate B.2 root seed over the exact received body bytes. A verifier that reports `invalidSignature` has failed to use the listed re-signature or has altered those bytes. A verifier that reports `nonDeterministicCbor` has incorrectly treated a schema-disallowed simple value as a Followee profile violation rather than applying the v1 schema.
 
 ## Appendix C. References
 
