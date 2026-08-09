@@ -3,8 +3,8 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.8.1**
-**8 August 2026**
+**Draft v0.9**
+**9 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -26,6 +26,8 @@ This is the first implementer's draft of the Followee specification. It is inten
 Draft v0.8 clarifies CBOR well-formedness, basic validity, deterministic-profile, and schema-error boundaries after independent implementations exposed a classification ambiguity. It also makes relay batch alignment, opaque-candidate isolation, and synchronization cursor progress explicit. These changes do not alter DID construction, signature bytes, authority precedence, or record ordering.
 
 Draft v0.8.1 clarifies one consequence of that layered CBOR model: a well-formed, basically valid, deterministically encoded simple value that no v1 schema admits produces `schemaViolation`, not `nonDeterministicCbor`. It adds fault-isolated signed vectors for both CBOR simple-value encoding forms. No wire encoding, cryptographic rule, authority rule, ordering rule, or relay behaviour changes.
+
+Draft v0.9 makes relay-local update-number order consistent with visibility to `v1/changes`. It prevents a successful cursor from overtaking a concurrent update that can become visible later, and adds a deterministic concurrency-test obligation. No wire encoding, cryptographic rule, Identity Record rule, authority rule, or record-ordering rule changes.
 
 The design rationale is given separately in the *Followee: A Relay Protocol for Following People, Not Platforms* whitepaper. If the two documents differ on wire behaviour, this specification governs implementations of the version it defines.
 
@@ -1064,6 +1066,10 @@ On success, the number of returned entries MUST NOT exceed `itemLimit`. A receiv
 
 `nextCursor` advances through exactly the returned range. If no entry is returned, it represents the supplied position. A Relay MUST NOT advance past omitted eligible entries. If the next single entry cannot fit within `byteLimit`, it returns `responseTooLarge` rather than an unchanged success cursor loop.
 
+Update positions and cursor advancement MUST be visibility-safe under concurrent ingress. Once a successful response returns `nextCursor`, no current tuple at or before the position represented by that cursor may subsequently become visible to `v1/changes` if it was not already visible when that response was assembled. Equivalently, update-number order MUST be consistent with the order in which current tuples become visible to `v1/changes`. A Relay MUST NOT return `nextCursor` beyond any position whose eventual visibility remains undecided.
+
+This invariant applies even when concurrent operations use separate transactions or writer connections. A Relay MAY satisfy it by serializing update-number assignment through commit, by holding an allocation lock until commit, or by withholding cursor advancement behind a contiguous visibility watermark. It MUST NOT set `nextCursor` merely to the greatest committed or observed update number when a lower-numbered operation can still become visible later.
+
 `hasMore` reports whether further entries were known when the response was assembled. Concurrent updates may create later work after `hasMore = false`.
 
 ### 12.7 Cursor generation and reset
@@ -1091,7 +1097,7 @@ For a full candidate, an Ingress Relay:
 5. persists a newly observed valid RootRevoked transition before acknowledging admission;
 6. compares timestamp and body digest within the applicable authority state;
 7. returns no-change for a duplicate or losing record; and
-8. for a winning record, atomically replaces current state, preserves authority state, and assigns a new relay-local update number.
+8. for a winning record, atomically replaces current state, preserves authority state, assigns a new relay-local update number, and makes the resulting tuple eligible for `v1/changes`.
 
 Signature verification MUST complete before candidate bytes enter the current map, appear in `v1/changes`, or are served as Full. A bounded asynchronous quarantine is permitted, but quarantine is not relay state.
 
@@ -1114,6 +1120,10 @@ These events do not increment it:
 - storage housekeeping that merely converts a Full entry to a Ref.
 
 A Relay may maintain a separate storage-generation mechanism for housekeeping changes. It MUST NOT present storage conversion as a newly signed identity update.
+
+From the perspective of concurrent ingress and `v1/changes`, assignment of an update number, commitment of the corresponding current-map change, and visibility of that change to `v1/changes` MUST satisfy the Section 12.6 visibility invariant. An implementation MUST NOT allow a higher cursor position to become returnable while a lower position can still become visible later.
+
+Implementations SHOULD complete request-body acquisition, size checks, deterministic-CBOR validation, signature verification, descriptor binding, and other expensive candidate work before entering the write-critical section. The final comparison against current state, sticky-authority enforcement, update-number assignment, and current-state commit MUST remain atomic with respect to competing writes. Serializing writers is a conforming strategy; concurrent writers require an equivalent allocation-through-commit or contiguous-watermark guarantee.
 
 ### 13.3 Synchronization receiver
 
@@ -1372,6 +1382,12 @@ Cursor synchronization alone does not guarantee that a Relay eventually acquires
 
 Recovery may occur through later pull under Section 13.4, a new bounded full enumeration, another Relay, or a subsequent source update. None is guaranteed by cursor synchronization itself. This liveness trade prevents one bad or premature candidate from permanently stalling synchronization of every later identity from that peer.
 
+### 16.17 Cursor overtaking under concurrent ingress
+
+If a Relay allocates update numbers independently of commit visibility, concurrent writes can commit out of numerical order. Returning a cursor at the greatest visible number can then permanently hide a lower-numbered transaction that commits later: the receiver has already advanced beyond it, while neither participant detects an omission.
+
+Sections 12.6 and 13.2 therefore require update-number order and `v1/changes` visibility to be cursor-safe. A single serialized writer that assigns the number inside the committing transaction is the simplest implementation. A concurrent implementation must provide an equivalent guarantee and must not expose a cursor beyond work whose eventual visibility remains undecided.
+
 ## 17. Privacy considerations
 
 Followee records are public and stable DIDs are correlatable. Controllers SHOULD publish links rather than secrets or unnecessary personal data. Separate personas SHOULD use separate DIDs when correlation would be harmful.
@@ -1474,6 +1490,7 @@ A conforming Relay MUST additionally pass tests covering:
 - complete rejection of a `changes` success response containing more entries than the request's `itemLimit`, without processing entries, changing state, or using `nextCursor`;
 - every status-dependent required and forbidden `changes` field combination, including the exact two-field status `1` ResetRequired response;
 - cursor pagination without gaps;
+- concurrent-ingress cursor safety, using a deterministic interleaving in which one publication is paused at the update-assignment or commit boundary while another publication and a `changes` request proceed, and proving that no successful `nextCursor` can overtake an entry that later becomes visible;
 - cursor-generation reset;
 - restore-time behaviour; and
 - bounded resource use under invalid and Sybil input.
@@ -1499,7 +1516,7 @@ A conforming DID Resolver or Followee client MUST additionally pass tests coveri
 
 At least two independent implementations MUST produce byte-identical Authority Descriptors and record bodies from the same structured input, verify the same envelopes, derive the same DIDs and body digests, select the same winners from candidates delivered in different orders, and exchange state through the HTTP/CBOR profile before v1 is described as interoperable.
 
-The complete conformance suite MUST be rerun after a normative CBOR-classification or relay-wrapper change. Reports SHOULD separately count acceptance/rejection disagreements, symbolic differences permitted by unspecified multi-fault precedence, and genuine unresolved specification ambiguities. A raw symbolic difference under an explicitly unspecified assertion is not itself an interoperability failure, but it MUST remain visible in the report.
+The complete conformance suite MUST be rerun after a normative CBOR-classification, relay-wrapper, or cursor-visibility change. Reports SHOULD separately count acceptance/rejection disagreements, symbolic differences permitted by unspecified multi-fault precedence, and genuine unresolved specification ambiguities. A raw symbolic difference under an explicitly unspecified assertion is not itself an interoperability failure, but it MUST remain visible in the report.
 
 ## 21. Registration and extension considerations
 
@@ -1527,7 +1544,7 @@ Followee v1 freezes:
 - Ed25519 COSE algorithm `-19`;
 - CBOR labels, basic-validity classification, deterministic profile, and byte-string opacity boundary;
 - the one-way Root → RootRevoked authority rule; and
-- the v1 relay wire schemas.
+- the v1 relay wire schemas and cursor-visibility semantics.
 
 A future version may add new descriptor versions or protocol capabilities, but it MUST NOT reinterpret valid version 1 bytes. A relay advertises supported protocol versions. Unsupported versions or suites cannot enter the v1 current map.
 
@@ -1928,7 +1945,7 @@ A client receiving these bytes as a `Full` candidate MUST discard that candidate
 
 ### B.9 Independent Bob identity
 
-This second complete identity is normative test material for cross-DID state isolation and relay batches. Migration vectors are intentionally deferred to the additive v0.8.1 vector release.
+This second complete identity is normative test material for cross-DID state isolation and relay batches. Migration vectors are intentionally deferred to a later additive vector release.
 
 ```text
 Bob root seed:
