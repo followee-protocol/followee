@@ -3,8 +3,8 @@
 ## A Relay Protocol for Following People, Not Platforms
 
 **Author: Mats Helander**
-**Whitepaper draft v0.9**
-**6 August 2026**
+**Whitepaper draft v0.10**
+**12 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 > Followee is a protocol for resolving a permanent, self-certifying identifier to its owner's current public contact information through an open network of independently operated relays.
@@ -469,11 +469,11 @@ Each field alone is only a signed directional claim. Given old DID A and new DID
 
 1. the winning admissible Identity Record for A contains `migration.successor = B`;
 2. the winning admissible Identity Record for B contains `migration.predecessor = A`; and
-3. both records pass the ordinary descriptor, signature, timestamp, and sticky authority-state rules.
+3. both records pass the ordinary descriptor, signature, timestamp, and sticky authority-state rules, and both are fresh at the time of the check.
 
-This reciprocal construction supplies signatures from both applicable authorities without defining another signed object or control event. If A's root has been revoked, a root-signed A record cannot establish the link; the current root-revoked record must do so. A missing, unavailable, stale, or non-reciprocal side does not establish a verified migration link; clients distinguish incomplete checking from a completed non-reciprocal check as specified in Section 13.4. Relays treat these fields as ordinary opaque contact data and never derive authority state from them.
+This reciprocal construction supplies signatures from both applicable authorities without defining another signed object or control event. If A's root has been revoked, a root-signed A record cannot establish the link; the current root-revoked record must do so. A missing or unavailable side leaves the reciprocal check incomplete. If both selected admissible records are obtained but either is stale or they do not reciprocate, the check is complete but the link is unverified. Section 13.4 defines the corresponding presentation states. Relays treat these fields as ordinary opaque contact data and never derive authority state from them.
 
-A verified migration link is therefore **live reciprocal state**, not a permanent historical certificate. It remains verifiable only while both selected records remain discoverable and admissible. A cached older record may remain cryptographically authentic after it becomes stale or is superseded, but it no longer establishes the current reciprocal link. Controllers who want a migration bridge to remain useful to late-arriving followers SHOULD keep the old DID's linking record published through several relays and refresh it before `validUntil`, when that field is used, for as long as they want the bridge to operate.
+A verified migration link is therefore **live reciprocal state**, not a permanent historical certificate. It remains verifiable only while both selected records remain discoverable, admissible, and fresh. A cached older record may remain cryptographically authentic after it becomes stale or is superseded, but it no longer establishes the current reciprocal link. Controllers who want a migration bridge to remain useful to late-arriving followers SHOULD keep the old DID's linking record published through several relays and refresh it before `validUntil`, when that field is used, for as long as they want the bridge to operate.
 
 A verified migration link proves only that the two currently selected records mutually endorse the direction A → B. It does not prove legal identity, exclusivity, or permanence; it does not transfer authority over either DID; and it MUST NOT cause a client to replace a followed DID automatically. A client MAY present a deliberate re-follow action. Record ordering permits either controller to withdraw or change its current claim, and normal resolution budgets and cycle detection apply when inspecting longer chains.
 
@@ -836,13 +836,15 @@ When a followed DID's selected record names a successor, a client may resolve th
 
 | State | Meaning | Ordinary presentation |
 | --- | --- | --- |
-| **Verified** | Both selected admissible records were obtained and pass the reciprocal test in Section 8.3 | The client may explain the migration and offer a deliberate re-follow action |
-| **Checked but unverified** | A selected admissible counterpart was obtained, but it does not reciprocate | Suppress the claimed relationship; diagnostic views may explain the failed local check |
+| **Verified** | Both selected admissible records were obtained, both are fresh, and they pass the reciprocal test in Section 8.3 | The client may explain the migration and offer a deliberate re-follow action |
+| **Checked but unverified** | The reciprocal check completed against both selected admissible records, but either record is stale or the records do not reciprocate | Suppress the claimed relationship; diagnostic views may explain the completed but unsuccessful local check |
 | **Not checked** | The reciprocal test was not completed because it was deferred or because of budget exhaustion, timeout, unavailability, or absence of an admissible counterpart | Do not present the relationship; the client may offer an explicit action that starts a separate check |
 
 Only **Verified** authorises migration-oriented presentation. It still does not authorise silent replacement, copying of trust decisions, or deletion of the old DID from the following list. A cautious client retains the old DID until the user acts and may preserve it as provenance afterwards.
 
-**Not checked** is not a negative result and MUST NOT be cached or reported as though reciprocity failed. An explicit check is a new user operation and receives fresh aggregate budgets under Section 13.2. **Checked but unverified** may also be retried later because either controller can publish new full state, but it does not justify a migration prompt in the meantime.
+A stale record may remain cryptographically authentic and admissible for selection. Completing the reciprocal check against stale selected state therefore produces **Checked but unverified**, not **Not checked**. Diagnostic views may distinguish whether the claimant or counterpart was stale, but either outcome suppresses migration-oriented presentation.
+
+**Not checked** is not a negative result and MUST NOT be cached or reported as though reciprocity failed. An explicit check is a new user operation and receives fresh aggregate budgets under Section 13.2. **Checked but unverified** may also be retried later because either controller can publish fresh or reciprocal full state, but it does not justify a migration prompt in the meantime.
 
 The inverse discovery path is more dangerous. Any new DID can self-assert `migration.predecessor` naming a prominent identity. Until the predecessor's selected record reciprocates, an ordinary client MUST NOT present that claim as “formerly”, “continues from”, provenance, migration, or any other relationship. It SHOULD suppress the claim entirely rather than display it with a caveat. If the state is **Not checked**, a client MAY offer a generic verification control, but that control MUST NOT imply that the named predecessor endorsed the claim. Diagnostic and developer views may expose the raw signed field while clearly treating it as unverified data.
 
@@ -1038,7 +1040,7 @@ The first proof of concept should test the loose component—the relay network�
 16. **Multi-device collision.** Two offline signers produce the same timestamp and deterministic ordering reconverges all relays.
 17. **Identity-binding and descriptor substitution.** An unchanged valid envelope checked against another target, a legitimately re-signed body-`id` mutation checked against either target, and a record carrying a modified, non-canonical, or unrelated Authority Descriptor all fail with `identityBindingMismatch` under the same three-way invariant before affecting relay state.
 18. **Reciprocal migration.** Old DID A names new DID B and B names A; clients verify both current records and offer, but never perform, a deliberate re-follow. Removing either direction, substituting an invalid record, or revoking A's root makes the corresponding link unverified until valid reciprocal current state is available.
-19. **Migration decay, states, and budgets.** A verified link ceases to verify when either side is unavailable or stale. Budget exhaustion produces **Not checked**, not a failed reciprocity result; a separate explicit check receives fresh aggregate budgets. A completed mismatch produces **Checked but unverified**, an unreciprocated predecessor claim remains suppressed in the ordinary UI, and cyclic or long chains remain within the shared two-hop, byte, relay, and deadline budgets.
+19. **Migration decay, states, and budgets.** A verified link ceases to verify when either side becomes unavailable or stale. Unavailability, absence of an admissible counterpart, or budget exhaustion leaves the check **Not checked**; a separate explicit check receives fresh aggregate budgets. Obtaining both selected admissible records but finding either one stale, or finding that they do not reciprocate, produces **Checked but unverified**. In both unsuccessful states the claimed relationship remains suppressed in the ordinary UI, and cyclic or long chains remain within the shared two-hop, byte, relay, and deadline budgets.
 20. **Non-authoritative relay results.** One relay returns Absent and another returns `Error(premature)` while a further selected relay holds a valid Full record. The client continues within its existing budgets, verifies the Full record using its own clock, and does not let either earlier response suppress or classify that candidate.
 
 ### 20.3 Success criteria
@@ -1054,6 +1056,7 @@ The proof of concept succeeds if:
 - root revocation removes every root-signed record from selection without a blacklist;
 - existing followers remain attached to a Followee DID after handle migration;
 - reciprocal migration can be verified without granting either DID authority over the other or changing a following list automatically;
+- clients distinguish a completed but unsuccessful migration check from a check that did not complete, and present neither as a verified relationship;
 - unverified predecessor claims and migration-chain traversal cannot create an impersonation display, turn an incomplete check into a negative result, or reset client resource budgets;
 - relay synchronization exchanges current state rather than redundant history;
 - storage and traversal remain bounded under adversarial inputs; and
