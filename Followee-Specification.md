@@ -3,8 +3,8 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.9**
-**9 August 2026**
+**Draft v0.9.1**
+**12 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -28,6 +28,8 @@ Draft v0.8 clarifies CBOR well-formedness, basic validity, deterministic-profile
 Draft v0.8.1 clarifies one consequence of that layered CBOR model: a well-formed, basically valid, deterministically encoded simple value that no v1 schema admits produces `schemaViolation`, not `nonDeterministicCbor`. It adds fault-isolated signed vectors for both CBOR simple-value encoding forms. No wire encoding, cryptographic rule, authority rule, ordering rule, or relay behaviour changes.
 
 Draft v0.9 makes relay-local update-number order consistent with visibility to `v1/changes`. It prevents a successful cursor from overtaking a concurrent update that can become visible later, and adds a deterministic concurrency-test obligation. No wire encoding, cryptographic rule, Identity Record rule, authority rule, or record-ordering rule changes.
+
+Draft v0.9.1 clarifies the local presentation state of a completed migration check involving a stale winning record. Because a stale record remains admissible but cannot establish a verified migration link, such a completed check is **Checked but unverified**, not **Not checked**, even when the two records reciprocate. This amendment changes no wire encoding, record byte, cryptographic rule, authority rule, relay behaviour, or record-ordering rule.
 
 The design rationale is given separately in the *Followee: A Relay Protocol for Following People, Not Platforms* whitepaper. If the two documents differ on wire behaviour, this specification governs implementations of the version it defines.
 
@@ -1135,6 +1137,8 @@ The receiver MUST store and use the returned opaque `nextCursor` regardless of h
 
 A locally premature candidate also MUST NOT stall the peer cursor. The receiver MAY retain it in a bounded pending area or pull it again later, but v1 imposes no pending-cache or retry obligation. If the sender's current tuple never changes, the candidate may not appear again in that incremental stream after the receiver advances.
 
+Rejecting or deferring that premature candidate assigns no receiver-local update number and creates no receiver-local position that could later become visible to `v1/changes`. Advancing the opaque peer cursor past the sender's entry therefore does not violate the Section 12.6 receiver-local visibility invariant. If the same record later becomes time-admissible, it enters receiver state only through a new ingress decision and any update number assigned by that decision.
+
 Relay histories need not be consulted. Synchronization exchanges current state, not an event chain.
 
 ### 13.4 Pull policy
@@ -1187,13 +1191,15 @@ When checking a claimed migration relation, a client records one of three local 
 
 | State | Meaning | Ordinary presentation |
 | --- | --- | --- |
-| **Verified** | Both winning fresh records were obtained and reciprocate under Section 7.4 | May explain the migration and offer deliberate re-follow |
-| **Checked but unverified** | A winning fresh counterpart was obtained, but it did not reciprocate | Suppress the relationship; diagnostics may report the failed local test |
+| **Verified** | Both winning admissible records were obtained, both are fresh, and they reciprocate under Section 7.4 | May explain the migration and offer deliberate re-follow |
+| **Checked but unverified** | The reciprocal test completed against both winning admissible records, but they did not reciprocate or at least one was stale | Suppress the relationship; diagnostics may report the failed local test |
 | **Not checked** | The reciprocal test did not complete because it was deferred, exhausted its shared budget, timed out, encountered unavailability, or found no admissible counterpart | Do not present the relationship; may offer a separate explicit check |
 
 Only Verified permits migration-oriented presentation. It never permits silent following-list replacement, inherited trust decisions, or automatic deletion of the old DID.
 
 Not checked is not a negative result and MUST NOT be cached or reported as failed reciprocity. A user-requested explicit check is a new operation and receives fresh aggregate budgets. Checked but unverified may later be retried because either controller can publish new state.
+
+A stale record remains admissible under Section 5.5. Therefore, if the client obtains both winning admissible records and either record is stale, the reciprocal test has completed and the client MUST record **Checked but unverified**, regardless of whether the two migration fields reciprocate. It MUST NOT record **Not checked** merely because the claiming record or counterpart is stale. Diagnostics SHOULD distinguish `claimantStale`, `counterpartStale`, and `nonReciprocal` where that distinction is exposed locally; these diagnostic names are not wire-protocol error codes.
 
 ### 14.3 Predecessor impersonation defence
 
@@ -1204,6 +1210,8 @@ When the state is Not checked, a client MAY offer a generic verification action,
 ### 14.4 Migration decay
 
 A reciprocal migration link is live current state, not a permanent historical certificate. It ceases to verify when either selected record becomes stale, unavailable, superseded, or non-reciprocal.
+
+If both current winning admissible records remain obtainable but either is stale or they no longer reciprocate, a fresh check produces **Checked but unverified** under Section 14.2. If the check cannot obtain a winning admissible counterpart or otherwise cannot complete, it produces **Not checked**.
 
 Controllers who want a bridge to remain useful SHOULD keep the old DID's linking record fresh and published through several relays for as long as they want late-arriving followers to verify it.
 
@@ -1259,7 +1267,7 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `3` | `recordTooLarge` | Envelope exceeds the hard or advertised cap |
 | `4` | `invalidCbor` | Input is not well-formed CBOR, or is well-formed but not basically valid under RFC 8949, including invalid UTF-8 text strings and duplicate map keys |
 | `5` | `nonDeterministicCbor` | Basically valid CBOR violates the deterministic or restricted Followee profile in Section 6.1.2 |
-| `6` | `schemaViolation` | Parsed object violates its v1 schema or limits, including use of a well-formed, basically valid, deterministically encoded data-item type that the applicable schema does not admit |
+| `6` | `schemaViolation` | Parsed object violates its applicable v1 schema or limits and no more specific error applies; see Section 6.1.3 |
 | `7` | `identityBindingMismatch` | Body `id`, target DID, and Authority Descriptor do not bind to the same identifier |
 | `8` | `invalidRevocationKey` | Revealed key does not match the commitment or key profile |
 | `9` | `invalidSignature` | COSE or Ed25519 verification fails |
@@ -1490,7 +1498,7 @@ A conforming Relay MUST additionally pass tests covering:
 - complete rejection of a `changes` success response containing more entries than the request's `itemLimit`, without processing entries, changing state, or using `nextCursor`;
 - every status-dependent required and forbidden `changes` field combination, including the exact two-field status `1` ResetRequired response;
 - cursor pagination without gaps;
-- concurrent-ingress cursor safety, using a deterministic interleaving in which one publication is paused at the update-assignment or commit boundary while another publication and a `changes` request proceed, and proving that no successful `nextCursor` can overtake an entry that later becomes visible;
+- concurrent-ingress cursor safety, using a deterministic attempted interleaving in which publication A has been assigned or reserved the lower update position and is paused before its current-map change commits or becomes visible, while publication B and a `changes` request are allowed to proceed; a pause only at or after A's commit is insufficient. The test MUST prove either that serialization prevents B from obtaining or committing a higher position until A resolves, or that any concurrently committed higher position remains behind a cursor watermark until A resolves, so no successful `nextCursor` can overtake an entry that later becomes visible;
 - cursor-generation reset;
 - restore-time behaviour; and
 - bounded resource use under invalid and Sybil input.
@@ -1509,6 +1517,7 @@ A conforming DID Resolver or Followee client MUST additionally pass tests coveri
 - handle mapping and inverse verification;
 - reciprocal migration verification;
 - Verified, Checked but unverified, and Not checked migration states;
+- exact **Checked but unverified** classification when both winning admissible migration records are obtained but either the claiming record or counterpart is stale, including the case where their fields still reciprocate;
 - predecessor impersonation suppression; and
 - no automatic following-list migration.
 
