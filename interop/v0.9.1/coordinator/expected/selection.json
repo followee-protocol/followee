@@ -1,0 +1,1330 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "selection.json",
+  "provenance": "specification-determined",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71",
+    "specificationVersion": "v0.9.1"
+  },
+  "description": "Constructed winner-selection comparison cases with explicitly enumerated candidate permutations over the published records. Expected winners are determined by Section 8; every permutation of one candidate set must select the same winner.",
+  "cases": [
+    {
+      "id": "select-authority-precedence-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "authority-precedence",
+      "candidateOrder": [
+        "b4",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "A signature-valid RootRevoked record outranks every Root record (Section 8.2).",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-authority-precedence-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "authority-precedence",
+      "candidateOrder": [
+        "b5",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "A signature-valid RootRevoked record outranks every Root record (Section 8.2).",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-binding-rejection-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "binding-rejection",
+      "candidateOrder": [
+        "b4",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+        "authorityState": "root"
+      },
+      "note": "The B.8 substituted-descriptor candidate is rejected with identityBindingMismatch; the valid Root record wins.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-binding-rejection-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "binding-rejection",
+      "candidateOrder": [
+        "b8",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+        "authorityState": "root"
+      },
+      "note": "The B.8 substituted-descriptor candidate is rejected with identityBindingMismatch; the valid Root record wins.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-equal-time-digest-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "equal-time-digest",
+      "candidateOrder": [
+        "b6a",
+        "b6b"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b6-alice-a"
+          },
+          {
+            "vector": "records",
+            "case": "b6-alice-b"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "6f347840328b2b2cd74cce2f9a222a313e9d9504305c3ac816987ff2f4b47d97",
+        "authorityState": "root"
+      },
+      "note": "At equal authority and timestamp the lexicographically lower body digest wins (Section 8.3, Appendix B.6).",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-equal-time-digest-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "equal-time-digest",
+      "candidateOrder": [
+        "b6b",
+        "b6a"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b6-alice-b"
+          },
+          {
+            "vector": "records",
+            "case": "b6-alice-a"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "6f347840328b2b2cd74cce2f9a222a313e9d9504305c3ac816987ff2f4b47d97",
+        "authorityState": "root"
+      },
+      "note": "At equal authority and timestamp the lexicographically lower body digest wins (Section 8.3, Appendix B.6).",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b4",
+        "b5",
+        "b8",
+        "b9"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b4",
+        "b5",
+        "b9",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-02",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b4",
+        "b8",
+        "b5",
+        "b9"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-03",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b4",
+        "b8",
+        "b9",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-04",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b4",
+        "b9",
+        "b5",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-05",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b4",
+        "b9",
+        "b8",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-06",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b5",
+        "b4",
+        "b8",
+        "b9"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-07",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b5",
+        "b4",
+        "b9",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-08",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b5",
+        "b8",
+        "b4",
+        "b9"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-09",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b5",
+        "b8",
+        "b9",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-10",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b5",
+        "b9",
+        "b4",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-11",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b5",
+        "b9",
+        "b8",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-12",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b8",
+        "b4",
+        "b5",
+        "b9"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-13",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b8",
+        "b4",
+        "b9",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-14",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b8",
+        "b5",
+        "b4",
+        "b9"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-15",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b8",
+        "b5",
+        "b9",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-16",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b8",
+        "b9",
+        "b4",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-17",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b8",
+        "b9",
+        "b5",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-18",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b9",
+        "b4",
+        "b5",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-19",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b9",
+        "b4",
+        "b8",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-20",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b9",
+        "b5",
+        "b4",
+        "b8"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-21",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b9",
+        "b5",
+        "b8",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-22",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b9",
+        "b8",
+        "b4",
+        "b5"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-full-mixed-perm-23",
+      "operation": "selectCurrent",
+      "permutationOf": "full-mixed",
+      "candidateOrder": [
+        "b9",
+        "b8",
+        "b5",
+        "b4"
+      ],
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          },
+          {
+            "vector": "envelopes-negative",
+            "case": "b8-descriptor-substitution"
+          },
+          {
+            "vector": "records",
+            "case": "b5-root-revoked"
+          },
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "authorityState": "rootRevoked"
+      },
+      "note": "Cross-DID candidate (Bob) and substituted descriptor are rejected; RootRevoked precedence decides among the survivors.",
+      "specificationSections": [
+        "Section 8",
+        "Section 20.4"
+      ]
+    },
+    {
+      "id": "select-sticky-suppression",
+      "operation": "selectCurrent",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "rootRevoked"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": null,
+        "authorityState": "rootRevoked"
+      },
+      "note": "Sticky RootRevoked state excludes every Root candidate (Section 8.2); there is no last-good-Root fallback.",
+      "specificationSections": [
+        "Section 8"
+      ]
+    },
+    {
+      "id": "select-cross-did-only",
+      "operation": "selectCurrent",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b9-bob-root"
+          }
+        ],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": null,
+        "authorityState": "unknown"
+      },
+      "note": "A candidate bound to another DID yields no winner for this target.",
+      "specificationSections": [
+        "Section 8"
+      ]
+    },
+    {
+      "id": "select-premature-only",
+      "operation": "selectCurrent",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [
+          {
+            "vector": "records",
+            "case": "b4-root"
+          }
+        ],
+        "nowMs": "1785588900122",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": null,
+        "authorityState": "unknown"
+      },
+      "note": "A premature candidate is not currently admissible (Section 5.4).",
+      "specificationSections": [
+        "Section 8"
+      ]
+    },
+    {
+      "id": "select-empty-candidates",
+      "operation": "selectCurrent",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "candidates": [],
+        "nowMs": "1785589300000",
+        "stickyAuthority": "unknown"
+      },
+      "expected": {
+        "winnerRecordBodyDigestHex": null,
+        "authorityState": "unknown"
+      },
+      "note": "No candidates yields no winner.",
+      "specificationSections": [
+        "Section 8"
+      ]
+    }
+  ]
+}

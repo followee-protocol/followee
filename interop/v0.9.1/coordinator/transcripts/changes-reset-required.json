@@ -1,0 +1,33 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "changes-reset-required.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71"
+  },
+  "id": "transcript-changes-reset-required",
+  "description": "ResetRequired after a cursor-generation reset (Sections 12.6, 12.7). Status 1 is the sole v1 wire encoding of ResetRequired and the response contains exactly labels 0 and 1; these five bytes are fully determined. The stale cursor value in the request is an example.",
+  "operation": "v1/changes",
+  "specificationSections": [
+    "Section 12.6",
+    "Section 12.7"
+  ],
+  "scenario": "The relay reset its cursor generation; the peer presents a cursor from the old generation.",
+  "request": {
+    "method": "POST",
+    "path": "v1/changes",
+    "contentType": "application/cbor",
+    "bodyHex": "a40001014e6f6c642d67656e2d637572736f72021864031a00100000",
+    "bodyLength": "28",
+    "bodySha256": "2d5f246ca13effb53a8afc163bd079c55847bac7d611a4b6ecfcb04058754e6d",
+    "bodyProvenance": "illustrative-nonnormative"
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a200010101",
+    "bodyLength": "5",
+    "bodySha256": "8179cf9a2f4e2611c7232a0810f81e087dfe4dcefbeebe86385c6133e656b9bc",
+    "bodyProvenance": "specification-determined"
+  }
+}

@@ -1,0 +1,566 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "verification.json",
+  "provenance": "specification-determined",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71",
+    "specificationVersion": "v0.9.1"
+  },
+  "description": "Record-verification comparison cases over the published envelopes, including constructed clock scenarios and constructed target-DID classification variants whose error classifications are normative under Section 3.1 and Appendix B.7. Envelope references resolve within coordinator/expected/.",
+  "cases": [
+    {
+      "id": "verify-b4-accept",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7"
+      },
+      "specificationSections": [
+        "Appendix B.4",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-b5-accept",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b5-root-revoked"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589201123",
+        "authority": "rootRevoked",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861"
+      },
+      "specificationSections": [
+        "Appendix B.5",
+        "Section 8.2"
+      ]
+    },
+    {
+      "id": "verify-b9-accept",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+        "envelope": {
+          "vector": "records",
+          "case": "b9-bob-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+        "timestampMs": "1785589201123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8"
+      },
+      "specificationSections": [
+        "Appendix B.9",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-b4-premature",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785588900122"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": true,
+        "stale": false,
+        "recordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7"
+      },
+      "specificationSections": [
+        "Section 5.4"
+      ]
+    },
+    {
+      "id": "verify-b4-premature-boundary",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785588900123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7"
+      },
+      "specificationSections": [
+        "Section 5.4"
+      ]
+    },
+    {
+      "id": "verify-b8-descriptor-substitution",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b8-descriptor-substitution"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "identityBindingMismatch"
+      },
+      "specificationSections": [
+        "Appendix B.8"
+      ]
+    },
+    {
+      "id": "verify-b10-duplicate-key",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-duplicate-key"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-overlong",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-overlong"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-surrogate",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-surrogate"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-above-max",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-above-max"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-incomplete",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-incomplete"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b12-simple-value-16",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b12-simple-value-16"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "specificationSections": [
+        "Appendix B.12"
+      ]
+    },
+    {
+      "id": "verify-b12-simple-value-32",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b12-simple-value-32"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "specificationSections": [
+        "Appendix B.12"
+      ]
+    },
+    {
+      "id": "verify-target-foreign-valid-attacker",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPdjR6k8HFgbf4e51P7iMy4aY3buGsxQU49fSHdGhce7s",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "identityBindingMismatch"
+      },
+      "note": "Unchanged internally consistent envelope verified against a different syntactically valid target (Appendix B.7 item 1, first form).",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-foreign-valid-bob",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "identityBindingMismatch"
+      },
+      "note": "Second foreign valid target.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-unsupported-hash-code",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zS5SPMkx81hBavRpesXb1kSazJTYCY4ZPchUCANBn3TQtDP",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "unsupportedHash"
+      },
+      "note": "Structurally well-formed multihash with code 0x13 (Appendix B.7 item 2).",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-unsupported-digest-length",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z6PDzzSEgcEdMV5arz8kUtwa8y4F7NyfVevjcoQ78KQ3HX",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "unsupportedHash"
+      },
+      "note": "Code 0x12 with well-formed declared digest length 0x1f matching the bytes present.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-trailing-byte",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z2otvnh5aufBdZfR6Rd8ykQUWNRuqejUBmt1VQahD6xF68iuD",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Trailing byte after the multihash.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-length-disagreement",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z6PHuQ5jQh8TrCVGyxeFkLqVtCKFg9gcbZWbvguJSK7qws",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Declared digest length 0x20 disagrees with 31 bytes present.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-non-minimal-varint",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zFZwUGTotmmKvNbLPhGVFo56bxDna4rU4aT7ztGNdJ7oQczzV",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Non-minimal unsigned-varint encoding of code 0x12.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-missing-multibase-prefix",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:QmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Method-specific identifier does not begin with 'z'.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-wrong-multibase-prefix",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:ZQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Uppercase 'Z' is not the base58btc multibase prefix.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-invalid-base58-character",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z0mPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "'0' is not in the Bitcoin base58 alphabet.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-percent-encoded",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z%51mPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Percent-encoding is malformed in the method-specific id.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-uppercase-did-prefix",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:FLW:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "The did:flw: prefix MUST be lowercase (Section 3.1).",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-empty-method-id",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Empty method-specific identifier.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    }
+  ]
+}

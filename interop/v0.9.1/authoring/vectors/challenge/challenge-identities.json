@@ -1,0 +1,33 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "challenge-identities.json",
+  "provenance": "challenge-input",
+  "blind": true,
+  "description": "New neutral challenge identities. Inputs only: no derived value for these seeds is published anywhere in this bundle. Each implementation derives the complete identity chain independently; results are compared only after both implementations are frozen. These seeds are public test material in the sense of Appendix B.1 and MUST NOT be used for a real Followee DID. Their byte patterns are chosen to be disjoint from every seed published in Appendix B.",
+  "cases": [
+    {
+      "id": "challenge-identity-carol",
+      "operation": "deriveIdentity",
+      "input": {
+        "rootSeedHex": "c0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedf",
+        "revocationSeedHex": "e0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+      }
+    },
+    {
+      "id": "challenge-identity-dave",
+      "operation": "deriveIdentity",
+      "input": {
+        "rootSeedHex": "1f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100",
+        "revocationSeedHex": "3f3e3d3c3b3a393837363534333231302f2e2d2c2b2a29282726252423222120"
+      }
+    },
+    {
+      "id": "challenge-identity-erin",
+      "operation": "deriveIdentity",
+      "input": {
+        "rootSeedHex": "5f5e5d5c5b5a595857565554535251504f4e4d4c4b4a49484746454443424140",
+        "revocationSeedHex": "7f7e7d7c7b7a797877767574737271706f6e6d6c6b6a69686766656463626160"
+      }
+    }
+  ]
+}

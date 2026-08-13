@@ -1,0 +1,133 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "timestamps.json",
+  "provenance": "specification-determined",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71",
+    "specificationVersion": "v0.9.1"
+  },
+  "description": "Constructed timestamp-generation comparison cases for the Section 5.3 rule max(now_ms, previous + 1) with checked arithmetic.",
+  "cases": [
+    {
+      "id": "next-first-record",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "1785589200123",
+        "previousTimestampMs": null
+      },
+      "expected": {
+        "timestampMs": "1785589200123",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-now-ahead",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "2000",
+        "previousTimestampMs": "1000"
+      },
+      "expected": {
+        "timestampMs": "2000",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-now-behind",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "1000",
+        "previousTimestampMs": "2000"
+      },
+      "expected": {
+        "timestampMs": "2001",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-equal",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "2000",
+        "previousTimestampMs": "2000"
+      },
+      "expected": {
+        "timestampMs": "2001",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-boundary",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "2001",
+        "previousTimestampMs": "2000"
+      },
+      "expected": {
+        "timestampMs": "2001",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-zero-now",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "0",
+        "previousTimestampMs": null
+      },
+      "expected": {
+        "timestampMs": "0",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-now-max",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "18446744073709551615",
+        "previousTimestampMs": null
+      },
+      "expected": {
+        "timestampMs": "18446744073709551615",
+        "error": null
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    },
+    {
+      "id": "next-overflow",
+      "operation": "nextTimestamp",
+      "input": {
+        "nowMs": "5",
+        "previousTimestampMs": "18446744073709551615"
+      },
+      "expected": {
+        "timestampMs": null,
+        "error": "overflow"
+      },
+      "specificationSections": [
+        "Section 5.3"
+      ]
+    }
+  ]
+}
