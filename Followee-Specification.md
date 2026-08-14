@@ -3,8 +3,8 @@
 ## `did:flw` DID Method and Relay Protocol Specification
 
 **Author: Mats Helander**
-**Draft v0.9.1**
-**12 August 2026**
+**Draft v0.9.2**
+**14 August 2026**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 ---
@@ -30,6 +30,8 @@ Draft v0.8.1 clarifies one consequence of that layered CBOR model: a well-formed
 Draft v0.9 makes relay-local update-number order consistent with visibility to `v1/changes`. It prevents a successful cursor from overtaking a concurrent update that can become visible later, and adds a deterministic concurrency-test obligation. No wire encoding, cryptographic rule, Identity Record rule, authority rule, or record-ordering rule changes.
 
 Draft v0.9.1 clarifies the local presentation state of a completed migration check involving a stale winning record. Because a stale record remains admissible but cannot establish a verified migration link, such a completed check is **Checked but unverified**, not **Not checked**, even when the two records reciprocate. This amendment changes no wire encoding, record byte, cryptographic rule, authority rule, relay behaviour, or record-ordering rule.
+
+Draft v0.9.2 resolves a publish-response field-presence ambiguity exposed by the first cross-implementation interoperability campaign. Section 12.5 now states the status-dependent rule for `errorCode`: forbidden on status `0`; optional on status `1`, where a present code MUST be `losingRecord` or `duplicate` and MUST accurately identify the no-change reason; required on status `2`, where it MUST NOT be `losingRecord` or `duplicate`, because a duplicate or losing-but-valid publication is the successful no-change outcome of Sections 13.1, 13.2, and 15.4, never a rejection. Any other combination is malformed and the complete response is rejected. This is the reading under which every Section 15.3 wire error code retains a wire position — `losingRecord` and `duplicate` are transmittable exactly as optional status `1` reasons — and both encodings observed in the campaign (with and without the status `1` reason code) are conforming; interoperability reports classify that variation as permitted diagnostic variation, kept visible under Section 20.4. This is a normative relay-wrapper clarification and the Section 20.4 rerun obligation applies. Every published Appendix B vector remains byte-identical; no cryptographic rule, record byte, authority rule, or record-ordering rule changes.
 
 The design rationale is given separately in the *Followee: A Relay Protocol for Following People, Not Platforms* whitepaper. If the two documents differ on wire behaviour, this specification governs implementations of the version it defines.
 
@@ -1023,6 +1025,10 @@ Status values are:
 
 “Admitted and current” means current at that Relay only. It makes no propagation, retention, payment, or global-availability promise.
 
+Status `0` and status `1` report successful protocol processing (Section 15.4). On status `0`, `errorCode` MUST be absent. On status `1`, `errorCode` MAY be present as a diagnostic; when present it MUST be `losingRecord` or `duplicate` and MUST accurately identify the no-change reason. On status `2`, `errorCode` is required, identifies the rejection with a Section 15.3 code, and MUST NOT be `losingRecord` or `duplicate`: a duplicate or losing-but-valid record is the status `1` no-change outcome of Sections 13.1 and 13.2, never a rejection. The status `1` reason code is diagnostic information from that Relay in the sense of Section 12.3; its presence is the Relay's choice, and a publisher needs no code to act on status `1`.
+
+Any other status and `errorCode` combination fails the applicable v1 schema. A receiver MUST reject that complete relay response under Section 12.1 and MUST NOT extract a status from it.
+
 ### 12.6 Current-state changes
 
 The request is:
@@ -1282,7 +1288,7 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `18` | `invalidCursor` | Cursor is malformed or unknown for reasons other than reset |
 | `19` | `internalError` | Unexpected server failure |
 
-Stale is result metadata, not an error. Absent is a resolve result, not `invalidDid` or proof of non-existence.
+Stale is result metadata, not an error. Absent is a resolve result, not `invalidDid` or proof of non-existence. `losingRecord` and `duplicate` name valid-but-no-change ingress outcomes: their only wire position is the optional status `1` reason code of Section 12.5, and neither ever marks a rejection.
 
 ### 15.4 HTTP status use
 
@@ -1497,6 +1503,7 @@ A conforming Relay MUST additionally pass tests covering:
 - synchronization cursor advancement to the exact returned `nextCursor` despite rejected Full candidates, without record, authority-state, `lastUpdated`, or update-number mutation for the rejected DID;
 - complete rejection of a `changes` success response containing more entries than the request's `itemLimit`, without processing entries, changing state, or using `nextCursor`;
 - every status-dependent required and forbidden `changes` field combination, including the exact two-field status `1` ResetRequired response;
+- every status-dependent publish-response field combination: acceptance of status `1` both with and without a `losingRecord` or `duplicate` reason code, and rejection of a status `0` response carrying `errorCode`, of a status `1` response carrying any other code, of a status `2` response lacking `errorCode`, and of a status `2` response carrying `losingRecord` or `duplicate`;
 - cursor pagination without gaps;
 - concurrent-ingress cursor safety, using a deterministic attempted interleaving in which publication A has been assigned or reserved the lower update position and is paused before its current-map change commits or becomes visible, while publication B and a `changes` request are allowed to proceed; a pause only at or after A's commit is insufficient. The test MUST prove either that serialization prevents B from obtaining or committing a higher position until A resolves, or that any concurrently committed higher position remains behind a cursor watermark until A resolves, so no successful `nextCursor` can overtake an entry that later becomes visible;
 - cursor-generation reset;
@@ -1736,7 +1743,7 @@ remote-sign-response = {
 }
 ```
 
-The optional markers in the `changes-response` CDDL express the union of fields used across all statuses; they do not make those fields discretionary within a status. The status-conditional required and forbidden fields in Section 12.6 are normative and MUST be enforced in addition to CDDL acceptance.
+The optional markers in the `publish-response` and `changes-response` CDDL express the union of fields used across all statuses; CDDL acceptance alone never establishes a conforming status combination. The status-conditional rules of Sections 12.5 and 12.6 are normative and MUST be enforced in addition to CDDL acceptance: in `changes-response` no field is discretionary within a status, and in `publish-response` the only discretionary member is the status `1` reason code, constrained as Section 12.5 states.
 
 The conditional relationship between record-body labels `3` and `5` is normative text in Section 5.1. CDDL acceptance alone is never sufficient record validation.
 
