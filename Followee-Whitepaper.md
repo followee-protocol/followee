@@ -3,8 +3,9 @@
 ## A Relay Protocol for Following People, Not Platforms
 
 **Author: Mats Helander**
-**Whitepaper draft v0.10**
-**12 August 2026**
+**Whitepaper draft v0.10.1**
+**14 August 2026**
+**Corresponding protocol specification: Draft v0.9.2**
 **Licence: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)**
 
 > Followee is a protocol for resolving a permanent, self-certifying identifier to its owner's current public contact information through an open network of independently operated relays.
@@ -27,7 +28,7 @@ Followee is transport- and platform-neutral. Relays may run on conventional serv
 
 ## 1. Status and scope
 
-This document is a design whitepaper and an implementable protocol profile, not yet a final standards document. Capitalised requirement terms such as **MUST**, **SHOULD**, and **MAY** indicate intended normative behaviour in a later specification.
+This document is a design whitepaper, not the normative protocol specification. It corresponds to Draft v0.9.2 of the *`did:flw` DID Method and Relay Protocol Specification*, which governs wire, verification, and conformance behaviour if the two documents differ. Capitalised requirement terms such as **MUST**, **SHOULD**, and **MAY** summarise the intended behaviour of that profile.
 
 Followee's core purpose is deliberately narrow:
 
@@ -685,7 +686,7 @@ The response contains candidate bytes, a routing hint, local absence, or a per-D
 
 An Ingress Relay accepts a signed record candidate and applies its admission policy. Admission may require payment, authentication, sponsorship, proof of work at the application layer, a per-Followee DID quota, or nothing at all. These are operator policies and are not identity-validity rules.
 
-A successful publication response means only that this relay admitted the record. It does not imply global propagation.
+Publication has three protocol outcomes: admitted and current; valid but causing no current-state change; or rejected. All three are ordinary protocol-body outcomes; successful HTTP-layer processing SHOULD return them with HTTP `200`, including a protocol-level rejection. On the no-change outcome, a relay may optionally distinguish a losing candidate from an exact duplicate; that reason is diagnostic and does not turn the outcome into a rejection. Admission means only that this relay changed its own current state. No outcome implies global propagation.
 
 ### 11.5 Ingress algorithm
 
