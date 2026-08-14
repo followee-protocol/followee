@@ -1025,7 +1025,7 @@ Status values are:
 
 “Admitted and current” means current at that Relay only. It makes no propagation, retention, payment, or global-availability promise.
 
-Status `0` and status `1` report successful protocol processing (Section 15.4). On status `0`, `errorCode` MUST be absent. On status `1`, `errorCode` MAY be present as a diagnostic; when present it MUST be `losingRecord` or `duplicate` and MUST accurately identify the no-change reason. On status `2`, `errorCode` is required, identifies the rejection with a Section 15.3 code, and MUST NOT be `losingRecord` or `duplicate`: a duplicate or losing-but-valid record is the status `1` no-change outcome of Sections 13.1 and 13.2, never a rejection. The status `1` reason code is diagnostic information from that Relay in the sense of Section 12.3; its presence is the Relay's choice, and a publisher needs no code to act on status `1`.
+Status `0` and status `1` report successful protocol processing (Section 15.4). On status `0`, `errorCode` MUST be absent. On status `1`, `errorCode` MAY be present as a diagnostic; when present it MUST be `losingRecord` or `duplicate` and MUST accurately identify the no-change reason. On status `2`, `errorCode` is required, identifies the rejection with a Section 15.3 code, and MUST NOT be `losingRecord` or `duplicate`: a duplicate or losing-but-valid record is the status `1` no-change outcome of Sections 13.1 and 13.2, never a rejection. The status `1` reason code is diagnostic information from that Relay in the sense of Section 12.3; its presence is the Relay's choice, and a publisher needs no code to act on status `1`. The optional CDDL marker above expresses the union of these permitted status-dependent shapes; it does not permit `errorCode` outside them (Appendix A).
 
 Any other status and `errorCode` combination fails the applicable v1 schema. A receiver MUST reject that complete relay response under Section 12.1 and MUST NOT extract a status from it.
 
@@ -1279,8 +1279,8 @@ Operators may impose lower publication quotas, retention limits, or authenticate
 | `9` | `invalidSignature` | COSE or Ed25519 verification fails |
 | `10` | `premature` | Timestamp exceeds the recipient's future bound |
 | `11` | `rootRevoked` | Root candidate is excluded by sticky state |
-| `12` | `losingRecord` | Valid candidate loses current ordering |
-| `13` | `duplicate` | Body digest is already current |
+| `12` | `losingRecord` | Valid candidate loses current ordering (status `1` reason only; never a rejection) |
+| `13` | `duplicate` | Body digest is already current (status `1` reason only; never a rejection) |
 | `14` | `policyRejected` | Local admission policy rejected the request |
 | `15` | `rateLimited` | Local rate or resource limit was reached |
 | `16` | `responseTooLarge` | Requested response cannot fit the negotiated bound |
@@ -1292,7 +1292,7 @@ Stale is result metadata, not an error. Absent is a resolve result, not `invalid
 
 ### 15.4 HTTP status use
 
-Successful protocol processing, including Absent, per-DID Error results, valid no-change publication, and `ResetRequired`, SHOULD return HTTP `200` with the protocol body. Servers MUST use `400` when the outer request fails Section 6.1 well-formedness, basic validity, deterministic-profile, or top-level schema validation and therefore cannot safely enter per-item processing. Such a response has no normative per-item CBOR body. Servers SHOULD use `413` for an HTTP entity rejected before protocol parsing, `415` for unsupported media type, `429` for transport-level rate limiting, and `500` or `503` for failures that prevent a protocol response.
+Successful protocol processing, including Absent, per-DID Error results, all three publication outcomes, and `ResetRequired`, SHOULD return HTTP `200` with the protocol body. A publication rejected by a conforming status `2` response is successful processing at the HTTP layer; the rejection is expressed by the protocol status and `errorCode`, not by a non-`200` HTTP status. Servers MUST use `400` when the outer request fails Section 6.1 well-formedness, basic validity, deterministic-profile, or top-level schema validation and therefore cannot safely enter per-item processing. Such a response has no normative per-item CBOR body. Servers SHOULD use `413` for an HTTP entity rejected before protocol parsing, `415` for unsupported media type, `429` for transport-level rate limiting, and `500` or `503` for failures that prevent a protocol response.
 
 An invalid item inside an otherwise valid batch request is not an outer-request failure. In particular, a syntactically malformed DID carried as a basically valid UTF-8 text string receives an aligned per-DID `Error(invalidDid)` in an HTTP `200` resolve response. Invalid UTF-8 instead makes the enclosing request basically invalid under Section 6.1.1. A server MUST NOT reject the entire batch merely because one requested DID is syntactically invalid.
 
@@ -1503,7 +1503,7 @@ A conforming Relay MUST additionally pass tests covering:
 - synchronization cursor advancement to the exact returned `nextCursor` despite rejected Full candidates, without record, authority-state, `lastUpdated`, or update-number mutation for the rejected DID;
 - complete rejection of a `changes` success response containing more entries than the request's `itemLimit`, without processing entries, changing state, or using `nextCursor`;
 - every status-dependent required and forbidden `changes` field combination, including the exact two-field status `1` ResetRequired response;
-- every status-dependent publish-response field combination: acceptance of status `1` both with and without a `losingRecord` or `duplicate` reason code, and rejection of a status `0` response carrying `errorCode`, of a status `1` response carrying any other code, of a status `2` response lacking `errorCode`, and of a status `2` response carrying `losingRecord` or `duplicate`;
+- every status-dependent publish-response field combination: acceptance of status `1` without `errorCode` and with each permitted reason code (`losingRecord` and `duplicate`), and rejection of a status `0` response carrying `errorCode`, of a status `1` response carrying each registered code other than `losingRecord` and `duplicate` (including `invalidSignature` and `rateLimited`), of a status `2` response lacking `errorCode`, and of a status `2` response carrying `losingRecord` or `duplicate`;
 - cursor pagination without gaps;
 - concurrent-ingress cursor safety, using a deterministic attempted interleaving in which publication A has been assigned or reserved the lower update position and is paused before its current-map change commits or becomes visible, while publication B and a `changes` request are allowed to proceed; a pause only at or after A's commit is insufficient. The test MUST prove either that serialization prevents B from obtaining or committing a higher position until A resolves, or that any concurrently committed higher position remains behind a cursor watermark until A resolves, so no successful `nextCursor` can overtake an entry that later becomes visible;
 - cursor-generation reset;
