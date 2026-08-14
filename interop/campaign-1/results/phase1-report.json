@@ -1,0 +1,3961 @@
+{
+ "cases": [
+  {
+   "caseId": "identity-alice",
+   "file": "identities",
+   "motoko": {
+    "caseId": "identity-alice",
+    "file": "identities",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "deriveIdentity",
+    "verdict": "match"
+   },
+   "operation": "deriveIdentity",
+   "rust": {
+    "caseId": "identity-alice",
+    "category": "coverage-limitation",
+    "file": "identities",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "provenance": "normative-specification",
+      "verdict": "notExposed"
+     },
+     {
+      "member": "did",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "deriveIdentity",
+    "verdict": "coverageLimitation"
+   }
+  },
+  {
+   "caseId": "identity-attacker",
+   "file": "identities",
+   "motoko": {
+    "caseId": "identity-attacker",
+    "file": "identities",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "deriveIdentity",
+    "verdict": "match"
+   },
+   "operation": "deriveIdentity",
+   "rust": {
+    "caseId": "identity-attacker",
+    "category": "coverage-limitation",
+    "file": "identities",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "provenance": "specification-determined",
+      "verdict": "notExposed"
+     },
+     {
+      "member": "did",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "deriveIdentity",
+    "verdict": "coverageLimitation"
+   }
+  },
+  {
+   "caseId": "identity-bob",
+   "file": "identities",
+   "motoko": {
+    "caseId": "identity-bob",
+    "file": "identities",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "deriveIdentity",
+    "verdict": "match"
+   },
+   "operation": "deriveIdentity",
+   "rust": {
+    "caseId": "identity-bob",
+    "category": "coverage-limitation",
+    "file": "identities",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "provenance": "normative-specification",
+      "verdict": "notExposed"
+     },
+     {
+      "member": "did",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "deriveIdentity",
+    "verdict": "coverageLimitation"
+   }
+  },
+  {
+   "caseId": "b4-root",
+   "file": "records",
+   "motoko": {
+    "caseId": "b4-root",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   },
+   "operation": "authorRecord",
+   "rust": {
+    "caseId": "b4-root",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "b5-root-revoked",
+   "file": "records",
+   "motoko": {
+    "caseId": "b5-root-revoked",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   },
+   "operation": "authorRecord",
+   "rust": {
+    "caseId": "b5-root-revoked",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "b6-alice-a",
+   "file": "records",
+   "motoko": {
+    "caseId": "b6-alice-a",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   },
+   "operation": "authorRecord",
+   "rust": {
+    "caseId": "b6-alice-a",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "b6-alice-b",
+   "file": "records",
+   "motoko": {
+    "caseId": "b6-alice-b",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   },
+   "operation": "authorRecord",
+   "rust": {
+    "caseId": "b6-alice-b",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "b9-bob-root",
+   "file": "records",
+   "motoko": {
+    "caseId": "b9-bob-root",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   },
+   "operation": "authorRecord",
+   "rust": {
+    "caseId": "b9-bob-root",
+    "file": "records",
+    "members": [
+     {
+      "member": "did",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "provenance": "normative-specification",
+      "verdict": "match"
+     }
+    ],
+    "operation": "authorRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b4-accept",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b4-accept",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b4-accept",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b5-accept",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b5-accept",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b5-accept",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b9-accept",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b9-accept",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b9-accept",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b4-premature",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b4-premature",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b4-premature",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b4-premature-boundary",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b4-premature-boundary",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b4-premature-boundary",
+    "file": "verification",
+    "members": [
+     {
+      "member": "id",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authority",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "validUntilMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "premature",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "stale",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b8-descriptor-substitution",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b8-descriptor-substitution",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b8-descriptor-substitution",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b10-duplicate-key",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b10-duplicate-key",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b10-duplicate-key",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b10-utf8-overlong",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b10-utf8-overlong",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b10-utf8-overlong",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b10-utf8-surrogate",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b10-utf8-surrogate",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b10-utf8-surrogate",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b10-utf8-above-max",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b10-utf8-above-max",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b10-utf8-above-max",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b10-utf8-incomplete",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b10-utf8-incomplete",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b10-utf8-incomplete",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b12-simple-value-16",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b12-simple-value-16",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b12-simple-value-16",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-b12-simple-value-32",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-b12-simple-value-32",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-b12-simple-value-32",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-foreign-valid-attacker",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-foreign-valid-attacker",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-foreign-valid-attacker",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-foreign-valid-bob",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-foreign-valid-bob",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-foreign-valid-bob",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-unsupported-hash-code",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-unsupported-hash-code",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-unsupported-hash-code",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-unsupported-digest-length",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-unsupported-digest-length",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-unsupported-digest-length",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-trailing-byte",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-trailing-byte",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-trailing-byte",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-length-disagreement",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-length-disagreement",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-length-disagreement",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-non-minimal-varint",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-non-minimal-varint",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-non-minimal-varint",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-missing-multibase-prefix",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-missing-multibase-prefix",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-missing-multibase-prefix",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-wrong-multibase-prefix",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-wrong-multibase-prefix",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-wrong-multibase-prefix",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-invalid-base58-character",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-invalid-base58-character",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-invalid-base58-character",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-percent-encoded",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-percent-encoded",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-percent-encoded",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-uppercase-did-prefix",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-uppercase-did-prefix",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-uppercase-did-prefix",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "verify-target-empty-method-id",
+   "file": "verification",
+   "motoko": {
+    "caseId": "verify-target-empty-method-id",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   },
+   "operation": "verifyRecord",
+   "rust": {
+    "caseId": "verify-target-empty-method-id",
+    "file": "verification",
+    "members": [
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "verifyRecord",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-first-record",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-first-record",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-first-record",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-now-ahead",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-now-ahead",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-now-ahead",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-now-behind",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-now-behind",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-now-behind",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-equal",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-equal",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-equal",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-boundary",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-boundary",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-boundary",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-zero-now",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-zero-now",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-zero-now",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-now-max",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-now-max",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-now-max",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "next-overflow",
+   "file": "timestamps",
+   "motoko": {
+    "caseId": "next-overflow",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   },
+   "operation": "nextTimestamp",
+   "rust": {
+    "caseId": "next-overflow",
+    "file": "timestamps",
+    "members": [
+     {
+      "member": "timestampMs",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "error",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "nextTimestamp",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-authority-precedence-perm-00",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-authority-precedence-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-authority-precedence-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-authority-precedence-perm-01",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-authority-precedence-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-authority-precedence-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-binding-rejection-perm-00",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-binding-rejection-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-binding-rejection-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-binding-rejection-perm-01",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-binding-rejection-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-binding-rejection-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-equal-time-digest-perm-00",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-equal-time-digest-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-equal-time-digest-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-equal-time-digest-perm-01",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-equal-time-digest-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-equal-time-digest-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-00",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-00",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-01",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-01",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-02",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-02",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-02",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-03",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-03",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-03",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-04",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-04",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-04",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-05",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-05",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-05",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-06",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-06",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-06",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-07",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-07",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-07",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-08",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-08",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-08",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-09",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-09",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-09",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-10",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-10",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-10",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-11",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-11",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-11",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-12",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-12",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-12",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-13",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-13",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-13",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-14",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-14",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-14",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-15",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-15",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-15",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-16",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-16",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-16",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-17",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-17",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-17",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-18",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-18",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-18",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-19",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-19",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-19",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-20",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-20",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-20",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-21",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-21",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-21",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-22",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-22",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-22",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-full-mixed-perm-23",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-full-mixed-perm-23",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-full-mixed-perm-23",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-sticky-suppression",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-sticky-suppression",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-sticky-suppression",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-cross-did-only",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-cross-did-only",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-cross-did-only",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-premature-only",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-premature-only",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-premature-only",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  },
+  {
+   "caseId": "select-empty-candidates",
+   "file": "selection",
+   "motoko": {
+    "caseId": "select-empty-candidates",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   },
+   "operation": "selectCurrent",
+   "rust": {
+    "caseId": "select-empty-candidates",
+    "file": "selection",
+    "members": [
+     {
+      "member": "winnerRecordBodyDigestHex",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityState",
+      "provenance": "specification-determined",
+      "verdict": "match"
+     }
+    ],
+    "operation": "selectCurrent",
+    "verdict": "match"
+   }
+  }
+ ],
+ "crossVerifyRecord": [
+  {
+   "caseId": "verify-b4-accept",
+   "members": [
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "category": "interface-shape-gap",
+     "member": "record",
+     "note": "compared under the documented interface-shape mapping; the descriptor sub-shape of INTERFACE.md is unspecified and the participants chose different member names",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "verify-b5-accept",
+   "members": [
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "category": "interface-shape-gap",
+     "member": "record",
+     "note": "compared under the documented interface-shape mapping; the descriptor sub-shape of INTERFACE.md is unspecified and the participants chose different member names",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "verify-b9-accept",
+   "members": [
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "category": "interface-shape-gap",
+     "member": "record",
+     "note": "compared under the documented interface-shape mapping; the descriptor sub-shape of INTERFACE.md is unspecified and the participants chose different member names",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "verify-b4-premature",
+   "members": [
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "category": "interface-shape-gap",
+     "member": "record",
+     "note": "compared under the documented interface-shape mapping; the descriptor sub-shape of INTERFACE.md is unspecified and the participants chose different member names",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "verify-b4-premature-boundary",
+   "members": [
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "category": "interface-shape-gap",
+     "member": "record",
+     "note": "compared under the documented interface-shape mapping; the descriptor sub-shape of INTERFACE.md is unspecified and the participants chose different member names",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  }
+ ],
+ "permutationInvariance": {
+  "motoko": [
+   {
+    "group": "authority-precedence",
+    "invariant": true,
+    "outcomes": [
+     [
+      "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+      "rootRevoked"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "binding-rejection",
+    "invariant": true,
+    "outcomes": [
+     [
+      "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+      "root"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "equal-time-digest",
+    "invariant": true,
+    "outcomes": [
+     [
+      "6f347840328b2b2cd74cce2f9a222a313e9d9504305c3ac816987ff2f4b47d97",
+      "root"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "full-mixed",
+    "invariant": true,
+    "outcomes": [
+     [
+      "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+      "rootRevoked"
+     ]
+    ],
+    "permutations": 24
+   }
+  ],
+  "rust": [
+   {
+    "group": "authority-precedence",
+    "invariant": true,
+    "outcomes": [
+     [
+      "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+      "rootRevoked"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "binding-rejection",
+    "invariant": true,
+    "outcomes": [
+     [
+      "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+      "root"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "equal-time-digest",
+    "invariant": true,
+    "outcomes": [
+     [
+      "6f347840328b2b2cd74cce2f9a222a313e9d9504305c3ac816987ff2f4b47d97",
+      "root"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "full-mixed",
+    "invariant": true,
+    "outcomes": [
+     [
+      "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+      "rootRevoked"
+     ]
+    ],
+    "permutations": 24
+   }
+  ]
+ },
+ "phase": 1,
+ "pins": {
+  "motokoChallengeSha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e",
+  "motokoCommit": "3840d9adf07755d326d920f4711dafc4e08bcb40",
+  "motokoGrandparent": "4bd922c301ed8f1583bcca37ac988b6493badfae",
+  "motokoParent": "7f2243ef729aa21e95e047becef12319ee50d765",
+  "motokoTag": "motoko-v0.9.1-independent-freeze",
+  "protocolRepoCommit": "c90742eb763cda5bd3c6e7d20ab1799590da489b",
+  "protocolRepoTag": "v0.9.1-interop-bundle-reviewed",
+  "rustCommit": "8606a102bfb4f2bbfbc81e364bdf548c437bf123",
+  "rustTag": "milestone-5-v0.9.1-reviewed",
+  "specificationSha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71"
+ },
+ "rustMultihashCoverageAnalysis": [
+  {
+   "caseId": "identity-alice",
+   "expectedMultihashEncodesToRustDid": true,
+   "expectedMultihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+   "rustDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+  },
+  {
+   "caseId": "identity-attacker",
+   "expectedMultihashEncodesToRustDid": true,
+   "expectedMultihashHex": "1220133be1f58c4402f8de2014912853357d8734fd3ac453c9c024a4be0b513f901a",
+   "rustDid": "did:flw:zQmPdjR6k8HFgbf4e51P7iMy4aY3buGsxQU49fSHdGhce7s"
+  },
+  {
+   "caseId": "identity-bob",
+   "expectedMultihashEncodesToRustDid": true,
+   "expectedMultihashHex": "1220ddc23bec60a7a9dad831d8c52439b9f3f30e17012da4d948233ece41154817ba",
+   "rustDid": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy"
+  }
+ ],
+ "totals": {
+  "motoko": {
+   "byOperation": {
+    "authorRecord": {
+     "match": 5
+    },
+    "deriveIdentity": {
+     "match": 3
+    },
+    "nextTimestamp": {
+     "match": 8
+    },
+    "selectCurrent": {
+     "match": 34
+    },
+    "verifyRecord": {
+     "match": 26
+    }
+   },
+   "byVerdict": {
+    "match": 76
+   },
+   "total": 76
+  },
+  "rust": {
+   "byOperation": {
+    "authorRecord": {
+     "match": 5
+    },
+    "deriveIdentity": {
+     "coverageLimitation": 3
+    },
+    "nextTimestamp": {
+     "match": 8
+    },
+    "selectCurrent": {
+     "match": 34
+    },
+    "verifyRecord": {
+     "match": 26
+    }
+   },
+   "byVerdict": {
+    "coverageLimitation": 3,
+    "match": 73
+   },
+   "total": 76
+  }
+ }
+}

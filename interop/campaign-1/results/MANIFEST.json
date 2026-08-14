@@ -1,0 +1,38 @@
+{
+ "campaign-meta.json": {
+  "bytes": 3716,
+  "sha256": "81e87c442e83f77693edb51973b498f0ad32bf6ae65998a3d263724f7a63ffc9"
+ },
+ "phase1-motoko-responses.jsonl": {
+  "bytes": 36648,
+  "sha256": "69f7d173e3fc882e528decca831449f865327f0959f8bbedec12d26809569380"
+ },
+ "phase1-report.json": {
+  "bytes": 90013,
+  "sha256": "c327fb44f79379c7bcacb940f4330ed66ddae07a1485a64301935545d00dced4"
+ },
+ "phase1-requests.jsonl": {
+  "bytes": 119312,
+  "sha256": "23a15bc0971ae4c894e1363ee3bc8690f957e9a403b8e659edc61a44ec10eda9"
+ },
+ "phase1-rust-responses.jsonl": {
+  "bytes": 41376,
+  "sha256": "135e092cda6fa4f14d21c03d7fa966559fc479f33b47fdbc9b7ed44c729edd85"
+ },
+ "phase2-motoko-challenge-frozen.jsonl": {
+  "bytes": 51068,
+  "sha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e"
+ },
+ "phase2-report.json": {
+  "bytes": 42585,
+  "sha256": "b60633858051fffdcf47745047a637aef90116817c6da71e503708e7c5d1baa0"
+ },
+ "phase2-rust-challenge-results.jsonl": {
+  "bytes": 53997,
+  "sha256": "23ee6a9db3163acf1d984adf74b8ea68d1c8c41955904dc022b287cc363816b1"
+ },
+ "phase3-report.json": {
+  "bytes": 60333,
+  "sha256": "23e284ed3a774cbc06d9ca77a8d8e8aeffbaebca806126f40aa82c71c5c27d37"
+ }
+}

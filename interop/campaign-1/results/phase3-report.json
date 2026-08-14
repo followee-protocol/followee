@@ -1,0 +1,1114 @@
+{
+ "checks": [
+  {
+   "description": "info is 200 application/cbor",
+   "id": "R1.status",
+   "pass": true
+  },
+  {
+   "decoded": {
+    "0": "1",
+    "1": "b'\\xb1\\xb6a\\xf5?\\x85e\\x0f\\x11q\\xe7\\xb7\\xbaVR\\xb6'",
+    "2": "7",
+    "3": "[1]",
+    "4": "[-19]",
+    "5": "{0: 16384, 1: 256, 2: 1048576, 3: 1024, 4: 4194304}",
+    "6": "b'\\xd0\\r\\x180ij{d\\xc6\\xa1\\x19:WTu!'",
+    "7": "b'\\x9a+\\xf6@\\xeb\\x82\\x97Y\\x90\\xeb\\xc7\\xae\\xd40\\xe5\\xe5'",
+    "8": "'http://127.0.0.1:40891/'"
+   },
+   "description": "info: protocol version 1 present, suite -19 present, opaque 16-byte identifiers, relay capability bit set",
+   "id": "R1.structure",
+   "pass": true
+  },
+  {
+   "decoded": {
+    "0": "1",
+    "1": "b'\\x9a+\\xf6@\\xeb\\x82\\x97Y\\x90\\xeb\\xc7\\xae\\xd40\\xe5\\xe5'",
+    "2": "[]"
+   },
+   "description": "directory: 16-byte generation and entry list",
+   "id": "R2.structure",
+   "pass": true
+  },
+  {
+   "description": "publish publish-admit: exact specification-determined response bytes over live HTTP",
+   "got": "a200010100",
+   "id": "R3.0.bytes",
+   "pass": true,
+   "want": "a200010100"
+  },
+  {
+   "description": "publish publish-no-change: exact specification-determined response bytes over live HTTP",
+   "got": "a200010101",
+   "id": "R3.1.bytes",
+   "pass": true,
+   "want": "a200010101"
+  },
+  {
+   "description": "publish publish-rejected: exact specification-determined response bytes over live HTTP",
+   "got": "a3000101020207",
+   "id": "R3.2.bytes",
+   "pass": true,
+   "want": "a3000101020207"
+  },
+  {
+   "description": "B.9 admitted",
+   "id": "R3.seed-bob",
+   "pass": true
+  },
+  {
+   "description": "Motoko client resolve request equals the published bytes",
+   "got": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a3455",
+   "id": "R4.duplicates.request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Motoko production client accepts the wrapper, keeps exact positional alignment, and verifies every Full candidate",
+   "id": "R4.duplicates.aligned",
+   "pass": true,
+   "results": [
+    {
+     "authority": "root",
+     "bodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "kind": "full",
+     "premature": false,
+     "stale": false,
+     "verified": true
+    },
+    {
+     "authority": "root",
+     "bodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "kind": "full",
+     "premature": false,
+     "stale": false,
+     "verified": true
+    },
+    {
+     "authority": "root",
+     "bodyDigestHex": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+     "kind": "full",
+     "premature": false,
+     "stale": false,
+     "verified": true
+    }
+   ]
+  },
+  {
+   "description": "Motoko client resolve request equals the published bytes",
+   "got": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a3455",
+   "id": "R4.malformed.request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Motoko production client accepts the wrapper, keeps exact positional alignment, and verifies every Full candidate",
+   "id": "R4.malformed.aligned",
+   "pass": true,
+   "results": [
+    {
+     "authority": "root",
+     "bodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "kind": "full",
+     "premature": false,
+     "stale": false,
+     "verified": true
+    },
+    {
+     "code": 0,
+     "kind": "error"
+    },
+    {
+     "authority": "root",
+     "bodyDigestHex": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+     "kind": "full",
+     "premature": false,
+     "stale": false,
+     "verified": true
+    }
+   ]
+  },
+  {
+   "description": "Rust answers HTTP 400 with no per-item results",
+   "id": "R4.invalid-outer",
+   "pass": true
+  },
+  {
+   "description": "Motoko receiver admits both current records through its own ingress",
+   "id": "R5.initial.admitted",
+   "pass": true,
+   "received": {
+    "items": [
+     {
+      "ingress": {
+       "admitted": 1
+      }
+     },
+     {
+      "ingress": {
+       "admitted": 2
+      }
+     }
+    ],
+    "outcome": "processed"
+   }
+  },
+  {
+   "description": "stored peer cursor is byte-identical to the returned nextCursor",
+   "id": "R5.initial.cursor",
+   "pass": true,
+   "served": "d00d1830696a7b64c6a1193a575475210000000000000002",
+   "stored": "d00d1830696a7b64c6a1193a575475210000000000000002"
+  },
+  {
+   "description": "B.5 revocation admitted",
+   "id": "R5.publish-b5",
+   "pass": true
+  },
+  {
+   "description": "the update is visible and admitted exactly once",
+   "id": "R5.incremental.update",
+   "pass": true,
+   "received": {
+    "items": [
+     {
+      "ingress": {
+       "admitted": 3
+      }
+     }
+    ],
+    "outcome": "processed"
+   }
+  },
+  {
+   "admitted": [
+    1,
+    2
+   ],
+   "description": "itemLimit-1 pagination yields both records exactly once across pages with cursor progress",
+   "id": "R5.pagination",
+   "pages": 2,
+   "pass": true
+  },
+  {
+   "description": "rust relay resolve succeeds",
+   "id": "R6.rust-view",
+   "pass": true,
+   "stderr": ""
+  },
+  {
+   "description": "current maps agree on every DID's winning body digest and authority state after the two-way exchange",
+   "detail": {
+    "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm": {
+     "motoko": {
+      "authority": "rootRevoked",
+      "digest": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861"
+     },
+     "rust": {
+      "authority": "rootRevoked",
+      "digest": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861"
+     }
+    },
+    "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy": {
+     "motoko": {
+      "authority": "root",
+      "digest": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8"
+     },
+     "rust": {
+      "authority": "root",
+      "digest": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8"
+     }
+    }
+   },
+   "id": "R6.agreement",
+   "pass": true
+  },
+  {
+   "description": "the agreed state is the expected winning content (B.5 revocation for Alice, B.9 for Bob)",
+   "id": "R6.expected-content",
+   "pass": true
+  },
+  {
+   "description": "ResetRequired is the exact specification-determined two-field response",
+   "got": "a200010101",
+   "id": "R7.reset.bytes",
+   "pass": true
+  },
+  {
+   "description": "Motoko receiver: only the peer cursor is discarded; entries and counter unchanged",
+   "id": "R7.reset.receiver",
+   "pass": true,
+   "received": {
+    "op": "receiveChanges",
+    "peerCursorHex": null,
+    "result": {
+     "outcome": "resetRequired"
+    },
+    "updateCounter": 3
+   }
+  },
+  {
+   "description": "Rust production client reports admitted",
+   "id": "M1.0.cli",
+   "pass": true,
+   "stderr": "",
+   "stdout": "{\"recordFile\":\"~/followee-protocol/followee/interop/campaign-1/work/phase3/records/b4-root.cose\",\"relay\":\"http://127.0.0.1:34883/\",\"status\":\"admitted\"}\n"
+  },
+  {
+   "description": "Motoko publish response equals the publish-admit specification-determined bytes",
+   "id": "M1.0.bytes",
+   "pass": true
+  },
+  {
+   "description": "publish request arrives as application/cose",
+   "id": "M1.0.mediaType",
+   "pass": true
+  },
+  {
+   "description": "Rust production client reports noChange",
+   "id": "M1.1.cli",
+   "pass": true,
+   "stderr": "",
+   "stdout": "{\"recordFile\":\"~/followee-protocol/followee/interop/campaign-1/work/phase3/records/b4-root.cose\",\"relay\":\"http://127.0.0.1:34883/\",\"status\":\"noChange\"}\n"
+  },
+  {
+   "description": "publish response protocol version and status agree with the transcript",
+   "got": "a300010101020d",
+   "id": "M1.1.status",
+   "pass": true,
+   "want": "a200010101"
+  },
+  {
+   "description": "publish request arrives as application/cose",
+   "id": "M1.1.mediaType",
+   "pass": true
+  },
+  {
+   "description": "Rust production client reports admitted",
+   "id": "M1.2.cli",
+   "pass": true,
+   "stderr": "",
+   "stdout": "{\"recordFile\":\"~/followee-protocol/followee/interop/campaign-1/work/phase3/records/b9-bob-root.cose\",\"relay\":\"http://127.0.0.1:34883/\",\"status\":\"admitted\"}\n"
+  },
+  {
+   "description": "Motoko publish response equals the publish-admit specification-determined bytes",
+   "id": "M1.2.bytes",
+   "pass": true
+  },
+  {
+   "description": "publish request arrives as application/cose",
+   "id": "M1.2.mediaType",
+   "pass": true
+  },
+  {
+   "description": "Rust production client surfaces the rejection with identityBindingMismatch",
+   "id": "M1.rejected.cli",
+   "pass": true,
+   "stderr": "error[publishRejected]: relay rejected the record: identityBindingMismatch\n"
+  },
+  {
+   "description": "Motoko rejection response equals the publish-rejected specification-determined bytes",
+   "got": "a3000101020207",
+   "id": "M1.rejected.bytes",
+   "pass": true
+  },
+  {
+   "description": "Rust client resolve request equals the published bytes",
+   "got": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a3455",
+   "id": "M2.duplicates.request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Motoko-served response equals the published response bytes",
+   "gotSha": "203e22e2d913359b08070c289d60889770bcdeee0584187dee25e1c8e05fdfe8",
+   "id": "M2.duplicates.response-bytes",
+   "pass": true,
+   "wantSha": "203e22e2d913359b08070c289d60889770bcdeee0584187dee25e1c8e05fdfe8"
+  },
+  {
+   "description": "Rust production client verifies and aligns the results",
+   "id": "M2.duplicates.cli",
+   "pass": true,
+   "results": [
+    {
+     "authority": "root",
+     "bodyDigest": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+     "freshness": "fresh",
+     "kind": "full",
+     "recordHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+     "timeStatus": "admissible",
+     "timestampMs": 1785589200123,
+     "verified": true
+    },
+    {
+     "authority": "root",
+     "bodyDigest": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+     "freshness": "fresh",
+     "kind": "full",
+     "recordHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+     "timeStatus": "admissible",
+     "timestampMs": 1785589200123,
+     "verified": true
+    },
+    {
+     "authority": "root",
+     "bodyDigest": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+     "did": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+     "freshness": "fresh",
+     "kind": "full",
+     "recordHex": "d28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+     "timeStatus": "admissible",
+     "timestampMs": 1785589201123,
+     "verified": true
+    }
+   ],
+   "stderr": ""
+  },
+  {
+   "description": "Rust client resolve request equals the published bytes",
+   "got": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a3455",
+   "id": "M2.malformed.request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Motoko-served response equals the published response bytes",
+   "gotSha": "d8a36364ed62a8fabb905f6c20c04304fe1803df10fa1680840c5c7cd1af96fa",
+   "id": "M2.malformed.response-bytes",
+   "pass": true,
+   "wantSha": "d8a36364ed62a8fabb905f6c20c04304fe1803df10fa1680840c5c7cd1af96fa"
+  },
+  {
+   "description": "Rust production client verifies and aligns the results",
+   "id": "M2.malformed.cli",
+   "pass": true,
+   "results": [
+    {
+     "authority": "root",
+     "bodyDigest": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+     "freshness": "fresh",
+     "kind": "full",
+     "recordHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+     "timeStatus": "admissible",
+     "timestampMs": 1785589200123,
+     "verified": true
+    },
+    {
+     "error": {
+      "code": 0,
+      "symbol": "invalidDid"
+     },
+     "kind": "error"
+    },
+    {
+     "authority": "root",
+     "bodyDigest": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+     "did": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+     "freshness": "fresh",
+     "kind": "full",
+     "recordHex": "d28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+     "timeStatus": "admissible",
+     "timestampMs": 1785589201123,
+     "verified": true
+    }
+   ],
+   "stderr": ""
+  },
+  {
+   "description": "Motoko classifies the outer fault; transported as HTTP 400 with no per-item results",
+   "id": "M3.invalid-outer",
+   "motokoOutcome": 400,
+   "pass": true
+  },
+  {
+   "description": "Rust client resolve request equals the published B.11.3 bytes",
+   "id": "M4.request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Rust client preserves batch alignment over the served response and verifies the valid candidate at index 1",
+   "id": "M4.cli",
+   "pass": true,
+   "results": [
+    {
+     "did": null,
+     "error": {
+      "code": 19,
+      "symbol": "internalError"
+     },
+     "kind": "error",
+     "verified": null
+    },
+    {
+     "did": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+     "error": null,
+     "kind": "full",
+     "verified": true
+    }
+   ]
+  },
+  {
+   "description": "Rust production client rejects the complete B.11.2 response at the deterministic-CBOR-profile layer",
+   "id": "H1.rust",
+   "pass": true,
+   "stderr": "error[outerResponseRejected]: relay client failure: outer relay response rejected: encoding violates the deterministic CBOR profile\n"
+  },
+  {
+   "description": "Motoko production client rejects the complete B.11.2 response as nonDeterministicCbor",
+   "got": {
+    "error": "nonDeterministicCbor",
+    "op": "clientProcessResolve",
+    "outcome": "reject"
+   },
+   "id": "H1.motoko",
+   "pass": true
+  },
+  {
+   "description": "Rust client changes request equals the published B.11.5/7 bytes",
+   "got": "a4000101487630382d303030300202031a00100000",
+   "id": "H2.rust-request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Rust production client rejects the complete oversize response at the schema/limits layer without using its cursor",
+   "id": "H2.rust-reject",
+   "pass": true,
+   "stderr": "error[outerResponseRejected]: relay client failure: outer relay response rejected: record violates the v1 schema or its limits\n",
+   "stdout": "{\"error\":{\"message\":\"relay client failure: outer relay response rejected: record violates the v1 schema or its limits\",\"symbol\":\"outerResponseRejected\"}}\n"
+  },
+  {
+   "description": "Motoko client changes request equals the published B.11.5/7 bytes",
+   "got": "a4000101487630382d303030300202031a00100000",
+   "id": "H2.motoko-request-bytes",
+   "pass": true
+  },
+  {
+   "description": "Motoko receiver rejects the complete response (schemaViolation), keeps the old cursor, and changes no entry (B.11.7 required post-state)",
+   "dump": {
+    "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm": true,
+    "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy": false
+   },
+   "id": "H2.motoko-reject",
+   "pass": true,
+   "received": {
+    "op": "receiveChanges",
+    "peerCursorHex": "7630382d30303030",
+    "result": {
+     "error": "schemaViolation",
+     "outcome": "rejectedResponse"
+    },
+    "updateCounter": 41
+   }
+  },
+  {
+   "description": "Motoko receiver on B.11.5: B.8 candidate rejected (identityBindingMismatch), Bob admitted at 42, counter 42, cursor advanced to the exact returned bytes (required post-state)",
+   "id": "H3.motoko",
+   "pass": true,
+   "received": {
+    "op": "receiveChanges",
+    "peerCursorHex": "7630382d30303032",
+    "result": {
+     "items": [
+      {
+       "ingress": {
+        "rejected": "identityBindingMismatch"
+       }
+      },
+      {
+       "ingress": {
+        "admitted": 42
+       }
+      }
+     ],
+     "outcome": "processed"
+    },
+    "updateCounter": 42
+   }
+  },
+  {
+   "description": "local Rust relay holds Alice's B.4",
+   "id": "H3.rust-seed",
+   "pass": true
+  },
+  {
+   "description": "Rust receiver on B.11.5: Bob admitted, B.8 candidate rejected with identityBindingMismatch, cursor stored as the exact returned bytes",
+   "id": "H3.rust",
+   "pass": true,
+   "stderr": "",
+   "stdout": "e-protocol/followee/interop/campaign-1/work/phase3/rust-sync.db\",\"finalCursorHex\":\"7630382d30303032\",\"hasMore\":false,\"noChange\":0,\"pages\":1,\"peer\":\"http://127.0.0.1:38923/\",\"peerRelayId\":\"a1a2a3a4a5a6a7a8a9aaabacadaeafb0\",\"refsIgnored\":0,\"rejected\":[{\"entryDid\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"error\":{\"code\":7,\"symbol\":\"identityBindingMismatch\"}}],\"resetPerformed\":false}\n"
+  },
+  {
+   "description": "Rust post-state: Alice unchanged at B.4, Bob current at B.9",
+   "id": "H3.rust-post-state",
+   "pass": true,
+   "rows": [
+    {
+     "bodyDigest": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+     "kind": "full",
+     "verified": true
+    },
+    {
+     "bodyDigest": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+     "kind": "full",
+     "verified": true
+    }
+   ]
+  }
+ ],
+ "coverageGaps": [
+  "motoko-as-relay serves publish and resolve only: the frozen Motoko participant has no HTTP transport, no v1/info or v1/directory encoder, and no changes-feed serving path",
+  "motoko has no publish-response client decoder; publish responses it received were compared byte-exactly by the coordinator against specification-determined transcript bytes",
+  "v1/info and v1/directory served by Rust were structurally checked by the coordinator, not by the Motoko participant",
+  "the Motoko publish shim receives the scenario target DID from published values; DID extraction from the envelope is not part of the frozen Motoko surface",
+  "HTTP media-type and status handling in the motoko-serves direction is coordinator-shim transport and is not evidence of Motoko HTTP-binding conformance"
+ ],
+ "exchanges": [
+  {
+   "direction": "rust-serves",
+   "id": "R1",
+   "live": true,
+   "note": "coordinator-checked structure; opaque values not compared",
+   "operation": "v1/info",
+   "request": {
+    "bodyHex": "",
+    "bodyLength": 0,
+    "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contentType": null,
+    "method": "GET",
+    "path": "/v1/info"
+   },
+   "response": {
+    "bodyHex": "a900010150b1b661f53f85650f1171e7b7ba5652b6020703810104813205a50019400001190100021a0010000003190400041a004000000650d00d1830696a7b64c6a1193a5754752107509a2bf640eb82975990ebc7aed430e5e50877687474703a2f2f3132372e302e302e313a34303839312f",
+    "bodyLength": 116,
+    "bodySha256": "23f947cd02203060542c36b7d8cee423adb56c1ca89b37b666be5a9214c7c57f",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R2",
+   "live": true,
+   "note": "coordinator-checked structure; opaque values not compared",
+   "operation": "v1/directory",
+   "request": {
+    "bodyHex": "",
+    "bodyLength": 0,
+    "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contentType": null,
+    "method": "GET",
+    "path": "/v1/directory"
+   },
+   "response": {
+    "bodyHex": "a3000101509a2bf640eb82975990ebc7aed430e5e50280",
+    "bodyLength": 23,
+    "bodySha256": "f3581bcc08dcc4b6be8067e483d56a625df0e56dcba4fb1ecd258464933a35db",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R3.0",
+   "live": true,
+   "note": "Motoko-authored envelope crossing to Rust (b4-root)",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+    "bodyLength": 356,
+    "bodySha256": "fee0945b61fca0f378e0959f66881e77b1fc8e571283988e6c79ba123659de66",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a200010100",
+    "bodyLength": 5,
+    "bodySha256": "42d491ef85582fa694caec4c447478fe7f0903ac10343096e4566aa078accce9",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R3.1",
+   "live": true,
+   "note": "Motoko-authored envelope crossing to Rust (b4-root)",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+    "bodyLength": 356,
+    "bodySha256": "fee0945b61fca0f378e0959f66881e77b1fc8e571283988e6c79ba123659de66",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a200010101",
+    "bodyLength": 5,
+    "bodySha256": "8179cf9a2f4e2611c7232a0810f81e087dfe4dcefbeebe86385c6133e656b9bc",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R3.2",
+   "live": true,
+   "note": "Motoko-authored envelope crossing to Rust (b8)",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a200320158202543b92ff1095511476adc8369db6ddc933665a11978dda1404ee1066ca9559d0258202a35f76c8bcc0c5fc69e99d51656c2a93a1c8e447677d6f78c8c9d729eef3ca607a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840b8352e21b1168a4c74020f2b7cf10b519fda4fb0c2465a682328f802c08b1873e1b1c137b79cce7f81aa00fc1a5630e34c19500a016b45867c9900108625650e",
+    "bodyLength": 356,
+    "bodySha256": "d63b43ed9971a03e47d8160cb33f2ab478b7ba134d3b1dc0de27e2ec341e3c60",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a3000101020207",
+    "bodyLength": 7,
+    "bodySha256": "d8beeaa9d7242bea2fb2531de0debad39076efa9ed17e69f9bbae9e69d3a3e87",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R3.seed-bob",
+   "live": true,
+   "note": "Motoko-authored B.9",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 350,
+    "bodySha256": "9286f531fcd5517cb6563f3d23bd6b8b407e5a5148b107d19ea3917f8e9c9ced",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a200010100",
+    "bodyLength": 5,
+    "bodySha256": "42d491ef85582fa694caec4c447478fe7f0903ac10343096e4566aa078accce9",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R4.duplicates",
+   "live": true,
+   "note": "live response; generation opaque per NONDETERMINISM",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 176,
+    "bodySha256": "ea2c9422529945ce78406f486c80ad633a1e90726cd493dedfa4347df373cf73",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "a3000101509a2bf640eb82975990ebc7aed430e5e50283a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 1106,
+    "bodySha256": "56831519ef6f558b750ef412d762995d4bc5f3a1953c88dd38800bf7157714c0",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R4.malformed",
+   "live": true,
+   "note": "live response; generation opaque per NONDETERMINISM",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d776469643a666c773a6e6f742d612d6d756c74696261736578376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 143,
+    "bodySha256": "8276648c9938dcc57a004695414bc7bd6776186b8df1626210667abf1c9ccf38",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "a3000101509a2bf640eb82975990ebc7aed430e5e50283a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a200030200a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 748,
+    "bodySha256": "88f82ddbb04aa639087c6872a3b75e2ad342baf7696cbfc8afc3c486ac39237e",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R4.invalid-outer",
+   "live": true,
+   "note": "published invalid outer request",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a30001018178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d018178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 121,
+    "bodySha256": "0f3aa1e98de0c1d63a2dd740e04542be326e550e75a133ade1ac045694bfb790",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "",
+    "bodyLength": 0,
+    "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contentType": null,
+    "httpStatus": 400
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R5.initial",
+   "live": true,
+   "note": "null-cursor initial enumeration",
+   "operation": "v1/changes",
+   "request": {
+    "bodyHex": "a4000101f602190100031a00100000",
+    "bodyLength": 15,
+    "bodySha256": "fd42884692d21fccf8ad79dac4c2b9ec61caeb862c494099a5f6ef75d0d59153",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/changes"
+   },
+   "response": {
+    "bodyHex": "a60001010002828378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436da2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204018378376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c6020202035818d00d1830696a7b64c6a1193a57547521000000000000000204f405509a2bf640eb82975990ebc7aed430e5e5",
+    "bodyLength": 892,
+    "bodySha256": "faf429aeed65c788bad690b8e1cf495cfd9be9c26d85099e5681c0a33a717fcc",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R5.publish-b5",
+   "live": true,
+   "note": "Motoko-authored B.5 revocation crosses the wire",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c09",
+    "bodyLength": 395,
+    "bodySha256": "a8cc2e8e72f4386c3df8df63bb4dff6ca921a9be4a3f87ecbae6e6c4fdfe4a82",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a200010100",
+    "bodyLength": 5,
+    "bodySha256": "42d491ef85582fa694caec4c447478fe7f0903ac10343096e4566aa078accce9",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R5.incremental",
+   "live": true,
+   "note": "incremental pull after update",
+   "operation": "v1/changes",
+   "request": {
+    "bodyHex": "a40001015818d00d1830696a7b64c6a1193a57547521000000000000000202190100031a00100000",
+    "bodyLength": 40,
+    "bodySha256": "e77b47d26c17d87685fb5d60869148fdef1bf67e793644216026c21c6aa0e4a9",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/changes"
+   },
+   "response": {
+    "bodyHex": "a60001010002818378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436da200000159018bd28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c0903035818d00d1830696a7b64c6a1193a57547521000000000000000304f405509a2bf640eb82975990ebc7aed430e5e5",
+    "bodyLength": 515,
+    "bodySha256": "61e5a9fe0975e71ddc2437696db7e15d3f01df3739f8484c12aa7eb58b19532a",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R5.page0",
+   "live": true,
+   "note": "itemLimit-1 pagination",
+   "operation": "v1/changes",
+   "request": {
+    "bodyHex": "a4000101f60201031a00100000",
+    "bodyLength": 13,
+    "bodySha256": "61cc41cdb6d3938808d6aba5e407205c47e546d5ba67cddaf5aff6a713a53d44",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/changes"
+   },
+   "response": {
+    "bodyHex": "a60001010002818378376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c6020202035818d00d1830696a7b64c6a1193a57547521000000000000000204f505509a2bf640eb82975990ebc7aed430e5e5",
+    "bodyLength": 470,
+    "bodySha256": "7cd051ce7ffddbb20909872d216fd398516d57ce89a3acef835af22a32c8c524",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R5.page1",
+   "live": true,
+   "note": "itemLimit-1 pagination",
+   "operation": "v1/changes",
+   "request": {
+    "bodyHex": "a40001015818d00d1830696a7b64c6a1193a5754752100000000000000020201031a00100000",
+    "bodyLength": 38,
+    "bodySha256": "d8db9de6dfef8d086abdab569b564587b77653069414fbadf5338fa92dd54ae2",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/changes"
+   },
+   "response": {
+    "bodyHex": "a60001010002818378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436da200000159018bd28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c0903035818d00d1830696a7b64c6a1193a57547521000000000000000304f405509a2bf640eb82975990ebc7aed430e5e5",
+    "bodyLength": 515,
+    "bodySha256": "61e5a9fe0975e71ddc2437696db7e15d3f01df3739f8484c12aa7eb58b19532a",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "rust-serves",
+   "id": "R7.reset",
+   "live": true,
+   "note": "old-generation cursor presented to a reset relay",
+   "operation": "v1/changes",
+   "request": {
+    "bodyHex": "a40001015818d00d1830696a7b64c6a1193a57547521000000000000000302190100031a00100000",
+    "bodyLength": 40,
+    "bodySha256": "7c0619eb732f9393b6a3e532676baf71335f7489ea6da4d7918fb460198ec202",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/changes"
+   },
+   "response": {
+    "bodyHex": "a200010101",
+    "bodyLength": 5,
+    "bodySha256": "8179cf9a2f4e2611c7232a0810f81e087dfe4dcefbeebe86385c6133e656b9bc",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M1.0",
+   "live": true,
+   "note": "Rust-authored envelope crossing to Motoko (b4-root)",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+    "bodyLength": 356,
+    "bodySha256": "fee0945b61fca0f378e0959f66881e77b1fc8e571283988e6c79ba123659de66",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a200010100",
+    "bodyLength": 5,
+    "bodySha256": "42d491ef85582fa694caec4c447478fe7f0903ac10343096e4566aa078accce9",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M1.1",
+   "live": true,
+   "note": "Rust-authored envelope crossing to Motoko (b4-root)",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+    "bodyLength": 356,
+    "bodySha256": "fee0945b61fca0f378e0959f66881e77b1fc8e571283988e6c79ba123659de66",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a300010101020d",
+    "bodyLength": 7,
+    "bodySha256": "40b4e5a8a8f90bdcc98fd0ec4f60f9820280c2ad8e676b82b6d56b04f4916c86",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M1.2",
+   "live": true,
+   "note": "Rust-authored envelope crossing to Motoko (b9-bob-root)",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 350,
+    "bodySha256": "9286f531fcd5517cb6563f3d23bd6b8b407e5a5148b107d19ea3917f8e9c9ced",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a200010100",
+    "bodyLength": 5,
+    "bodySha256": "42d491ef85582fa694caec4c447478fe7f0903ac10343096e4566aa078accce9",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M1.rejected",
+   "live": true,
+   "note": "published B.8 envelope rejected by Motoko ingress",
+   "operation": "v1/publish",
+   "request": {
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a200320158202543b92ff1095511476adc8369db6ddc933665a11978dda1404ee1066ca9559d0258202a35f76c8bcc0c5fc69e99d51656c2a93a1c8e447677d6f78c8c9d729eef3ca607a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840b8352e21b1168a4c74020f2b7cf10b519fda4fb0c2465a682328f802c08b1873e1b1c137b79cce7f81aa00fc1a5630e34c19500a016b45867c9900108625650e",
+    "bodyLength": 356,
+    "bodySha256": "d63b43ed9971a03e47d8160cb33f2ab478b7ba134d3b1dc0de27e2ec341e3c60",
+    "contentType": "application/cose",
+    "method": "POST",
+    "path": "/v1/publish"
+   },
+   "response": {
+    "bodyHex": "a3000101020207",
+    "bodyLength": 7,
+    "bodySha256": "d8beeaa9d7242bea2fb2531de0debad39076efa9ed17e69f9bbae9e69d3a3e87",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M2.duplicates",
+   "live": true,
+   "note": "published-scenario state; pinned example generation",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 176,
+    "bodySha256": "ea2c9422529945ce78406f486c80ad633a1e90726cd493dedfa4347df373cf73",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "a300010150000102030405060708090a0b0c0d0e0f0283a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 1106,
+    "bodySha256": "203e22e2d913359b08070c289d60889770bcdeee0584187dee25e1c8e05fdfe8",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M2.malformed",
+   "live": true,
+   "note": "published-scenario state; pinned example generation",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d776469643a666c773a6e6f742d612d6d756c74696261736578376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 143,
+    "bodySha256": "8276648c9938dcc57a004695414bc7bd6776186b8df1626210667abf1c9ccf38",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "a300010150000102030405060708090a0b0c0d0e0f0283a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a200030200a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 748,
+    "bodySha256": "d8a36364ed62a8fabb905f6c20c04304fe1803df10fa1680840c5c7cd1af96fa",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M3.invalid-outer",
+   "live": true,
+   "note": "published invalid outer request bytes",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a30001018178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d018178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 121,
+    "bodySha256": "0f3aa1e98de0c1d63a2dd740e04542be326e550e75a133ade1ac045694bfb790",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "",
+    "bodyLength": 0,
+    "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contentType": null,
+    "httpStatus": 400
+   }
+  },
+  {
+   "direction": "motoko-serves",
+   "id": "M4.isolation",
+   "live": true,
+   "note": "published B.11.3 scenario via production seed",
+   "operation": "v1/resolve",
+   "request": {
+    "bodyHex": "a20001018278376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": 119,
+    "bodySha256": "a2d1d1944182db0f42468bdcaeb086d1987ee3570b892811a378f0ec3bbbca78",
+    "contentType": "application/cbor",
+    "method": "POST",
+    "path": "/v1/resolve"
+   },
+   "response": {
+    "bodyHex": "a300010150000102030405060708090a0b0c0d0e0f0282a200030213a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+    "bodyLength": 385,
+    "bodySha256": "752ad968d544425ccebc125666ba29a1bfc726fa3341c47850f9b79d856dc055",
+    "contentType": "application/cbor",
+    "httpStatus": 200
+   }
+  }
+ ],
+ "findings": [
+  {
+   "classification": "unresolved-specification-ambiguity",
+   "description": "publish status-1 response encoding differs: Motoko includes the optional errorCode member (13, duplicate) while Rust and the bundle transcript omit it. Section 12.5 marks errorCode optional without a presence rule for non-rejection statuses (unlike Section 12.6, which pins presence per status), so both encodings satisfy the published schema; the live Rust production client accepted the Motoko response and reported noChange. Not normalized; flagged for the specification maintainer.",
+   "id": "M1.1.publish-response-encoding",
+   "interopEffect": "none observed; Rust client accepted",
+   "motokoBytesHex": "a300010101020d",
+   "rustAndTranscriptBytesHex": "a200010101"
+  },
+  {
+   "classification": "serving-disagreement-with-published-vector",
+   "description": "Motoko relay serving diverges from the published B.11.3 response for a held unverifiable candidate: its production handleResolve re-verifies stored envelope bytes at serving time and answers { 0: 3, 2: 19 (internalError) } where the published vector serves the retained invalid B.8 envelope verbatim as a Full result (Section 12.3: a Full result 'carries the exact admitted complete envelope bytes as a candidate, not a validity assertion'). The state was coordinator-seeded through Motoko's production seed entry point; the frozen participant's own ingress rejects unverifiable candidates, so this state is unreachable through its production ingress alone. Client-side candidate isolation — the Section 20.4 obligation — agreed on both sides in R4, H3, and this exchange's index-1 handling. Correction is proposed as a later reviewed commit descended from the frozen tag; the frozen tag is not altered.",
+   "id": "M4.opaque-candidate-serving",
+   "motokoBytesSha256": "752ad968d544425ccebc125666ba29a1bfc726fa3341c47850f9b79d856dc055",
+   "motokoServedIndex0": "{0: 3, 2: 19}",
+   "publishedIndex0": "Full (exact B.8 envelope bytes)",
+   "publishedSha256": "62246877adbd56be2996ea37d05475d88c0e7932ff9b042f8ddbb9a809f8f4ca"
+  }
+ ],
+ "phase": 3,
+ "pins": {
+  "motokoChallengeSha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e",
+  "motokoCommit": "3840d9adf07755d326d920f4711dafc4e08bcb40",
+  "motokoGrandparent": "4bd922c301ed8f1583bcca37ac988b6493badfae",
+  "motokoParent": "7f2243ef729aa21e95e047becef12319ee50d765",
+  "motokoTag": "motoko-v0.9.1-independent-freeze",
+  "protocolRepoCommit": "c90742eb763cda5bd3c6e7d20ab1799590da489b",
+  "protocolRepoTag": "v0.9.1-interop-bundle-reviewed",
+  "rustCommit": "8606a102bfb4f2bbfbc81e364bdf548c437bf123",
+  "rustTag": "milestone-5-v0.9.1-reviewed",
+  "specificationSha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71"
+ },
+ "recipientClockMs": "1785589201123",
+ "totals": {
+  "checks": 52,
+  "exchanges": 23,
+  "failed": 0,
+  "passed": 52,
+  "recordedFindings": 2
+ }
+}

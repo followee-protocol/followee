@@ -1,0 +1,56 @@
+{
+ "campaign": "followee-interop/v0.9.1 campaign 1 (first neutral Rust<->Motoko run)",
+ "pins": {
+  "motokoChallengeSha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e",
+  "motokoCommit": "3840d9adf07755d326d920f4711dafc4e08bcb40",
+  "motokoGrandparent": "4bd922c301ed8f1583bcca37ac988b6493badfae",
+  "motokoParent": "7f2243ef729aa21e95e047becef12319ee50d765",
+  "motokoTag": "motoko-v0.9.1-independent-freeze",
+  "protocolRepoCommit": "c90742eb763cda5bd3c6e7d20ab1799590da489b",
+  "protocolRepoTag": "v0.9.1-interop-bundle-reviewed",
+  "rustCommit": "8606a102bfb4f2bbfbc81e364bdf548c437bf123",
+  "rustTag": "milestone-5-v0.9.1-reviewed",
+  "specificationSha256": "1c1a20c639aaf90b1bfc54b5e9ea72c49f680566ba9b12ad10615412ece3cd71"
+ },
+ "reproduction": [
+  "# From the protocol repository root, with the three frozen checkouts",
+  "# at their pinned revisions (paths overridable via FOLLOWEE_RS and",
+  "# FOLLOWEE_MOTOKO; every script refuses non-pinned checkouts):",
+  "cd interop/v0.9.1 && python3 verify/verify_bundle.py",
+  "cd interop/v0.9.1 && python3 -m unittest discover -s verify/tests",
+  "cd interop/campaign-1/adapters/rust-iface && cargo test",
+  "cd interop/campaign-1/orchestrate && python3 phase1.py",
+  "cd interop/campaign-1/orchestrate && python3 phase2.py",
+  "cd interop/campaign-1/orchestrate && python3 phase3.py",
+  "cd interop/campaign-1 && python3 -m unittest discover -s orchestrate/tests -t orchestrate",
+  "cd interop/campaign-1/orchestrate && python3 make_archive.py",
+  "# Phase 1 and phase 2 outputs are byte-deterministic across runs;",
+  "# phase 3 raw exchanges contain relay-chosen opaque values that vary",
+  "# between live executions per authoring/NONDETERMINISM.md."
+ ],
+ "scope": {
+  "exercised": [
+   "phase 1: all 76 interface-contract expected-vector cases on both participants (deriveIdentity, authorRecord, verifyRecord incl. all B.8/B.10/B.12 negatives and target-DID variants, nextTimestamp, selectCurrent incl. all enumerated permutations)",
+   "phase 2: all 36 blind challenge cases three ways (frozen Motoko vs Rust vs coordinator derivation), cross-verification of each side's envelopes by the other, identityRef resolution, permutation invariance",
+   "phase 3 rust-serves: live v1/info, v1/directory, v1/publish (statuses 0/1/2), v1/resolve (duplicates, malformed DID, invalid outer 400), v1/changes (initial enumeration, incremental update visibility, itemLimit-1 pagination, ResetRequired) with the Motoko production client/receiver on the other end",
+   "phase 3 motoko-serves: live v1/publish (statuses 0/1/2) and v1/resolve (duplicates, malformed DID, invalid outer 400, B.11.3 candidate scenario) with the Rust production CLI client on the other end",
+   "hostile-peer client behaviour: published B.11.2, B.11.5, and B.11.7 responses against both production clients"
+  ],
+  "notExercised": [
+   "motoko-as-relay: v1/info, v1/directory, and v1/changes serving (deferred by the frozen Motoko participant to its wire-transport milestone)",
+   "motoko publish-response client decoding (coordinator byte-compared those responses instead)",
+   "motoko validation of served relay-info/directory shapes (coordinator-checked)",
+   "HTTP media-type/status handling as evidence for Motoko (transport shim territory)",
+   "multi-relay resolver traversal, WebFinger handles, and every role beyond the operations listed above"
+  ]
+ },
+ "toolchains": {
+  "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+  "core (mops package)": "2.6.1 (exact-pinned in mops.toml / mops.lock)",
+  "moc": "1.14.0 (pinned via mops toolchain)",
+  "mops": "CLI 2.14.1",
+  "node": "v24.17.0",
+  "python3": "3.10.12",
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+ }
+}

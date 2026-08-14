@@ -1,0 +1,20 @@
+[package]
+name = "followee-interop-adapter-rust"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Neutral interop-interface adapter (interop/v0.9.1 INTERFACE.md) for the frozen followee-rs participant"
+license = "MIT"
+publish = false
+
+[dependencies]
+# The frozen Rust participant, linked read-only by path. The campaign
+# verifies the checkout is at tag milestone-5-v0.9.1-reviewed before use.
+followee = { path = "../../../../../followee-rs" }
+serde = "1"
+serde_json = "1"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]
