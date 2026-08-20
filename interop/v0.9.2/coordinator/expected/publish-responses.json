@@ -1,0 +1,831 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "publish-responses.json",
+  "provenance": "specification-determined",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a",
+    "specificationVersion": "v0.9.2"
+  },
+  "description": "Section 12.5 publish-response field-presence matrix introduced by specification v0.9.2: exact accept/reject classification for every status and errorCode combination over the registered Section 15.3 codes plus explicit unregistered-value probes (the Section 15.3 registry is the complete v1 wire vocabulary, so an unregistered errorCode makes the response malformed on every status), including the enumerated permitted status-1 diagnostic encodings. The permitted status-1 forms are byte-distinct conforming encodings of the same protocol outcome; their difference is permitted diagnostic variation, never a disagreement, and is never normalized away.",
+  "cases": [
+    {
+      "id": "publish-accept-status-0",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a200010100"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "0",
+        "errorCode": null
+      },
+      "note": "Admitted and current: errorCode MUST be absent.",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-1-bare",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a200010101"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "1",
+        "errorCode": null
+      },
+      "note": "Valid but no current-state change, without the optional diagnostic reason.",
+      "specificationSections": [
+        "Section 12.5"
+      ],
+      "variationGroup": "publish-status-1"
+    },
+    {
+      "id": "publish-accept-status-1-losingRecord",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010101020c"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "1",
+        "errorCode": "12"
+      },
+      "note": "Valid but no current-state change with the accurate `losingRecord` reason: one of the enumerated permitted status-1 encodings. Byte-distinct from the bare form; never normalized into it.",
+      "specificationSections": [
+        "Section 12.5"
+      ],
+      "variationGroup": "publish-status-1",
+      "comparisonRule": "permitted-diagnostic-variation",
+      "diagnosticVariationOf": "publish-accept-status-1-bare"
+    },
+    {
+      "id": "publish-accept-status-1-duplicate",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010101020d"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "1",
+        "errorCode": "13"
+      },
+      "note": "Valid but no current-state change with the accurate `duplicate` reason: one of the enumerated permitted status-1 encodings. Byte-distinct from the bare form; never normalized into it.",
+      "specificationSections": [
+        "Section 12.5"
+      ],
+      "variationGroup": "publish-status-1",
+      "comparisonRule": "permitted-diagnostic-variation",
+      "diagnosticVariationOf": "publish-accept-status-1-bare"
+    },
+    {
+      "id": "publish-reject-status-1-invalidDid",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010200"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `invalidDid` (0) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-unsupportedHash",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010201"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `unsupportedHash` (1) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-unsupportedSuite",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010202"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `unsupportedSuite` (2) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-recordTooLarge",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010203"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `recordTooLarge` (3) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-invalidCbor",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010204"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `invalidCbor` (4) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-nonDeterministicCbor",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010205"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `nonDeterministicCbor` (5) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-schemaViolation",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010206"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `schemaViolation` (6) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-identityBindingMismatch",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010207"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `identityBindingMismatch` (7) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-invalidRevocationKey",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010208"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `invalidRevocationKey` (8) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-invalidSignature",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010209"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `invalidSignature` (9) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-premature",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010101020a"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `premature` (10) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-rootRevoked",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010101020b"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `rootRevoked` (11) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-policyRejected",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010101020e"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `policyRejected` (14) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-rateLimited",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010101020f"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `rateLimited` (15) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-responseTooLarge",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010210"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `responseTooLarge` (16) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-temporarilyUnavailable",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010211"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `temporarilyUnavailable` (17) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-invalidCursor",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010212"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `invalidCursor` (18) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-internalError",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010213"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 1 may carry only `losingRecord` or `duplicate`; `internalError` (19) fails the applicable v1 schema.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-0-duplicate",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010100020d"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 0 forbids errorCode even for a no-change reason code.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-0-identityBindingMismatch",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101000207"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 0 forbids errorCode even for a rejection code.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-2-missing-errorCode",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a200010102"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "Status 2 requires errorCode.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-2-losingRecord",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102020c"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "A duplicate or losing-but-valid record is the status 1 no-change outcome, never a rejection; status 2 MUST NOT carry `losingRecord`.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-2-duplicate",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102020d"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "A duplicate or losing-but-valid record is the status 1 no-change outcome, never a rejection; status 2 MUST NOT carry `duplicate`.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-0-unregistered-20",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101000214"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "errorCode 20 is the first value beyond the registered Section 15.3 range. The registry is the complete v1 wire vocabulary, so an unregistered value fails the applicable v1 schema on every status; the complete response is rejected without extracting a status.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-1-unregistered-20",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101010214"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "errorCode 20 is the first value beyond the registered Section 15.3 range. The registry is the complete v1 wire vocabulary, so an unregistered value fails the applicable v1 schema on every status; the complete response is rejected without extracting a status.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-2-unregistered-20",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020214"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "errorCode 20 is the first value beyond the registered Section 15.3 range. The registry is the complete v1 wire vocabulary, so an unregistered value fails the applicable v1 schema on every status; the complete response is rejected without extracting a status.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-reject-status-2-unregistered-uint64-max",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102021bffffffffffffffff"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "requiredBehaviour": "reject-complete-response-no-status-no-state-change",
+      "note": "The canonical uint64 maximum as errorCode: unregistered, so the complete response is rejected. This wide probe proves the complete-vocabulary rule is enforced over the full unsigned range, not as a one-byte range check.",
+      "specificationSections": [
+        "Section 12.1",
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-invalidDid",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020200"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "0"
+      },
+      "note": "Status 2 with the registered rejection code `invalidDid` (0) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-unsupportedHash",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020201"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "1"
+      },
+      "note": "Status 2 with the registered rejection code `unsupportedHash` (1) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-unsupportedSuite",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020202"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "2"
+      },
+      "note": "Status 2 with the registered rejection code `unsupportedSuite` (2) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-recordTooLarge",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020203"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "3"
+      },
+      "note": "Status 2 with the registered rejection code `recordTooLarge` (3) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-invalidCbor",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020204"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "4"
+      },
+      "note": "Status 2 with the registered rejection code `invalidCbor` (4) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-nonDeterministicCbor",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020205"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "5"
+      },
+      "note": "Status 2 with the registered rejection code `nonDeterministicCbor` (5) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-schemaViolation",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020206"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "6"
+      },
+      "note": "Status 2 with the registered rejection code `schemaViolation` (6) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-identityBindingMismatch",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020207"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "7"
+      },
+      "note": "Status 2 with the registered rejection code `identityBindingMismatch` (7) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-invalidRevocationKey",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020208"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "8"
+      },
+      "note": "Status 2 with the registered rejection code `invalidRevocationKey` (8) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-invalidSignature",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020209"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "9"
+      },
+      "note": "Status 2 with the registered rejection code `invalidSignature` (9) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-premature",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102020a"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "10"
+      },
+      "note": "Status 2 with the registered rejection code `premature` (10) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-rootRevoked",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102020b"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "11"
+      },
+      "note": "Status 2 with the registered rejection code `rootRevoked` (11) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-policyRejected",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102020e"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "14"
+      },
+      "note": "Status 2 with the registered rejection code `policyRejected` (14) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-rateLimited",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a300010102020f"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "15"
+      },
+      "note": "Status 2 with the registered rejection code `rateLimited` (15) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-responseTooLarge",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020210"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "16"
+      },
+      "note": "Status 2 with the registered rejection code `responseTooLarge` (16) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-temporarilyUnavailable",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020211"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "17"
+      },
+      "note": "Status 2 with the registered rejection code `temporarilyUnavailable` (17) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-invalidCursor",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020212"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "18"
+      },
+      "note": "Status 2 with the registered rejection code `invalidCursor` (18) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    },
+    {
+      "id": "publish-accept-status-2-internalError",
+      "operation": "receivePublishResponse",
+      "input": {
+        "responseHex": "a3000101020213"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "status": "2",
+        "errorCode": "19"
+      },
+      "note": "Status 2 with the registered rejection code `internalError` (19) is schema-conforming wrapper content; whether the code is appropriate for a given publication is the emitting Relay's Section 13.1 classification, exercised by the live campaign, not by wrapper acceptance. A conforming status-2 rejection is ordinary successful protocol processing at the HTTP layer and is normally carried by HTTP 200 (Section 15.4).",
+      "specificationSections": [
+        "Section 12.5"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,961 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "verification.json",
+  "provenance": "specification-determined",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a",
+    "specificationVersion": "v0.9.2"
+  },
+  "description": "Record-verification comparison cases over the published envelopes, including constructed clock scenarios, constructed target-DID classification variants whose error classifications are normative under Section 3.1 and Appendix B.7, and constructed direct-wire cases carrying present-empty optional collections that the authorRecord input canonicalization cannot produce. Accepted expectations carry the complete corrected accepted-result projection of the interface contract. Envelope references resolve within coordinator/expected/; direct-wire cases carry their envelope bytes inline.",
+  "cases": [
+    {
+      "id": "verify-b4-accept",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Alice Example",
+            "summary": "Writer",
+            "avatar": null,
+            "alsoKnownAs": [
+              "acct:alice@example.com"
+            ],
+            "services": [
+              {
+                "id": "feed",
+                "type": "Feed",
+                "endpoint": "https://alice.example/feed.xml",
+                "mediaType": "application/atom+xml",
+                "label": "Writing",
+                "language": null,
+                "rel": null
+              }
+            ],
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": null
+        }
+      },
+      "specificationSections": [
+        "Appendix B.4",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-b5-accept",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b5-root-revoked"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589201123",
+        "authority": "rootRevoked",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861",
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": {
+            "suite": "-19",
+            "publicKeyHex": "29acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd7",
+            "publicKeyCborHex": "a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd7"
+          },
+          "contact": {
+            "displayName": "Alice Example",
+            "summary": "Writer",
+            "avatar": null,
+            "alsoKnownAs": [
+              "acct:alice@example.com"
+            ],
+            "services": [
+              {
+                "id": "feed",
+                "type": "Feed",
+                "endpoint": "https://alice.example/feed.xml",
+                "mediaType": "application/atom+xml",
+                "label": "Writing",
+                "language": null,
+                "rel": null
+              }
+            ],
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": null
+        }
+      },
+      "specificationSections": [
+        "Appendix B.5",
+        "Section 8.2"
+      ]
+    },
+    {
+      "id": "verify-b9-accept",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+        "envelope": {
+          "vector": "records",
+          "case": "b9-bob-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+        "timestampMs": "1785589201123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa",
+            "revocationCommitmentHex": "46ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c41",
+            "authorityDescriptorCborHex": "a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c41",
+            "authorityDescriptorDigestHex": "ddc23bec60a7a9dad831d8c52439b9f3f30e17012da4d948233ece41154817ba",
+            "multihashHex": "1220ddc23bec60a7a9dad831d8c52439b9f3f30e17012da4d948233ece41154817ba",
+            "did": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Bob Example",
+            "summary": "Reader",
+            "avatar": null,
+            "alsoKnownAs": [
+              "acct:bob@example.net"
+            ],
+            "services": [
+              {
+                "id": "feed",
+                "type": "Feed",
+                "endpoint": "https://bob.example/feed.xml",
+                "mediaType": "application/atom+xml",
+                "label": "Reading",
+                "language": null,
+                "rel": null
+              }
+            ],
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": null
+        }
+      },
+      "specificationSections": [
+        "Appendix B.9",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-b4-premature",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785588900122"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": true,
+        "stale": false,
+        "recordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Alice Example",
+            "summary": "Writer",
+            "avatar": null,
+            "alsoKnownAs": [
+              "acct:alice@example.com"
+            ],
+            "services": [
+              {
+                "id": "feed",
+                "type": "Feed",
+                "endpoint": "https://alice.example/feed.xml",
+                "mediaType": "application/atom+xml",
+                "label": "Writing",
+                "language": null,
+                "rel": null
+              }
+            ],
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": null
+        }
+      },
+      "specificationSections": [
+        "Section 5.4"
+      ]
+    },
+    {
+      "id": "verify-b4-premature-boundary",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785588900123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "recordBodyDigestHex": "f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7",
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Alice Example",
+            "summary": "Writer",
+            "avatar": null,
+            "alsoKnownAs": [
+              "acct:alice@example.com"
+            ],
+            "services": [
+              {
+                "id": "feed",
+                "type": "Feed",
+                "endpoint": "https://alice.example/feed.xml",
+                "mediaType": "application/atom+xml",
+                "label": "Writing",
+                "language": null,
+                "rel": null
+              }
+            ],
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": null
+        }
+      },
+      "specificationSections": [
+        "Section 5.4"
+      ]
+    },
+    {
+      "id": "verify-wire-empty-alsoKnownAs",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelopeHex": "d28443a10132a058b3a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a200765769726520456d70747920416c736f4b6e6f776e4173038058404e652827ee0917a5904316d6fbb7ad42f263798a298dedb5a160ac7ecc7783eed7106f55aeb5e5907a30e1ed57502c4624a098e71fe759207f5103aa6327d604",
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "envelopeHex": "d28443a10132a058b3a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a200765769726520456d70747920416c736f4b6e6f776e4173038058404e652827ee0917a5904316d6fbb7ad42f263798a298dedb5a160ac7ecc7783eed7106f55aeb5e5907a30e1ed57502c4624a098e71fe759207f5103aa6327d604",
+        "recordBodyCborHex": "a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a200765769726520456d70747920416c736f4b6e6f776e41730380",
+        "recordBodyDigestHex": "d9f6a550b49e15a10b076a8e6ec2f9cb94e260342a93162049de20d791d1a631",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Wire Empty AlsoKnownAs",
+            "summary": null,
+            "avatar": null,
+            "alsoKnownAs": [],
+            "services": null,
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": null
+        }
+      },
+      "construction": {
+        "form": "direct-wire",
+        "presentEmpty": "Contact Document label 3 present as an empty array",
+        "note": "Valid record constructed directly at the wire layer and signed with the published Appendix B.2 root key. The present-empty optional collections are valid protocol encodings that the authorRecord input canonicalization cannot construct; bundle tooling asserts the canonicalized counterpart omits them and yields different bytes."
+      },
+      "specificationSections": [
+        "Section 7.1",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-wire-empty-contact-extensions",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelopeHex": "d28443a10132a058bba600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a200781d5769726520456d70747920436f6e7461637420457874656e73696f6e7306a05840e31604f5532893fbc5d7c5c72ff98ae5b545da1111b2d442c966653ba2d0aa588b18c894585c400ebde236a36b0fffda7e5fda755b1d4b00d415ea7fbf756b08",
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "envelopeHex": "d28443a10132a058bba600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a200781d5769726520456d70747920436f6e7461637420457874656e73696f6e7306a05840e31604f5532893fbc5d7c5c72ff98ae5b545da1111b2d442c966653ba2d0aa588b18c894585c400ebde236a36b0fffda7e5fda755b1d4b00d415ea7fbf756b08",
+        "recordBodyCborHex": "a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a200781d5769726520456d70747920436f6e7461637420457874656e73696f6e7306a0",
+        "recordBodyDigestHex": "1ee8c092261d1368a7ade83422f76f2d4f8fe96b0786332e541f816b70638f2b",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Wire Empty Contact Extensions",
+            "summary": null,
+            "avatar": null,
+            "alsoKnownAs": null,
+            "services": null,
+            "migration": null,
+            "extensions": {}
+          },
+          "extensions": null
+        }
+      },
+      "construction": {
+        "form": "direct-wire",
+        "presentEmpty": "Contact Document label 6 present as an empty map",
+        "note": "Valid record constructed directly at the wire layer and signed with the published Appendix B.2 root key. The present-empty optional collections are valid protocol encodings that the authorRecord input canonicalization cannot construct; bundle tooling asserts the canonicalized counterpart omits them and yields different bytes."
+      },
+      "specificationSections": [
+        "Section 7.1",
+        "Section 7.2",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-wire-empty-record-extensions",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelopeHex": "d28443a10132a058baa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a100781c5769726520456d707479205265636f726420457874656e73696f6e7308a05840d94987dc26c593cb9aafb2602efed720653017b47d083df2633b664f740b8e7fa44a12a7294d75594890e08416321214b59cff9181f1045f72e750dd01edc008",
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "envelopeHex": "d28443a10132a058baa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a100781c5769726520456d707479205265636f726420457874656e73696f6e7308a05840d94987dc26c593cb9aafb2602efed720653017b47d083df2633b664f740b8e7fa44a12a7294d75594890e08416321214b59cff9181f1045f72e750dd01edc008",
+        "recordBodyCborHex": "a700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a100781c5769726520456d707479205265636f726420457874656e73696f6e7308a0",
+        "recordBodyDigestHex": "e5e7b546fa4b571543aa7cfad68cf3451cf05b85679f6686bbeed416d8fb2926",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Wire Empty Record Extensions",
+            "summary": null,
+            "avatar": null,
+            "alsoKnownAs": null,
+            "services": null,
+            "migration": null,
+            "extensions": null
+          },
+          "extensions": {}
+        }
+      },
+      "construction": {
+        "form": "direct-wire",
+        "presentEmpty": "record-body label 8 present as an empty map",
+        "note": "Valid record constructed directly at the wire layer and signed with the published Appendix B.2 root key. The present-empty optional collections are valid protocol encodings that the authorRecord input canonicalization cannot construct; bundle tooling asserts the canonicalized counterpart omits them and yields different bytes."
+      },
+      "specificationSections": [
+        "Section 5.1",
+        "Section 7.2",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-wire-empty-collections-combined",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelopeHex": "d28443a10132a058c1a700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a300781f5769726520456d70747920436f6c6c656374696f6e7320436f6d62696e6564038006a008a05840e237cdea0e9622bbfa7c8bdcb2c7c07eefded2678022a7a4a2565f27f3ebe1dd8a49fb135acb3b22f6d500be8d32f4dc55346b81423a508ad7abb67d25754508",
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "accepted",
+        "envelopeHex": "d28443a10132a058c1a700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a300781f5769726520456d70747920436f6c6c656374696f6e7320436f6d62696e6564038006a008a05840e237cdea0e9622bbfa7c8bdcb2c7c07eefded2678022a7a4a2565f27f3ebe1dd8a49fb135acb3b22f6d500be8d32f4dc55346b81423a508ad7abb67d25754508",
+        "recordBodyCborHex": "a700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a300781f5769726520456d70747920436f6c6c656374696f6e7320436f6d62696e6564038006a008a0",
+        "recordBodyDigestHex": "7d8aa0cb37449375befb78d2b264ab383201ac4c7e12d78bea10e31372c6d0e4",
+        "id": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "timestampMs": "1785589200123",
+        "authority": "root",
+        "validUntilMs": null,
+        "premature": false,
+        "stale": false,
+        "record": {
+          "descriptor": {
+            "descriptorVersion": "1",
+            "rootKeySuite": "-19",
+            "rootPublicKeyHex": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+            "revocationCommitmentHex": "d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorCborHex": "a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de",
+            "authorityDescriptorDigestHex": "12dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "multihashHex": "122012dc4b843d10c5ca7313aa2452db61d661afbe3943b3fdbea43405c7028d1eb2",
+            "did": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm"
+          },
+          "revocationKey": null,
+          "contact": {
+            "displayName": "Wire Empty Collections Combined",
+            "summary": null,
+            "avatar": null,
+            "alsoKnownAs": [],
+            "services": null,
+            "migration": null,
+            "extensions": {}
+          },
+          "extensions": {}
+        }
+      },
+      "construction": {
+        "form": "direct-wire",
+        "presentEmpty": "contact labels 3 and 6 and record-body label 8 all present and empty in one record",
+        "note": "Valid record constructed directly at the wire layer and signed with the published Appendix B.2 root key. The present-empty optional collections are valid protocol encodings that the authorRecord input canonicalization cannot construct; bundle tooling asserts the canonicalized counterpart omits them and yields different bytes."
+      },
+      "specificationSections": [
+        "Section 5.1",
+        "Section 7.1",
+        "Section 7.2",
+        "Section 8.1"
+      ]
+    },
+    {
+      "id": "verify-b8-descriptor-substitution",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b8-descriptor-substitution"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "identityBindingMismatch"
+      },
+      "specificationSections": [
+        "Appendix B.8"
+      ]
+    },
+    {
+      "id": "verify-b10-duplicate-key",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-duplicate-key"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-overlong",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-overlong"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-surrogate",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-surrogate"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-above-max",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-above-max"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b10-utf8-incomplete",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b10-utf8-incomplete"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidCbor"
+      },
+      "specificationSections": [
+        "Appendix B.10"
+      ]
+    },
+    {
+      "id": "verify-b12-simple-value-16",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b12-simple-value-16"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "specificationSections": [
+        "Appendix B.12"
+      ]
+    },
+    {
+      "id": "verify-b12-simple-value-32",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "envelopes-negative",
+          "case": "b12-simple-value-32"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "schemaViolation"
+      },
+      "specificationSections": [
+        "Appendix B.12"
+      ]
+    },
+    {
+      "id": "verify-target-foreign-valid-attacker",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmPdjR6k8HFgbf4e51P7iMy4aY3buGsxQU49fSHdGhce7s",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "identityBindingMismatch"
+      },
+      "note": "Unchanged internally consistent envelope verified against a different syntactically valid target (Appendix B.7 item 1, first form).",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-foreign-valid-bob",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "identityBindingMismatch"
+      },
+      "note": "Second foreign valid target.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-unsupported-hash-code",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zS5SPMkx81hBavRpesXb1kSazJTYCY4ZPchUCANBn3TQtDP",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "unsupportedHash"
+      },
+      "note": "Structurally well-formed multihash with code 0x13 (Appendix B.7 item 2).",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-unsupported-digest-length",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z6PDzzSEgcEdMV5arz8kUtwa8y4F7NyfVevjcoQ78KQ3HX",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "unsupportedHash"
+      },
+      "note": "Code 0x12 with well-formed declared digest length 0x1f matching the bytes present.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-trailing-byte",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z2otvnh5aufBdZfR6Rd8ykQUWNRuqejUBmt1VQahD6xF68iuD",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Trailing byte after the multihash.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-length-disagreement",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z6PHuQ5jQh8TrCVGyxeFkLqVtCKFg9gcbZWbvguJSK7qws",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Declared digest length 0x20 disagrees with 31 bytes present.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-non-minimal-varint",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:zFZwUGTotmmKvNbLPhGVFo56bxDna4rU4aT7ztGNdJ7oQczzV",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Non-minimal unsigned-varint encoding of code 0x12.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-missing-multibase-prefix",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:QmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Method-specific identifier does not begin with 'z'.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-wrong-multibase-prefix",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:ZQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Uppercase 'Z' is not the base58btc multibase prefix.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-invalid-base58-character",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z0mPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "'0' is not in the Bitcoin base58 alphabet.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-percent-encoded",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:z%51mPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Percent-encoding is malformed in the method-specific id.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-uppercase-did-prefix",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:FLW:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "The did:flw: prefix MUST be lowercase (Section 3.1).",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    },
+    {
+      "id": "verify-target-empty-method-id",
+      "operation": "verifyRecord",
+      "input": {
+        "targetDid": "did:flw:",
+        "envelope": {
+          "vector": "records",
+          "case": "b4-root"
+        },
+        "nowMs": "1785589201123"
+      },
+      "expected": {
+        "outcome": "rejected",
+        "error": "invalidDid"
+      },
+      "note": "Empty method-specific identifier.",
+      "specificationSections": [
+        "Section 3.1",
+        "Appendix B.7"
+      ]
+    }
+  ]
+}

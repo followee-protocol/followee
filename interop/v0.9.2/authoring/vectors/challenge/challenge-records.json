@@ -1,0 +1,301 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "challenge-records.json",
+  "provenance": "challenge-input",
+  "blind": true,
+  "description": "New neutral record-authoring challenge inputs. Inputs only: no record body, digest, signature, or envelope for these cases appears anywhere in this bundle. Identity references use the seeds in challenge-identities.json. Where a migration field names another challenge identity, the value is written as an identityRef object; each implementation substitutes the canonical Followee DID it derived for that identity. Every other convention follows the AUTHORING interface contract.",
+  "verifyNowMs": "1790001000000",
+  "cases": [
+    {
+      "id": "challenge-carol-root-full",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000000000",
+        "validUntilMs": "1793000000000",
+        "contact": {
+          "displayName": "Carol Éxample 测试",
+          "summary": "Interoperability challenge identity",
+          "avatar": "https://carol.example/avatar.png",
+          "alsoKnownAs": [
+            "acct:carol@example.org",
+            "https://carol.example/about"
+          ],
+          "services": [
+            {
+              "id": "feed",
+              "type": "Feed",
+              "endpoint": "https://carol.example/feed.json",
+              "mediaType": "application/feed+json",
+              "label": "Feed",
+              "language": "en-GB",
+              "rel": "alternate"
+            },
+            {
+              "id": "inbox",
+              "type": "https://proto.example/spec#inbox",
+              "endpoint": "https://[V1.a]/inbox",
+              "mediaType": null,
+              "label": "Boîte",
+              "language": "zh-Hant-HK",
+              "rel": "https://proto.example/rel#inbox"
+            }
+          ],
+          "migration": null,
+          "extensions": {
+            "https://ext.example/interop#note": {
+              "type": "text",
+              "value": "contact-level"
+            }
+          }
+        },
+        "extensions": {
+          "https://ext.example/interop#tree": {
+            "type": "map",
+            "entries": [
+              {
+                "key": {"type": "uint", "value": "0"},
+                "value": {"type": "uint", "value": "18446744073709551615"}
+              },
+              {
+                "key": {"type": "nint", "value": "-1"},
+                "value": {"type": "nint", "value": "-18446744073709551616"}
+              },
+              {
+                "key": {"type": "text", "value": "flags"},
+                "value": {
+                  "type": "array",
+                  "items": [
+                    {"type": "bool", "value": true},
+                    {"type": "bool", "value": false},
+                    {"type": "null"},
+                    {"type": "bytes", "hex": "00ff10"},
+                    {"type": "text", "value": "τέλος"}
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-carol-empty",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000001000",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": null,
+          "summary": null,
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-carol-revoked",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "rootRevoked",
+        "timestampMs": "1790000002000",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": null,
+          "summary": "Root key revoked",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "revocation"
+      }
+    },
+    {
+      "id": "challenge-carol-migrates",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000003000",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": null,
+          "summary": "Moving to a new identifier",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": {
+            "predecessor": null,
+            "successor": {"identityRef": "dave"}
+          },
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-dave-continues",
+      "operation": "authorRecord",
+      "identityRef": "dave",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000003500",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": null,
+          "summary": "Continues from a previous identifier",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": {
+            "predecessor": {"identityRef": "carol"},
+            "successor": null
+          },
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-dave-early",
+      "operation": "authorRecord",
+      "identityRef": "dave",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": null,
+          "summary": null,
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-erin-valid-until-boundary",
+      "operation": "authorRecord",
+      "identityRef": "erin",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000004000",
+        "validUntilMs": "1790000004000",
+        "contact": {
+          "displayName": null,
+          "summary": "validUntil equals timestamp",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-erin-revoked-empty",
+      "operation": "authorRecord",
+      "identityRef": "erin",
+      "input": {
+        "authority": "rootRevoked",
+        "timestampMs": "1790000004500",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": null,
+          "summary": null,
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "revocation"
+      }
+    },
+    {
+      "id": "challenge-carol-trio-a",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000005000",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": "Trio One",
+          "summary": "Equal-time ordering challenge",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-carol-trio-b",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000005000",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": "Trio Two",
+          "summary": "Equal-time ordering challenge",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    },
+    {
+      "id": "challenge-carol-trio-c",
+      "operation": "authorRecord",
+      "identityRef": "carol",
+      "input": {
+        "authority": "root",
+        "timestampMs": "1790000005000",
+        "validUntilMs": null,
+        "contact": {
+          "displayName": "Trio Three",
+          "summary": "Equal-time ordering challenge",
+          "avatar": null,
+          "alsoKnownAs": [],
+          "services": [],
+          "migration": null,
+          "extensions": {}
+        },
+        "extensions": {},
+        "signingSeed": "root"
+      }
+    }
+  ]
+}

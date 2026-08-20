@@ -1,0 +1,33 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "directory.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-directory",
+  "description": "Relay directory under the same directory generation used by the published Appendix B.11 vectors. Entry contents are example values; indices are meaningful only with this generation (Section 11.4). Index 0 is usable, as the Appendix B.11.7 scenario assumes.",
+  "operation": "v1/directory",
+  "specificationSections": [
+    "Section 11.4",
+    "Section 12.4"
+  ],
+  "scenario": "Any state.",
+  "request": {
+    "method": "GET",
+    "path": "v1/directory",
+    "body": null
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a300010150000102030405060708090a0b0c0d0e0f0282a400000150a1a2a3a4a5a6a7a8a9aaabacadaeafb002781f68747470733a2f2f72656c61792e6578616d706c652f666f6c6c6f7765652f0307a400010150b1b2b3b4b5b6b7b8b9babbbcbdbebfc002782168747470733a2f2f72656c61792d622e6578616d706c652f666f6c6c6f7765652f0303",
+    "bodyLength": "139",
+    "bodySha256": "c1e4979857291f974ffef2d471f1b0d71c11beaf221572c9b3ee27e9a2d50f44",
+    "bodyProvenance": "illustrative-nonnormative"
+  },
+  "structuralRequirements": [
+    "label 1 is the 16-byte directory generation; an index is interpreted only against the matching generation",
+    "generation value 000102030405060708090a0b0c0d0e0f is the published Appendix B.11 example generation"
+  ]
+}

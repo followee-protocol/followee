@@ -1,0 +1,41 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "info-missing-suite.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-info-missing-suite",
+  "description": "Hostile-peer case: a relay-info response whose supported-suites array omits the required signature suite -19 (Section 12.2: a v1 implementation MUST include signature suite -19). As with the missing version marker, the content requirement is part of the applicable v1 schema (Appendix A closing note); the receiving client MUST reject the complete response (Section 12.1) with schemaViolation (Sections 15.3, 6.1.3) and extract no usable protocol state. Every other member is valid example content, isolating the fault.",
+  "operation": "v1/info",
+  "specificationSections": [
+    "Section 6.1.3",
+    "Section 12.1",
+    "Section 12.2",
+    "Section 15.3"
+  ],
+  "scenario": "A hostile or non-conforming peer serves an otherwise well-formed info response advertising only an unknown signature suite.",
+  "request": {
+    "method": "GET",
+    "path": "v1/info",
+    "body": null
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a900010150a1a2a3a4a5a6a7a8a9aaabacadaeafb0020703810104812705a50019400001190100021a0010000003190400041a004000000650c1c2c3c4c5c6c7c8c9cacbcccdcecfd00750000102030405060708090a0b0c0d0e0f08781f68747470733a2f2f72656c61792e6578616d706c652f666f6c6c6f7765652f",
+    "bodyLength": "125",
+    "bodySha256": "b89f8216a52e853f2a2d70ca34221031d5512b7a3a63e97039cee1c54bee7a32",
+    "bodyProvenance": "illustrative-nonnormative"
+  },
+  "requiredClientBehaviour": {
+    "rejectCompleteResponse": true,
+    "classification": "schemaViolation",
+    "noUsableProtocolState": true
+  },
+  "structuralRequirements": [
+    "label 4 omits suite -19; label 3 still carries protocol version 1, isolating the fault",
+    "the client MUST reject the complete response and MUST NOT extract any protocol state from it",
+    "the local classification is schemaViolation (Section 15.3 code 6, Section 6.1.3 fallback)"
+  ]
+}

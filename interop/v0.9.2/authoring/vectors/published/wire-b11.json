@@ -1,0 +1,177 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "wire-b11.json",
+  "provenance": "normative-specification",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a",
+    "specificationVersion": "v0.9.2"
+  },
+  "description": "AUTHORING projection: every value in this file is literally published in Appendix B of the pinned specification. Values the specification only determines (reconstructed envelopes, unpublished derivation members, constructed comparison cases) are deliberately absent and must be derived from the specification alone.",
+  "directoryGenerationHex": "000102030405060708090a0b0c0d0e0f",
+  "cases": [
+    {
+      "id": "b11-1-invalid-outer-request",
+      "requestBytesHex": "a30001018178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d018178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+      "requestSha256": "0f3aa1e98de0c1d63a2dd740e04542be326e550e75a133ade1ac045694bfb790",
+      "requiredBehaviour": "http-400-no-per-item-results",
+      "publishedMembers": [
+        "requestBytesHex",
+        "requestSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.1",
+        "Section 12.1"
+      ]
+    },
+    {
+      "id": "b11-2-invalid-outer-response",
+      "responseBytesHex": "a30018010150000102030405060708090a0b0c0d0e0f0281a10002",
+      "responseSha256": "251497e0a44248c6099c5851e0c6668c0731d2b7f1f610f28c6f3c42254475cf",
+      "expectedClassification": "nonDeterministicCbor",
+      "requiredBehaviour": "reject-complete-response-not-absent",
+      "publishedMembers": [
+        "responseBytesHex",
+        "responseSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.2",
+        "Section 12.1"
+      ]
+    },
+    {
+      "id": "b11-3-resolve-candidate-isolation",
+      "requestBytesHex": "a20001018278376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+      "requestSha256": "a2d1d1944182db0f42468bdcaeb086d1987ee3570b892811a378f0ec3bbbca78",
+      "responseLength": "743",
+      "responseSha256": "62246877adbd56be2996ea37d05475d88c0e7932ff9b042f8ddbb9a809f8f4ca",
+      "requiredBehaviour": "accept-wrapper-discard-index0-retain-index1",
+      "publishedMembers": [
+        "requestBytesHex",
+        "requestSha256",
+        "responseLength",
+        "responseSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.3",
+        "Section 12.3"
+      ]
+    },
+    {
+      "id": "b11-4-duplicate-dids-cardinality",
+      "requestBytesHex": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d78376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+      "requestSha256": "ea2c9422529945ce78406f486c80ad633a1e90726cd493dedfa4347df373cf73",
+      "responseLength": "1106",
+      "responseSha256": "203e22e2d913359b08070c289d60889770bcdeee0584187dee25e1c8e05fdfe8",
+      "requiredBehaviour": "exact-cardinality-no-deduplication",
+      "publishedMembers": [
+        "requestBytesHex",
+        "requestSha256",
+        "responseLength",
+        "responseSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.4",
+        "Section 12.3"
+      ]
+    },
+    {
+      "id": "b11-5-changes-isolation-cursor",
+      "requestBytesHex": "a4000101487630382d303030300202031a00100000",
+      "requestSha256": "e65ad99bab6cd0eefba501a8e65ecfb30ad8ad453da9e554346e2becaab339df",
+      "responseLength": "879",
+      "responseSha256": "3337aa0be1d6b8cbf856a31657490398a4b778de586e0b292da68c5c26c200f2",
+      "initialReceiverState": {
+        "alice": {
+          "entry": {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          "authorityState": "root",
+          "lastUpdated": "41"
+        },
+        "bob": "absent",
+        "localUpdateCounter": "41",
+        "peerCursorHex": "7630382d30303030",
+        "nowMs": "1785589201123"
+      },
+      "requiredPostState": {
+        "aliceUnchanged": true,
+        "bobAdmitted": {
+          "vector": "records",
+          "case": "b9-bob-root"
+        },
+        "bobLastUpdated": "42",
+        "localUpdateCounter": "42",
+        "peerCursorHex": "7630382d30303032"
+      },
+      "requiredBehaviour": "admit-bob-reject-b8-advance-cursor",
+      "publishedMembers": [
+        "requestBytesHex",
+        "requestSha256",
+        "responseLength",
+        "responseSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.5",
+        "Section 13.3"
+      ]
+    },
+    {
+      "id": "b11-6-malformed-did-in-batch",
+      "requestBytesHex": "a20001018378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d776469643a666c773a6e6f742d612d6d756c74696261736578376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+      "requestSha256": "8276648c9938dcc57a004695414bc7bd6776186b8df1626210667abf1c9ccf38",
+      "responseLength": "748",
+      "responseSha256": "d8a36364ed62a8fabb905f6c20c04304fe1803df10fa1680840c5c7cd1af96fa",
+      "requiredBehaviour": "http-200-positional-error-invalidDid",
+      "publishedMembers": [
+        "requestBytesHex",
+        "requestSha256",
+        "responseLength",
+        "responseSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.6",
+        "Section 12.3"
+      ]
+    },
+    {
+      "id": "b11-7-changes-item-limit-overflow",
+      "requestBytesHex": "a4000101487630382d303030300202031a00100000",
+      "requestSha256": "e65ad99bab6cd0eefba501a8e65ecfb30ad8ad453da9e554346e2becaab339df",
+      "responseLength": "945",
+      "responseSha256": "334740ea2ce15b4b70dfcdd88f4cfc7f31bfd53f1b7615aa08df1c4137f4d795",
+      "initialReceiverState": {
+        "alice": {
+          "entry": {
+            "vector": "records",
+            "case": "b4-root"
+          },
+          "authorityState": "root",
+          "lastUpdated": "41"
+        },
+        "bob": "absent",
+        "localUpdateCounter": "41",
+        "peerCursorHex": "7630382d30303030",
+        "nowMs": "1785589201123"
+      },
+      "requiredPostState": {
+        "aliceUnchanged": true,
+        "bobRemainsAbsent": true,
+        "localUpdateCounter": "41",
+        "peerCursorHex": "7630382d30303030"
+      },
+      "requiredBehaviour": "reject-complete-response-do-not-use-nextCursor",
+      "publishedMembers": [
+        "requestBytesHex",
+        "requestSha256",
+        "responseLength",
+        "responseSha256"
+      ],
+      "specificationSections": [
+        "Appendix B.11.7",
+        "Section 12.6"
+      ]
+    }
+  ]
+}

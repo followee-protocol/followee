@@ -1,0 +1,46 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "publish-losing-record.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-publish-losing-record",
+  "description": "Publication of the valid B.6 \"Alice B\" record while the relay is current with the equal-timestamp lower-digest B.6 \"Alice A\" record. The candidate verifies but loses current ordering (Sections 8.3, 13.1, 13.2): status 1, shown with the optional accurate `losingRecord` reason code permitted by specification v0.9.2. The bare status-1 form is equally conforming for this scenario; the presence of the reason code is the relay's choice and is classified as permitted diagnostic variation.",
+  "operation": "v1/publish",
+  "specificationSections": [
+    "Section 12.5",
+    "Section 13.1",
+    "Section 13.2",
+    "Section 15.3"
+  ],
+  "scenario": "Relay is current for Alice with the B.6 \"Alice A\" record; the client publishes the valid equal-timestamp higher-digest B.6 \"Alice B\" record; recipient clock nowMs=1785589201123.",
+  "request": {
+    "method": "POST",
+    "path": "v1/publish",
+    "contentType": "application/cose",
+    "bodyHex": "d28443a10132a0590112a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a40067416c69636520420166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840f1697e217a94bba916a6ef20176117765ddfce3251b629e3738d138b4873baa21b4c8b9458a532eeb14c1ca9f4e56a7e0e1aa38be4c5061238051978edfb2500",
+    "bodyLength": "350",
+    "bodySha256": "19794fadf44ba7a7171535f195611815edc4d1f3b3074028509dbc4267824bd7",
+    "bodyProvenance": "specification-determined",
+    "sameAs": {
+      "vector": "records",
+      "case": "b6-alice-b",
+      "field": "envelopeHex"
+    }
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a300010101020c",
+    "bodyLength": "7",
+    "bodySha256": "dfe1b231f74c718dc5a83de8de8074e0d0e48ffe46900f2f1e0e5e72d1934d12",
+    "bodyProvenance": "permitted-diagnostic-variation",
+    "sameAs": {
+      "vector": "publish-responses",
+      "case": "publish-accept-status-1-losingRecord",
+      "field": "responseHex"
+    },
+    "variationGroup": "publish-status-1-losing"
+  }
+}

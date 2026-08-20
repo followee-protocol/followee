@@ -1,0 +1,167 @@
+{
+  "bundle": "followee-interop/v0.9.1",
+  "file": "challenge-selection.json",
+  "provenance": "challenge-input",
+  "blind": true,
+  "description": "Winner-selection challenge inputs with explicitly enumerated candidate permutations. Inputs only: no winner digest or authority state is published anywhere in this bundle. Candidates reference cases in challenge-records.json; each implementation materialises the envelopes it authored for those cases and runs its own selection. Every permutation of one set MUST select the same winner within one implementation; across implementations the winners are compared after both are frozen.",
+  "cases": [
+    {
+      "id": "challenge-select-trio-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-trio",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-trio-a"},
+          {"challengeCase": "challenge-carol-trio-b"},
+          {"challengeCase": "challenge-carol-trio-c"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-trio-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-trio",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-trio-a"},
+          {"challengeCase": "challenge-carol-trio-c"},
+          {"challengeCase": "challenge-carol-trio-b"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-trio-perm-02",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-trio",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-trio-b"},
+          {"challengeCase": "challenge-carol-trio-a"},
+          {"challengeCase": "challenge-carol-trio-c"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-trio-perm-03",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-trio",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-trio-b"},
+          {"challengeCase": "challenge-carol-trio-c"},
+          {"challengeCase": "challenge-carol-trio-a"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-trio-perm-04",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-trio",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-trio-c"},
+          {"challengeCase": "challenge-carol-trio-a"},
+          {"challengeCase": "challenge-carol-trio-b"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-trio-perm-05",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-trio",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-trio-c"},
+          {"challengeCase": "challenge-carol-trio-b"},
+          {"challengeCase": "challenge-carol-trio-a"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-authority-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-authority",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-root-full"},
+          {"challengeCase": "challenge-carol-revoked"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-authority-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "carol-authority",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-revoked"},
+          {"challengeCase": "challenge-carol-root-full"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-dave-perm-00",
+      "operation": "selectCurrent",
+      "permutationOf": "dave-timestamps",
+      "input": {
+        "targetIdentityRef": "dave",
+        "candidates": [
+          {"challengeCase": "challenge-dave-continues"},
+          {"challengeCase": "challenge-dave-early"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-dave-perm-01",
+      "operation": "selectCurrent",
+      "permutationOf": "dave-timestamps",
+      "input": {
+        "targetIdentityRef": "dave",
+        "candidates": [
+          {"challengeCase": "challenge-dave-early"},
+          {"challengeCase": "challenge-dave-continues"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "unknown"
+      }
+    },
+    {
+      "id": "challenge-select-carol-sticky",
+      "operation": "selectCurrent",
+      "input": {
+        "targetIdentityRef": "carol",
+        "candidates": [
+          {"challengeCase": "challenge-carol-root-full"}
+        ],
+        "nowMs": "1790001000000",
+        "stickyAuthority": "rootRevoked"
+      }
+    }
+  ]
+}

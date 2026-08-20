@@ -1,0 +1,45 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "publish-no-change.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-publish-no-change",
+  "description": "Republication of the identical B.4 record. The body digest is already current, so the record is valid but changes nothing: status 1, no new relay-local update number (Sections 12.5, 13.2). Shown without the optional diagnostic reason; under specification v0.9.2 a relay MAY instead answer with the accurate `duplicate` reason code, as the companion publish-no-change-diagnostic transcript documents. The two encodings are byte-distinct permitted forms of the same outcome and are never normalized into each other.",
+  "operation": "v1/publish",
+  "specificationSections": [
+    "Section 12.5",
+    "Section 13.2",
+    "Section 15.3"
+  ],
+  "scenario": "Relay is already current with the B.4 record for Alice.",
+  "request": {
+    "method": "POST",
+    "path": "v1/publish",
+    "contentType": "application/cose",
+    "bodyHex": "d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204",
+    "bodyLength": "356",
+    "bodySha256": "fee0945b61fca0f378e0959f66881e77b1fc8e571283988e6c79ba123659de66",
+    "bodyProvenance": "normative-specification",
+    "sameAs": {
+      "vector": "records",
+      "case": "b4-root",
+      "field": "envelopeHex"
+    }
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a200010101",
+    "bodyLength": "5",
+    "bodySha256": "8179cf9a2f4e2611c7232a0810f81e087dfe4dcefbeebe86385c6133e656b9bc",
+    "bodyProvenance": "permitted-diagnostic-variation",
+    "sameAs": {
+      "vector": "publish-responses",
+      "case": "publish-accept-status-1-bare",
+      "field": "responseHex"
+    },
+    "variationGroup": "publish-status-1"
+  }
+}

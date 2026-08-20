@@ -1,0 +1,42 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "directory-duplicate-index.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-directory-duplicate-index",
+  "description": "Hostile-peer case: a directory response assigning the same index to two different endpoints within one generation. Section 11.4 forbids reusing an index for another endpoint within the same generation, so the mapping is not schema-conforming content and reference interpretation against it would be ambiguous. The receiving client MUST reject the complete response (Section 12.1) with schemaViolation (Sections 15.3, 6.1.3) and follow no reference through it. The outer CBOR remains well-formed and deterministic; the fault is the duplicate index assignment alone.",
+  "operation": "v1/directory",
+  "specificationSections": [
+    "Section 6.1.3",
+    "Section 11.4",
+    "Section 12.1",
+    "Section 12.4",
+    "Section 15.3"
+  ],
+  "scenario": "A hostile or non-conforming peer serves a directory reusing index 0 for two different endpoints under one generation.",
+  "request": {
+    "method": "GET",
+    "path": "v1/directory",
+    "body": null
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a300010150000102030405060708090a0b0c0d0e0f0282a400000150a1a2a3a4a5a6a7a8a9aaabacadaeafb002781f68747470733a2f2f72656c61792e6578616d706c652f666f6c6c6f7765652f0307a400000150b1b2b3b4b5b6b7b8b9babbbcbdbebfc002782168747470733a2f2f72656c61792d622e6578616d706c652f666f6c6c6f7765652f0303",
+    "bodyLength": "139",
+    "bodySha256": "5debefd894fff96de7b7a5fe3a549223b3904df5f54c3076a6b609ee9984649d",
+    "bodyProvenance": "illustrative-nonnormative"
+  },
+  "requiredClientBehaviour": {
+    "rejectCompleteResponse": true,
+    "classification": "schemaViolation",
+    "noUsableProtocolState": true
+  },
+  "structuralRequirements": [
+    "two entries carry index 0 with different relay identifiers and endpoints under the same generation (Section 11.4)",
+    "the client MUST reject the complete response, resolve no reference through it, and cache nothing from it",
+    "the local classification is schemaViolation (Section 15.3 code 6, Section 6.1.3 fallback)"
+  ]
+}

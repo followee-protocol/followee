@@ -1,0 +1,35 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "resolve-invalid-request-400.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-resolve-invalid-request-400",
+  "description": "Published Appendix B.11.1 exchange: an outer request with adjacent duplicate top-level keys is a CBOR-layer fault. The relay rejects the complete request with HTTP 400 and returns no per-item results. No response CBOR body is normative for this case.",
+  "operation": "v1/resolve",
+  "specificationSections": [
+    "Section 12.1",
+    "Section 15.4",
+    "Appendix B.11.1"
+  ],
+  "scenario": "Client sends the published invalid request bytes.",
+  "request": {
+    "method": "POST",
+    "path": "v1/resolve",
+    "contentType": "application/cbor",
+    "bodyHex": "a30001018178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d018178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579",
+    "bodyLength": "121",
+    "bodySha256": "0f3aa1e98de0c1d63a2dd740e04542be326e550e75a133ade1ac045694bfb790",
+    "bodyProvenance": "normative-specification",
+    "sameAs": {
+      "vector": "wire-b11",
+      "case": "b11-1-invalid-outer-request",
+      "field": "requestBytesHex"
+    }
+  },
+  "response": {
+    "httpStatus": 400,
+    "body": null
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "bundle": "followee-interop/v0.9.2",
+  "file": "changes-premature-retained.json",
+  "source": {
+    "document": "authoring/specification/Followee-Specification.md",
+    "sha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+  },
+  "id": "transcript-changes-premature-retained",
+  "description": "A retained current tuple whose record is premature under the serving relay's own clock is still emitted by v1/changes. Admission made the tuple eligible for v1/changes (Section 13.1 step 8), and the serving-time premature classification neither removes the stored record nor alters lastUpdated (Section 5.4), so the tuple remains an eligible current entry that Section 12.6 forbids the cursor to advance past if omitted. The Section 5.4 prohibition on returning the record as Full governs the Relay Resolver serving path with the Section 12.3 Error fallback; the synchronization stream instead delivers untrusted candidate bytes that each receiver classifies under its own clock (Sections 13.3, 16.16), never importing the sender's premature diagnosis (Section 14.1). The cursor bytes and lastUpdated values shown are relay-local example values; the entry payload is the published B.4 envelope. The companion resolve-premature-retained transcript pins the resolve-side filtering of the same relay state.",
+  "operation": "v1/changes",
+  "specificationSections": [
+    "Section 5.4",
+    "Section 12.6",
+    "Section 13.1",
+    "Section 13.3",
+    "Section 14.1",
+    "Section 16.16"
+  ],
+  "scenario": {
+    "alice": {
+      "entry": {
+        "vector": "records",
+        "case": "b4-root"
+      },
+      "authorityState": "root",
+      "lastUpdated": "41"
+    },
+    "localUpdateCounter": "41",
+    "relayNowMs": "1785588900122",
+    "relayClassifiesRetainedRecord": "premature"
+  },
+  "requiredPostState": {
+    "sender": {
+      "aliceEntryUnchanged": true,
+      "aliceLastUpdated": "41",
+      "noNewUpdateNumber": true
+    },
+    "receiverWithNowMs1785589201123": {
+      "aliceAdmitted": {
+        "vector": "records",
+        "case": "b4-root"
+      },
+      "classification": "time-admissible"
+    },
+    "receiverWithNowMs1785588900122": {
+      "aliceClassification": "premature",
+      "aliceRejectedOrDeferred": true,
+      "noReceiverUpdateNumber": true,
+      "peerCursorStoredAndAdvanced": true
+    }
+  },
+  "request": {
+    "method": "POST",
+    "path": "v1/changes",
+    "contentType": "application/cbor",
+    "bodyHex": "a4000101f6021864031a00100000",
+    "bodyLength": "14",
+    "bodySha256": "584112e94eb37996b5aaaf62147ce2d51772b226088818e30d1a51068aac8fcb",
+    "bodyProvenance": "specification-determined"
+  },
+  "response": {
+    "httpStatus": 200,
+    "contentType": "application/cbor",
+    "bodyHex": "a60001010002818378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436da2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a5020418290344632d343104f40550000102030405060708090a0b0c0d0e0f",
+    "bodyLength": "456",
+    "bodySha256": "6dffec6f0236ab49860bcb5d61236bb95e9796b990fc5ba5ffe5fc2dc4f01e88",
+    "bodyProvenance": "illustrative-nonnormative"
+  },
+  "structuralRequirements": [
+    "the retained current tuple MUST appear in the changes response; omitting it while advancing nextCursor would advance past an omitted eligible entry (Section 12.6), and withholding nextCursor would stall the stream",
+    "emitting the tuple assigns no new update number and does not alter lastUpdated (Sections 5.4, 13.2)",
+    "each receiver classifies the candidate under its own nowMs and never imports the sender's clock (Sections 13.3, 14.1)",
+    "a receiver that rejects or defers the locally premature candidate still stores the returned nextCursor (Sections 13.3, 16.16)"
+  ]
+}
