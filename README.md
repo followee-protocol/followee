@@ -10,12 +10,19 @@ It allows people and organisations to remain followable when they move between w
 
 - [Whitepaper](Followee-Whitepaper.md) — motivation, architecture and design rationale
 - [`did:flw` Method and Relay Protocol Specification](Followee-Specification.md) — normative wire formats, validation rules, APIs and conformance requirements
+- [Interoperability campaign 1](interop/campaign-1/CAMPAIGN.md) — independent Rust ↔ Motoko convergence evidence (v0.9.1)
+- [Interoperability campaign 2](interop/campaign-2/CAMPAIGN.md) — maintained Rust ↔ Motoko interoperability evidence (v0.9.2)
+- [Operational-readiness plan](OPERATIONAL-READINESS.md) — the next milestone: predeclared gates for the remaining conformance, lifecycle, network, and release work
 
 ## Status
 
-Followee is currently an implementer’s draft at version 0.1. The protocol is ready for independent proof-of-concept implementations and adversarial interoperability testing, but `did:flw` has not yet been registered and should not be treated as production-standardised.
+The current specification is the **v0.9.2 implementer’s draft**.
 
-The next milestone is two independent implementations consuming the same machine-readable conformance vectors and producing identical results.
+Two proof-of-concept implementations exist, in Rust and Motoko. Campaign 1 preserves the independent-convergence evidence between them at its historical scope (v0.9.1, frozen at tag `v0.9.1-interop-campaign-1`). Campaign 2 demonstrates maintained Rust–Motoko interoperability under the v0.9.2 authoring-revision-2 contract for its documented tested scope, with zero unexplained disagreements; its coverage boundary is recorded in the campaign record and does not extend to multi-relay traversal, WebFinger handles, concurrency behaviour, or public (non-loopback) deployment.
+
+The `did:flw` method and the proposed Followee WebFinger relation URIs are **not yet registered**, and Followee must not yet be presented as production-ready or as a finalized standard. Interoperability at Campaign 2’s scope is not a production-readiness claim, and registry inclusion, when it happens, will be discovery metadata rather than standardization in itself.
+
+The next milestone is the operational-readiness program defined in [`OPERATIONAL-READINESS.md`](OPERATIONAL-READINESS.md). Formal GitHub release-candidate publication remains deferred until the pre-release gates designated in that plan pass.
 
 ## Design principles
 
