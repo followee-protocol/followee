@@ -49,22 +49,22 @@
     },
     {
       "path": "ACCEPTANCE.md",
-      "sha256": "d8da01bb5e1613746ef91791f8cd6f562aa479acdc91b05a9aeef6f0ef1e3803",
-      "bytes": "18972",
+      "sha256": "3cb321a38662373dfc6859dab3d080b8eb14a48de15535d3f7560191919c3f87",
+      "bytes": "19977",
       "provenance": "bundle-infrastructure",
       "audience": "coordinator"
     },
     {
       "path": "PROVENANCE.md",
-      "sha256": "0a0f8b7d09ce73043f74c93d697a3123628db6769cdbe6676693cd49c1645f4e",
-      "bytes": "7842",
+      "sha256": "978c09cfd54d06688babc5b34217618c75a7bf5675dc04e96e4d29f6b7b6dc9e",
+      "bytes": "8025",
       "provenance": "bundle-infrastructure",
       "audience": "coordinator"
     },
     {
       "path": "README.md",
-      "sha256": "54858ebab97982643114c9b63dbe89a40abdd842e272ce6bf4cf2ec5d88a5894",
-      "bytes": "8893",
+      "sha256": "d8b90d6452e2b0d2e3fb3686acdb676b86aa6d6feeb1e399554dbcd99c80a9c2",
+      "bytes": "9650",
       "provenance": "bundle-infrastructure",
       "audience": "coordinator"
     },
@@ -385,8 +385,8 @@
     },
     {
       "path": "evidence/EVIDENCE.md",
-      "sha256": "5e565238b83eae46f370db68992a0b795cdf5c3ae2e4327da5c13fe5ccaf34c3",
-      "bytes": "3882",
+      "sha256": "21396c16dc57d795edf465cbe2449e941dccd7de6a90d34b23ad0ce88951db92",
+      "bytes": "5231",
       "provenance": "confirmed-evidence-pointer",
       "audience": "coordinator"
     },

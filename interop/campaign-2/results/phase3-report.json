@@ -1,0 +1,756 @@
+{
+ "checks": [
+  {
+   "label": "info is 200 application/cbor",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "Motoko client accepts Rust info",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "directory is 200 application/cbor",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "Motoko client accepts Rust directory",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.4 admitted (exact publish-admit bytes)",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.4 republish: status-1 in the enumerated set, accepted by the Motoko client",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.8 rejected identityBindingMismatch under HTTP 200 (exact publish-rejected bytes)",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.9 admitted",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.6 Alice A admitted on the losing-scenario relay",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "losing record: status-1 in the enumerated losing set, accepted by the Motoko client",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "resolve [alice,alice,bob]: aligned, every Full candidate verified by Motoko",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "resolve with malformed DID: positionally aligned error 0 (invalidDid)",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "initial null-cursor enumeration admits both records through Motoko ingress",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "returned cursor stored exactly",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.5 revocation admitted",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "incremental pull sees the revocation exactly once",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "cursor advanced",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "second incremental pull is empty (exactly-once visibility)",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "final state agreement: alice=B.5 (rootRevoked), bob=B.9",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "itemLimit-1 pagination walks each record exactly once",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "B.11.1 invalid outer request is HTTP 400 with no per-item body",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "Motoko-authored challenge-carol-root-full admitted by Rust ingress",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "Motoko-authored challenge-dave-continues admitted by Rust ingress",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "Motoko-authored challenge-erin-revoked-empty admitted by Rust ingress",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "Rust serves the crossed records back byte-for-byte",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "crossed challenge records verify through the Motoko production interface",
+   "ok": true,
+   "section": "R"
+  },
+  {
+   "label": "info is 200 application/cbor",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "directory is 200 application/cbor",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.4 admitted via Rust client",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.4 republish: Rust client accepts the coded duplicate form",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "republish bytes are the enumerated coded duplicate form",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.8 rejected identityBindingMismatch via Rust client",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.8 rejection bytes exact under HTTP 200",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.9 admitted via Rust client",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.6 Alice A admitted on the losing-scenario instance",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "losing record: Rust client accepts the coded losingRecord form",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "losing bytes are the enumerated coded losingRecord form",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "resolve [alice,alice,bob]: aligned, every Full candidate verified by Rust",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "resolve with malformed DID: positionally aligned invalidDid error",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "initial sync admits both records through Rust ingress and stores the exact cursor",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.5 revocation admitted via Rust client",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "incremental sync sees the revocation exactly once",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "further sync is empty (exactly-once visibility)",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "itemLimit-1 sync walks each record exactly once across pages",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "final state agreement: both sides serve identical winning record bytes for alice and bob",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "B.11.1 invalid outer request is HTTP 400 with no per-item body",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "Rust-authored challenge-carol-root-full admitted by Motoko ingress",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "Rust-authored challenge-dave-continues admitted by Motoko ingress",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "Rust-authored challenge-erin-revoked-empty admitted by Motoko ingress",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "crossed challenge records resolve and verify (Rust side)",
+   "ok": true,
+   "section": "M"
+  },
+  {
+   "label": "Motoko rejects info without protocol version 1 (schemaViolation)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Motoko rejects info without suite -19 (schemaViolation)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Motoko rejects directory with duplicate indices (schemaViolation)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Motoko rejects the B.11.2 invalid outer response completely",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Motoko rejects a malformed publish response completely (status 1 with invalidDid)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.5 setup: Motoko receiver holds alice current",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.5: Motoko admits bob, rejects the B.8 candidate alone, stores the exact cursor",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.7: Motoko rejects the over-itemLimit response without using its cursor",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Rust rejects info-missing-version (complete schema rejection, no usable state)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Rust rejects info-missing-suite (complete schema rejection, no usable state)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Rust rejects directory with duplicate indices (complete rejection, no reference targets used)",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Rust rejects the B.11.2 invalid outer response completely",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.5 setup: Rust receiver holds alice current",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.5: Rust admits bob, rejects the B.8 candidate alone, stores the exact cursor",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.7: Rust rejects the over-itemLimit response without entry processing",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "B.11.7: the receiver's next request still presents the exact stored cursor",
+   "ok": true,
+   "section": "H"
+  },
+  {
+   "label": "Rust rejects a malformed publish response completely (status 1 with invalidDid)",
+   "ok": true,
+   "section": "H"
+  }
+ ],
+ "exchanges": [
+  {
+   "contentType": "application/cbor",
+   "direction": "rust-serves",
+   "operation": "v1/info",
+   "responseHex": "a90001015082315fb1648a7fc7faa37e6de74f4a67020703810104813205a50019400001190100021a0010000003190400041a004000000650f504e283fa584c9f5e6e84c1d983f87a0750d09d1429a0909d531147d406d8e57de20877687474703a2f2f3132372e302e302e313a34343035392f",
+   "scenario": "read",
+   "status": 200
+  },
+  {
+   "clientOutcome": "info accepted capabilityBits=7 baseUri=http://127.0.0.1:44059/",
+   "direction": "rust-serves",
+   "operation": "v1/info",
+   "scenario": "motoko-client-validation"
+  },
+  {
+   "contentType": "application/cbor",
+   "direction": "rust-serves",
+   "operation": "v1/directory",
+   "responseHex": "a300010150d09d1429a0909d531147d406d8e57de20280",
+   "scenario": "read",
+   "status": 200
+  },
+  {
+   "clientOutcome": "directory accepted entries=0",
+   "direction": "rust-serves",
+   "operation": "v1/directory",
+   "scenario": "motoko-client-validation"
+  },
+  {
+   "clientOutcome": "publish admitted",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010100",
+   "scenario": "b4-admit",
+   "status": 200
+  },
+  {
+   "clientOutcome": "publish noChange bare",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010101",
+   "scenario": "b4-republish-status-1",
+   "status": 200,
+   "variation": "permitted-diagnostic-variation: Rust emits the bare form"
+  },
+  {
+   "clientOutcome": "publish rejected identityBindingMismatch",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a3000101020207",
+   "scenario": "b8-rejected",
+   "status": 200
+  },
+  {
+   "clientOutcome": "publish admitted",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010100",
+   "scenario": "b9-admit",
+   "status": 200
+  },
+  {
+   "clientOutcome": "publish noChange bare",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010101",
+   "scenario": "b6b-losing-status-1",
+   "status": 200,
+   "variation": "permitted-diagnostic-variation: Rust emits the bare form"
+  },
+  {
+   "clientOutcome": "resolve accepted verified:f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7 verified:f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7 verified:c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+   "direction": "rust-serves",
+   "operation": "v1/resolve",
+   "responseHex": "a300010150d09d1429a0909d531147d406d8e57de20283a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+   "scenario": "duplicate-dids",
+   "status": 200
+  },
+  {
+   "clientOutcome": "resolve accepted verified:f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7 error:0 verified:c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+   "direction": "rust-serves",
+   "operation": "v1/resolve",
+   "responseHex": "a300010150d09d1429a0909d531147d406d8e57de20283a2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204a200030200a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+   "scenario": "malformed-did-in-batch",
+   "status": 200
+  },
+  {
+   "clientOutcome": "changes processed admitted:1 admitted:2 cursor=f504e283fa584c9f5e6e84c1d983f87a0000000000000002",
+   "direction": "rust-serves",
+   "operation": "v1/changes",
+   "responseHex": "a60001010002828378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436da2000001590164d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204018378376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c6020202035818f504e283fa584c9f5e6e84c1d983f87a000000000000000204f40550d09d1429a0909d531147d406d8e57de2",
+   "scenario": "initial-enumeration"
+  },
+  {
+   "clientOutcome": "publish admitted",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010100",
+   "scenario": "b5-revocation-admit"
+  },
+  {
+   "clientOutcome": "changes processed admitted:3 cursor=f504e283fa584c9f5e6e84c1d983f87a0000000000000003",
+   "direction": "rust-serves",
+   "operation": "v1/changes",
+   "responseHex": "a60001010002818378376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436da200000159018bd28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c0903035818f504e283fa584c9f5e6e84c1d983f87a000000000000000304f40550d09d1429a0909d531147d406d8e57de2",
+   "scenario": "incremental-revocation"
+  },
+  {
+   "clientOutcome": "resolve accepted verified:3c617919801d0c19684144f9b46e0f2384243c17c831a2d76531ba6554cb3861 verified:c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8",
+   "direction": "rust-serves",
+   "operation": "v1/resolve",
+   "responseHex": "a300010150d09d1429a0909d531147d406d8e57de20282a200000159018bd28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c09a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+   "scenario": "final-agreement"
+  },
+  {
+   "direction": "rust-serves",
+   "operation": "v1/changes",
+   "pages": [
+    "changes processed admitted:1 cursor=f504e283fa584c9f5e6e84c1d983f87a0000000000000002",
+    "changes processed admitted:2 cursor=f504e283fa584c9f5e6e84c1d983f87a0000000000000003",
+    "changes processed cursor=f504e283fa584c9f5e6e84c1d983f87a0000000000000003"
+   ],
+   "scenario": "item-limit-1-pagination"
+  },
+  {
+   "direction": "rust-serves",
+   "operation": "v1/resolve",
+   "responseHex": "",
+   "scenario": "b11-1-hostile-request",
+   "status": 400
+  },
+  {
+   "clientOutcome": "publish admitted",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010100",
+   "scenario": "crossing-challenge-carol-root-full"
+  },
+  {
+   "clientOutcome": "publish admitted",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010100",
+   "scenario": "crossing-challenge-dave-continues"
+  },
+  {
+   "clientOutcome": "publish admitted",
+   "direction": "rust-serves",
+   "operation": "v1/publish",
+   "responseHex": "a200010100",
+   "scenario": "crossing-challenge-erin-revoked-empty"
+  },
+  {
+   "direction": "rust-serves",
+   "operation": "v1/resolve",
+   "responseHex": "a300010150809dbef78e220809746e7af843a754eb0283a20000015902e0d28443a10132a0590294a800010178376469643a666c773a7a516d5464546f316f635531324857394d415473336d55574c5879614d334e4b514a5147444a67453250536b365669021b000001a0c4506c00030004a3000101a20032015820dde3bccec7f3a66a1115f45d720f4dc135c3ae7c4e22dca38fdb1efd6a495ff8025820407dbc4cbce71beaba8885c78fea2d0b0908b7a9504c7fcb556491f88736f7d7061b000001a17720ca0007a600754361726f6c20c38978616d706c6520e6b58be8af95017823496e7465726f7065726162696c697479206368616c6c656e6765206964656e7469747902782068747470733a2f2f6361726f6c2e6578616d706c652f6176617461722e706e67038276616363743a6361726f6c406578616d706c652e6f7267781b68747470733a2f2f6361726f6c2e6578616d706c652f61626f75740482a700646665656401644665656402781f68747470733a2f2f6361726f6c2e6578616d706c652f666565642e6a736f6e03756170706c69636174696f6e2f666565642b6a736f6e0464466565640565656e2d47420669616c7465726e617465a60065696e626f7801782068747470733a2f2f70726f746f2e6578616d706c652f7370656323696e626f78027468747470733a2f2f5b56312e615d2f696e626f780466426fc3ae7465056a7a682d48616e742d484b06781f68747470733a2f2f70726f746f2e6578616d706c652f72656c23696e626f7806a1782068747470733a2f2f6578742e6578616d706c652f696e7465726f70236e6f74656d636f6e746163742d6c6576656c08a1782068747470733a2f2f6578742e6578616d706c652f696e7465726f702374726565a3001bffffffffffffffff203bffffffffffffffff65666c61677385f5f4f64300ff106acf84ceadcebbcebfcf82584084a43b3980ed5adfa3d6f8fe137ed4c7f015d2ccd6ff9b662dbbfb51d53e4bfebd2d86743f386991196d7a0bc00446f047be126670e729980b1484b823b97a01a2000001590147d28443a10132a058fca600010178376469643a666c773a7a516d57415042743972615458383373505a59755239614764734e4d55627468457a4e7039396973727a317557736e021b000001a0c45079ac030004a3000101a20032015820712651f450ba05b63898b99ef5f7ba45632e8e2527f7f715cd671ec4024cc51e02582064e759fb454234c3ede36619afedec9487d5ba370ba6775d0085569e42431b9407a2017824436f6e74696e7565732066726f6d20612070726576696f7573206964656e74696669657205a10078376469643a666c773a7a516d5464546f316f635531324857394d415473336d55574c5879614d334e4b514a5147444a67453250536b3656695840634e1c00a3539cfb527efcd1de41780d49205ce46e546b091f6508cddb04251e24bc7b806e3629bdcda57043edc15592078399708e550052766ede0cdf36790aa200000159010bd28443a10132a058c0a700010178376469643a666c773a7a516d54637a4b58786f4341435147524d426572414b4a5a6a32735575616436645a4841595073464a6b3741714a4c021b000001a0c4507d94030104a3000101a200320158206b59d97021e7679371eaba379496b2b64991f1b4926bc96526ef4b6d5535242202582060d9b37c001f989339571da44dd3b7658a38d95b36fb8cfe0c55243cb02dcb5e05a2003201582085be789bde6b355235467291d57f2c16d1f40055c4becc32b0b2d85679ddf36907a05840a618cf42bbe61b9677d1d5bcf3b772aa4443bd9bc8e8ff4a98c6d71fd0d8f52ce6fbe7b41557fff599f1b979653895ce172b7047e482e267bcdf9672b551880f",
+   "scenario": "crossing-served-bytes"
+  },
+  {
+   "direction": "rust-serves",
+   "operation": "verifyRecord",
+   "outcomes": [
+    "accepted",
+    "accepted",
+    "accepted"
+   ],
+   "scenario": "crossing-verification-motoko-interface"
+  },
+  {
+   "contentType": "application/cbor",
+   "direction": "motoko-serves",
+   "operation": "v1/info",
+   "responseHex": "a900010150202122232425262728292a2b2c2d2e2f020703810104813205a50019400001190100021a0010000003190400041a004000000650101112131415161718191a1b1c1d1e1f0750000102030405060708090a0b0c0d0e0f08781f68747470733a2f2f72656c61792e6578616d706c652f666f6c6c6f7765652f",
+   "scenario": "read",
+   "status": 200
+  },
+  {
+   "contentType": "application/cbor",
+   "direction": "motoko-serves",
+   "operation": "v1/directory",
+   "responseHex": "a300010150000102030405060708090a0b0c0d0e0f0281a400000150202122232425262728292a2b2c2d2e2f02781f68747470733a2f2f72656c61792e6578616d706c652f666f6c6c6f7765652f0307",
+   "scenario": "read",
+   "status": 200
+  },
+  {
+   "clientOutcome": "{\"recordFile\":\"~/campaign-2-work/phase3/b4.cose\",\"relay\":\"http://127.0.0.1:42931/\",\"status\":\"admitted\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "scenario": "b4-admit"
+  },
+  {
+   "clientOutcome": "{\"reason\":\"duplicate\",\"recordFile\":\"~/campaign-2-work/phase3/b4.cose\",\"relay\":\"http://127.0.0.1:42931/\",\"status\":\"noChange\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "responseHex": "a300010101020d",
+   "scenario": "b4-republish-status-1",
+   "variation": "permitted-diagnostic-variation: Motoko emits the coded form"
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"relay rejected the record: identityBindingMismatch\",\"symbol\":\"publishRejected\"}}\nerror[publishRejected]: relay rejected the record: identityBindingMismatch",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "responseHex": "a3000101020207",
+   "scenario": "b8-rejected",
+   "status": 200
+  },
+  {
+   "clientOutcome": "{\"recordFile\":\"~/campaign-2-work/phase3/b9.cose\",\"relay\":\"http://127.0.0.1:42931/\",\"status\":\"admitted\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "scenario": "b9-admit"
+  },
+  {
+   "clientOutcome": "{\"reason\":\"losingRecord\",\"recordFile\":\"~/campaign-2-work/phase3/b6b.cose\",\"relay\":\"http://127.0.0.1:42932/\",\"status\":\"noChange\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "responseHex": "a300010101020c",
+   "scenario": "b6b-losing-status-1",
+   "variation": "permitted-diagnostic-variation: Motoko emits the coded form"
+  },
+  {
+   "clientOutcome": "{\"directoryGeneration\":\"000102030405060708090a0b0c0d0e0f\",\"relay\":\"http://127.0.0.1:42931/\",\"results\":[{\"authority\":\"root\",\"bodyDigest\":\"f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7\",\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"freshness\":\"fresh\",\"kind\":\"full\",\"recordHex\":\"d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204\",\"timeStatus\":\"admissible\",\"timestampMs\":1785589200123,\"verified\":true},{\"authority\":\"root\",\"bodyDigest\":\"f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7\",\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"freshness\":\"fresh\",\"kind\":\"full\",\"recordHex\":\"d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346",
+   "direction": "motoko-serves",
+   "operation": "v1/resolve",
+   "scenario": "duplicate-dids"
+  },
+  {
+   "clientOutcome": "{\"directoryGeneration\":\"000102030405060708090a0b0c0d0e0f\",\"relay\":\"http://127.0.0.1:42931/\",\"results\":[{\"authority\":\"root\",\"bodyDigest\":\"f8e387942fd568c72d629717f579314a3305f26e03b7197958c7555b2e9573c7\",\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"freshness\":\"fresh\",\"kind\":\"full\",\"recordHex\":\"d28443a10132a0590118a600010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f4fb030004a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de07a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e6758404db146d7bc6ca7690bac44b0c6ef38bcdd685ff157fdcca15da6b64662a26f94bd95b88f97f3e720246b3756c6eb6b8967103f9346dbef51c053cac381a50204\",\"timeStatus\":\"admissible\",\"timestampMs\":1785589200123,\"verified\":true},{\"error\":{\"code\":0,\"symbol\":\"invalidDid\"},\"kind\":\"error\"},{\"authority\":\"root\",\"bodyDigest\":\"c7d107d8004c0376b453d7de0eaf187f0597e0b4edccac307a81ddba3b8fcda8\",\"did\":\"did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy\",\"freshness\":\"fresh\",\"kind\":\"full\",\"recordHex\":\"d28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330",
+   "direction": "motoko-serves",
+   "operation": "v1/resolve",
+   "scenario": "malformed-did-in-batch"
+  },
+  {
+   "clientOutcome": "{\"admitted\":[{\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"updateNumber\":1},{\"did\":\"did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy\",\"updateNumber\":2}],\"database\":\"~/campaign-2-work/phase3/m-sync.sqlite\",\"finalCursorHex\":\"101112131415161718191a1b1c1d1e1f0000000000000002\",\"hasMore\":false,\"noChange\":0,\"pages\":1,\"peer\":\"http://127.0.0.1:42931/\",\"peerRelayId\":\"202122232425262728292a2b2c2d2e2f\",\"refsIgnored\":0,\"rejected\":[],\"resetPerformed\":false}",
+   "direction": "motoko-serves",
+   "operation": "v1/changes",
+   "scenario": "initial-sync"
+  },
+  {
+   "clientOutcome": "{\"admitted\":[{\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"updateNumber\":3}],\"database\":\"~/campaign-2-work/phase3/m-sync.sqlite\",\"finalCursorHex\":\"101112131415161718191a1b1c1d1e1f0000000000000003\",\"hasMore\":false,\"noChange\":0,\"pages\":1,\"peer\":\"http://127.0.0.1:42931/\",\"peerRelayId\":\"202122232425262728292a2b2c2d2e2f\",\"refsIgnored\":0,\"rejected\":[],\"resetPerformed\":false}",
+   "direction": "motoko-serves",
+   "operation": "v1/changes",
+   "scenario": "incremental-sync-revocation"
+  },
+  {
+   "clientOutcome": "{\"admitted\":[{\"did\":\"did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy\",\"updateNumber\":1},{\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"updateNumber\":2}],\"database\":\"~/campaign-2-work/phase3/m-sync-pages.sqlite\",\"finalCursorHex\":\"101112131415161718191a1b1c1d1e1f0000000000000003\",\"hasMore\":false,\"noChange\":0,\"pages\":2,\"peer\":\"http://127.0.0.1:42931/\",\"peerRelayId\":\"202122232425262728292a2b2c2d2e2f\",\"refsIgnored\":0,\"rejected\":[],\"resetPerformed\":false}",
+   "direction": "motoko-serves",
+   "operation": "v1/changes",
+   "scenario": "item-limit-1-pagination"
+  },
+  {
+   "direction": "motoko-serves",
+   "motokoViewHex": "a300010150000102030405060708090a0b0c0d0e0f0282a200000159018bd28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c09a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+   "operation": "v1/resolve",
+   "rustViewHex": "a300010150d078784b81f4e66f4091dd066755050d0282a200000159018bd28443a10132a059013fa700010178376469643a666c773a7a516d5063477374426137775739686f59516253364a5a345578775a6d6f4b7237595666397937717869794433436d021b0000019fbd68f8e3030104a3000101a2003201582003a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8025820d123bafb7ae35472d9a73944d98314a38ff8f201d79c32e640f97a27bec880de05a2003201582029acbae141bccaf0b22e1a94d34d0bc7361e526d0bfe12c89794bc9322966dd707a4006d416c696365204578616d706c650166577269746572038176616363743a616c696365406578616d706c652e636f6d0481a500646665656401644665656402781e68747470733a2f2f616c6963652e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046757726974696e675840c874ee1bb01dc4f3972b978455abba78ab0f84755fbd9ee01425a1e6c910abae7cfa8b407aff2092be09e9032e968a23a87e63f9e1e7b2a0d5498bf7df5d6c09a200000159015ed28443a10132a0590112a600010178376469643a666c773a7a516d64474a624a753670426269795a5839674a48425446786e55437442675261376d5a52634b4b73315463464579021b0000019fbd68f8e3030004a3000101a20032015820cd14b37f956e953194ff7fb73b3d81dcc561d61a7538094b7c3e1a643ee5f3aa02582046ed171c07da81226f954a36b2e61c3be4caee1f7b5d78aa6022eedb69486c4107a4006b426f62204578616d706c650166526561646572038174616363743a626f62406578616d706c652e6e65740481a500646665656401644665656402781c68747470733a2f2f626f622e6578616d706c652f666565642e786d6c03746170706c69636174696f6e2f61746f6d2b786d6c046752656164696e675840958a63029defee36e1047c002a8346aa57c832ed8fc27781ee622cc92330bc434c8f075aa89290b2c1021bf19602a92b5681ae6615268ed928bd113f15c60202",
+   "scenario": "final-agreement"
+  },
+  {
+   "direction": "motoko-serves",
+   "operation": "v1/resolve",
+   "responseHex": "",
+   "scenario": "b11-1-hostile-request",
+   "status": 400
+  },
+  {
+   "clientOutcome": "{\"recordFile\":\"~/campaign-2-work/phase3/cross-carol.cose\",\"relay\":\"http://127.0.0.1:42933/\",\"status\":\"admitted\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "scenario": "crossing-challenge-carol-root-full"
+  },
+  {
+   "clientOutcome": "{\"recordFile\":\"~/campaign-2-work/phase3/cross-dave.cose\",\"relay\":\"http://127.0.0.1:42933/\",\"status\":\"admitted\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "scenario": "crossing-challenge-dave-continues"
+  },
+  {
+   "clientOutcome": "{\"recordFile\":\"~/campaign-2-work/phase3/cross-erin.cose\",\"relay\":\"http://127.0.0.1:42933/\",\"status\":\"admitted\"}",
+   "direction": "motoko-serves",
+   "operation": "v1/publish",
+   "scenario": "crossing-challenge-erin-revoked-empty"
+  },
+  {
+   "clientOutcome": "{\"directoryGeneration\":\"000102030405060708090a0b0c0d0e0f\",\"relay\":\"http://127.0.0.1:42933/\",\"results\":[{\"authority\":\"root\",\"bodyDigest\":\"b8ba29c8f52e4f03c92b26857ac4ed346a7219c1619664106b4d017f33a46e2b\",\"did\":\"did:flw:zQmTdTo1ocU12HW9MATs3mUWLXyaM3NKQJQGDJgE2PSk6Vi\",\"freshness\":\"fresh\",\"kind\":\"full\",\"recordHex\":\"d28443a10132a0590294a800010178376469643a666c773a7a516d5464546f316f635531324857394d415473336d55574c5879614d334e4b514a5147444a67453250536b365669021b000001a0c4506c00030004a3000101a20032015820dde3bccec7f3a66a1115f45d720f4dc135c3ae7c4e22dca38fdb1efd6a495ff8025820407dbc4cbce71beaba8885c78fea2d0b0908b7a9504c7fcb556491f88736f7d7061b000001a17720ca0007a600754361726f6c20c38978616d706c6520e6b58be8af95017823496e7465726f7065726162696c697479206368616c6c656e6765206964656e7469747902782068747470733a2f2f6361726f6c2e6578616d706c652f6176617461722e706e67038276616363743a6361726f6c406578616d706c652e6f7267781b68747470733a2f2f6361726f6c2e6578616d706c652f61626f75740482a700646665656401644665656402781f68747470733a2f2f6361726f6c2e6578616d706c652f666565642e6a736f6e03756170706c69636174696f6e2f666565642b6a736f6e0464466565640565656e2d47420669616c7465726e617465a60065696e626f7801782068747470733a2f2f70726f746f2e6578616d706c652f7370656323696e626f78027468747470733a2f2f5b56312e615d2f696e626f780466426fc3ae7465056a7a682d48616e742d484b06781f68747470733a2f2f70726f746f2e6578616d706c652f72656c23696e626f7806a1782068747470733a2f2f6578742e6578616d706c652f696e7465726f70236e6f74656d636f6e746163742d6c6576656c08a1782068747470733a2f2f6578742e6578616d706c652f696e7465726f702374726565a3001bffffffffffffffff203bffffffffffffffff65666c61677385f5f4f64300ff106acf84ceadcebbcebfcf82584084a43b3980ed5adfa3d6f8fe137ed4c7f015d2ccd6ff9b662dbbfb51d53e4bfebd2d86743f386991196d7a0bc00446f047be126670e729980b1484b823b97a01\",\"timeStatus\":\"admissible\",\"timestampMs\":1790000000000,\"verified\":true},{\"authority\":\"root\",\"bodyDigest\":\"bfdba84df905bea92288e88c853536c828bd5099dbbdf88968d78774c3b2ccc2\",\"did\":\"did:flw:zQmWAPBt9raTX83sPZYuR9aGds",
+   "direction": "motoko-serves",
+   "operation": "v1/resolve",
+   "scenario": "crossing-verification"
+  },
+  {
+   "clientOutcome": "reject protocol schemaViolation",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/info",
+   "scenario": "info-missing-version"
+  },
+  {
+   "clientOutcome": "reject protocol schemaViolation",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/info",
+   "scenario": "info-missing-suite"
+  },
+  {
+   "clientOutcome": "reject protocol schemaViolation",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/directory",
+   "scenario": "directory-duplicate-index"
+  },
+  {
+   "clientOutcome": "reject protocol nonDeterministicCbor",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/resolve",
+   "scenario": "b11-2-invalid-outer-response"
+  },
+  {
+   "clientOutcome": "reject protocol schemaViolation",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/publish",
+   "scenario": "malformed-publish-response-status1-invalidDid"
+  },
+  {
+   "clientOutcome": "changes processed rejected:identityBindingMismatch admitted:2 cursor=7630382d30303032",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/changes",
+   "scenario": "b11-5-isolation-cursor",
+   "storedCursor": "7630382d30303032"
+  },
+  {
+   "clientOutcome": "reject protocol schemaViolation",
+   "direction": "hostile-to-motoko",
+   "operation": "v1/changes",
+   "scenario": "b11-7-item-limit-overflow",
+   "storedCursor": "7630382d30303032"
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"synchronization failed: outer relay response rejected: record violates the v1 schema or its limits\",\"symbol\":\"outerResponseRejected\"}}\nerror[outerResponseRejected]: synchronization failed: outer relay response rejected: record violates the v1 schema or its limits",
+   "direction": "hostile-to-rust",
+   "fixturePaths": [
+    "/v1/info"
+   ],
+   "operation": "v1/info",
+   "scenario": "info-missing-version"
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"synchronization failed: outer relay response rejected: record violates the v1 schema or its limits\",\"symbol\":\"outerResponseRejected\"}}\nerror[outerResponseRejected]: synchronization failed: outer relay response rejected: record violates the v1 schema or its limits",
+   "direction": "hostile-to-rust",
+   "fixturePaths": [
+    "/v1/info"
+   ],
+   "operation": "v1/info",
+   "scenario": "info-missing-suite"
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"resolution failed: temporarilyUnavailable\",\"symbol\":\"temporarilyUnavailable\"},\"resolution\":{\"authorityState\":\"unknown\",\"compressedRoute\":null,\"diagnostics\":[{\"event\":\"ref\",\"relay\":\"http://127.0.0.1:42341/\",\"relayIndex\":0},{\"error\":\"outerResponseRejected\",\"event\":\"requestFailed\",\"relay\":\"http://127.0.0.1:42341/\"}],\"did\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",",
+   "direction": "hostile-to-rust",
+   "operation": "v1/directory",
+   "scenario": "directory-duplicate-index"
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"relay client failure: outer relay response rejected: encoding violates the deterministic CBOR profile\",\"symbol\":\"outerResponseRejected\"}}\nerror[outerResponseRejected]: relay client failure: outer relay response rejected: encoding violates the deterministic CBOR profile",
+   "direction": "hostile-to-rust",
+   "note": "Rust folds the deterministic-CBOR layer into its composite outerResponseRejected client symbol with the layer named in the message (Campaign 1 note; not a protocol disagreement)",
+   "operation": "v1/resolve",
+   "scenario": "b11-2-invalid-outer-response"
+  },
+  {
+   "clientOutcome": "{\"admitted\":[{\"did\":\"did:flw:zQmdGJbJu6pBbiyZX9gJHBTFxnUCtBgRa7mZRcKKs1TcFEy\",\"updateNumber\":2}],\"database\":\"~/campaign-2-work/phase3/h-rust-b11-5.sqlite\",\"finalCursorHex\":\"7630382d30303032\",\"hasMore\":false,\"noChange\":0,\"pages\":1,\"peer\":\"http://127.0.0.1:42341/\",\"peerRelayId\":\"a1a2a3a4a5a6a7a8a9aaabacadaeafb0\",\"refsIgnored\":0,\"rejected\":[{\"entryDid\":\"did:flw:zQmPcGstBa7wW9hoYQbS6JZ4UxwZmoKr7YVf9y7qxiyD3Cm\",\"error\":{\"code\":7,\"symbol\":\"identityBindingMismatch\"}}],\"resetPerformed\":false}",
+   "direction": "hostile-to-rust",
+   "operation": "v1/changes",
+   "scenario": "b11-5-isolation-cursor"
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"synchronization failed: outer relay response rejected: record violates the v1 schema or its limits\",\"symbol\":\"outerResponseRejected\"}}\nerror[outerResponseRejected]: synchronization failed: outer relay response rejected: record violates the v1 schema or its limits",
+   "direction": "hostile-to-rust",
+   "operation": "v1/changes",
+   "scenario": "b11-7-item-limit-overflow"
+  },
+  {
+   "direction": "hostile-to-rust",
+   "operation": "v1/changes",
+   "scenario": "b11-7-cursor-preserved",
+   "sentCursorHex": [
+    "7630382d30303032"
+   ]
+  },
+  {
+   "clientOutcome": "{\"error\":{\"message\":\"relay client failure: outer relay response rejected: record violates the v1 schema or its limits\",\"symbol\":\"outerResponseRejected\"}}\nerror[outerResponseRejected]: relay client failure: outer relay response rejected: record violates the v1 schema or its limits",
+   "direction": "hostile-to-rust",
+   "operation": "v1/publish",
+   "scenario": "malformed-publish-response-status1-invalidDid"
+  }
+ ],
+ "failedChecks": [],
+ "notes": [
+  "Opaque relay-chosen values (relay ids, generations, cursors, lastUpdated numbers) are never byte-compared (NONDETERMINISM.md).",
+  "The publish status-1 reason-code choice is permitted diagnostic variation: Rust emits the bare form, Motoko the coded accurate form; each side accepted the other's choice; both raws preserved, never normalized.",
+  "HTTP response headers are transport-layer detail outside the comparison; publish CORS absence is the recorded deliberate scope decision (PRECLASSIFICATION.md)."
+ ],
+ "phase": 3,
+ "pins": {
+  "authoringAggregateR1Sha256": "cec54f10520535b405c2eb11952cbe2e14976be3962cb26cacff29031c89ae6b",
+  "authoringAggregateR2Sha256": "1b6514da0c1a0c5289e0909b648b5de73a302e91b346440624badacf5747855e",
+  "motokoBlindChallengeSha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e",
+  "motokoCommit": "bb0b0782e96bea9169ddb723815d191b58de65d7",
+  "motokoRepository": "https://github.com/followee-protocol/followee-motoko.git",
+  "motokoTag": "motoko-v0.9.2-r2-maintained-freeze",
+  "motokoTagObject": "527b3f0c0618d96b484f21ee641a59fec1e3ebc6",
+  "motokoV092ChallengeSha256": "d6c4e55650c03e5382abfe2caa77c8bc56ab2514d2f366d71526ee40e96311d3",
+  "motokoV092R2ChallengeSha256": "5c53c78735a05d81bc6a51bb813a003a6f181e604d334f1a6972203a6913315d",
+  "protocolRepoCommit": "ac5a794f2fdadc13cddf5367fa3e047617e3e950",
+  "protocolRepoTag": "v0.9.2-reviewed",
+  "rustCommit": "d865dc3fae52b3e2a54d573c298de7b01a1539c9",
+  "rustRepository": "https://github.com/followee-protocol/followee-rs.git",
+  "rustTag": "rust-v0.9.2-maintained-freeze",
+  "rustTagObject": "165533f54839aba9c25e6a37e58c85a406f9a8cb",
+  "specificationSha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+ },
+ "verdict": "pass"
+}

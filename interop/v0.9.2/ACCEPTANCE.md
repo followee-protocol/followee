@@ -268,3 +268,22 @@ disagreements, and the run report uses the Section 20.4 reporting
 categories with permitted diagnostic variation kept visible. Only then
 may Followee v1 — and each participating implementation — be described
 as interoperable, citing this bundle version and both frozen revisions.
+
+## Campaign 2 execution record
+
+The campaign defined by this matrix has been executed against this
+bundle at authoring revision 2 (`v0.9.2-r2`, aggregate
+`1b6514da0c1a0c5289e0909b648b5de73a302e91b346440624badacf5747855e`),
+between the recorded participant freezes
+`rust-v0.9.2-maintained-freeze`
+(`d865dc3fae52b3e2a54d573c298de7b01a1539c9`) and
+`motoko-v0.9.2-r2-maintained-freeze`
+(`bb0b0782e96bea9169ddb723815d191b58de65d7`), both created before any
+coordinator exposure (pins in `evidence/EVIDENCE.md`). Phases 1–3 and
+the executable gates G1–G3 all completed in both directions with zero
+unexplained disagreements; permitted diagnostic variation (the publish
+status-1 encoding choice) was observed live in both enumerated forms
+and kept visible. The complete run report, classifications, coverage
+boundary, and deterministic archive are in `../campaign-2/`
+(`CAMPAIGN.md`); its Section 20.4 conclusion is stated there with the
+maintained-participant framing and is subject to coordinator review.

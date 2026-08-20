@@ -1,0 +1,62 @@
+{
+ "aggregateSha256": "25095eff996b0ab7e3269e6d6105c7393d9d99e416783114c2ee1a162732d343",
+ "campaign": 2,
+ "files": {
+  "campaign-meta.json": {
+   "bytes": 4418,
+   "sha256": "551ea0e484ad4c14c25edc0e87297cec82a5e4c2750805c7d7c4ce978a1d1a51"
+  },
+  "gates-report.json": {
+   "bytes": 11905,
+   "sha256": "2ce479beb8541fa75a73ce053a29fd29527a1accb45e3608a0a3cf51d3a42f5a"
+  },
+  "phase1-motoko-responses.jsonl": {
+   "bytes": 53962,
+   "sha256": "fc72c63ff5b785c7dd9b7afddf690827450171fdf22fd68495d2fbd467df98aa"
+  },
+  "phase1-report.json": {
+   "bytes": 146741,
+   "sha256": "d162760bdf55817903e27816db767593aeb621669b9a3642396af0680cfbdd91"
+  },
+  "phase1-requests.jsonl": {
+   "bytes": 129848,
+   "sha256": "775e4d61562e212d773c55a2d1a44581044f366a4221d3eb98682c509981a4fb"
+  },
+  "phase1-rust-responses.jsonl": {
+   "bytes": 53962,
+   "sha256": "fc72c63ff5b785c7dd9b7afddf690827450171fdf22fd68495d2fbd467df98aa"
+  },
+  "phase2-cross-verification-raw.json": {
+   "bytes": 63713,
+   "sha256": "74ebd30bd419a57bb94249853486b8bc72189340c700581807f6176aad823889"
+  },
+  "phase2-motoko-challenge-frozen-r2.jsonl": {
+   "bytes": 56213,
+   "sha256": "5c53c78735a05d81bc6a51bb813a003a6f181e604d334f1a6972203a6913315d"
+  },
+  "phase2-report.json": {
+   "bytes": 43221,
+   "sha256": "6797a636de4b48e76608064173c7dad11768791fcfd1b7700d454969fcd57723"
+  },
+  "phase2-rust-frozen-challenge-identities.responses.ndjson": {
+   "bytes": 2716,
+   "sha256": "510d51cddf8273d2cc1f2160dc2242a435564591349e5d5e11e2f31d1ae8f253"
+  },
+  "phase2-rust-frozen-challenge-records.responses.ndjson": {
+   "bytes": 23455,
+   "sha256": "b3842f1af376dfcb630ba670a5266d6d43230e1feefe0a8c296371b5c796f269"
+  },
+  "phase2-rust-frozen-challenge-selection.responses.ndjson": {
+   "bytes": 2356,
+   "sha256": "82d55b44c15bdb7a13094aeff4293bf7e0c1e4014bd7f791a72b78bec83ff605"
+  },
+  "phase2-rust-frozen-challenge-verify.responses.ndjson": {
+   "bytes": 27686,
+   "sha256": "88bd1938c057e0a87a66ea35cad907b2e9089c38638da9e52c283c21e28f4c8b"
+  },
+  "phase3-report.json": {
+   "bytes": 46065,
+   "sha256": "26d4f327302c343bd1a24d622b4a1ca0cf856233f4675208197eeac7ab77948a"
+  }
+ }
+}

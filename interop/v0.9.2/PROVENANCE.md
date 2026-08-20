@@ -101,8 +101,11 @@ malformed response, classified and rejected as such.
 
 Pointers — commit hashes, tags, and aggregate digests only, never
 copies — to independently confirmed evidence outside this directory:
-the reviewed v0.9.1 bundle, the frozen Campaign 1 archive, and the
-reviewed implementation revisions listed in `evidence/EVIDENCE.md`.
+the reviewed v0.9.1 bundle, the frozen Campaign 1 archive, the
+reviewed implementation revisions, and (since the Campaign 2 run) the
+recorded Campaign 2 participant freezes and results-archive aggregate
+listed in `evidence/EVIDENCE.md`. The Campaign 2 deliverable itself
+lives outside this bundle in `../campaign-2/`.
 
 ## `bundle-infrastructure`
 

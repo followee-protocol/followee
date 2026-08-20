@@ -1,0 +1,2281 @@
+{
+ "cases": [
+  {
+   "caseId": "challenge-identity-carol",
+   "members": [
+    {
+     "member": "authorityDescriptorCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "authorityDescriptorDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "multihashHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationCommitmentHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationPublicKeyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationPublicKeyHex",
+     "verdict": "match"
+    },
+    {
+     "member": "rootPublicKeyHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-identity-dave",
+   "members": [
+    {
+     "member": "authorityDescriptorCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "authorityDescriptorDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "multihashHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationCommitmentHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationPublicKeyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationPublicKeyHex",
+     "verdict": "match"
+    },
+    {
+     "member": "rootPublicKeyHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-identity-erin",
+   "members": [
+    {
+     "member": "authorityDescriptorCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "authorityDescriptorDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "multihashHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationCommitmentHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationPublicKeyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "revocationPublicKeyHex",
+     "verdict": "match"
+    },
+    {
+     "member": "rootPublicKeyHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-root-full",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-root-full/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-empty",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-empty/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-revoked",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-revoked/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-migrates",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-migrates/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-dave-continues",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-dave-continues/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-dave-early",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-dave-early/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-erin-valid-until-boundary",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-erin-valid-until-boundary/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-erin-revoked-empty",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-erin-revoked-empty/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-a",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-a/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-b",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-b/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-c",
+   "members": [
+    {
+     "member": "did",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "sigStructureHex",
+     "verdict": "match"
+    },
+    {
+     "member": "signatureHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-c/verify",
+   "members": [
+    {
+     "member": "authority",
+     "verdict": "match"
+    },
+    {
+     "member": "envelopeHex",
+     "verdict": "match"
+    },
+    {
+     "member": "id",
+     "verdict": "match"
+    },
+    {
+     "member": "premature",
+     "verdict": "match"
+    },
+    {
+     "member": "record",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyCborHex",
+     "verdict": "match"
+    },
+    {
+     "member": "recordBodyDigestHex",
+     "verdict": "match"
+    },
+    {
+     "member": "stale",
+     "verdict": "match"
+    },
+    {
+     "member": "timestampMs",
+     "verdict": "match"
+    },
+    {
+     "member": "validUntilMs",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-trio-perm-00",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-trio-perm-01",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-trio-perm-02",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-trio-perm-03",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-trio-perm-04",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-trio-perm-05",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-authority-perm-00",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-authority-perm-01",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-dave-perm-00",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-dave-perm-01",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-select-carol-sticky",
+   "members": [
+    {
+     "member": "authorityState",
+     "verdict": "match"
+    },
+    {
+     "member": "winnerRecordBodyDigestHex",
+     "verdict": "match"
+    }
+   ],
+   "verdict": "match"
+  }
+ ],
+ "coordinatorComparison": {
+  "motoko": [
+   {
+    "caseId": "challenge-identity-carol",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-identity-dave",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-identity-erin",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-root-full",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-empty",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-revoked",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-migrates",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-dave-continues",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-dave-early",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-erin-valid-until-boundary",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-erin-revoked-empty",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-trio-a",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-trio-b",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-trio-c",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   }
+  ],
+  "rust": [
+   {
+    "caseId": "challenge-identity-carol",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-identity-dave",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-identity-erin",
+    "members": [
+     {
+      "member": "rootPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationPublicKeyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "revocationCommitmentHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "authorityDescriptorDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "multihashHex",
+      "verdict": "match"
+     },
+     {
+      "member": "did",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-root-full",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-empty",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-revoked",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-migrates",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-dave-continues",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-dave-early",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-erin-valid-until-boundary",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-erin-revoked-empty",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-trio-a",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-trio-b",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-carol-trio-c",
+    "members": [
+     {
+      "member": "did",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyCborHex",
+      "verdict": "match"
+     },
+     {
+      "member": "recordBodyDigestHex",
+      "verdict": "match"
+     },
+     {
+      "member": "sigStructureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "signatureHex",
+      "verdict": "match"
+     },
+     {
+      "member": "envelopeHex",
+      "verdict": "match"
+     }
+    ],
+    "verdict": "match"
+   }
+  ]
+ },
+ "crossVerification": [
+  {
+   "caseId": "challenge-carol-root-full",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-empty",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-revoked",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-migrates",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-dave-continues",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-dave-early",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-erin-valid-until-boundary",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-erin-revoked-empty",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-a",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-b",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  },
+  {
+   "caseId": "challenge-carol-trio-c",
+   "digestsAgree": true,
+   "motokoVerifiesRustEnvelope": "accepted",
+   "rustVerifiesMotokoEnvelope": "accepted",
+   "verdict": "match"
+  }
+ ],
+ "frozenOutputs": {
+  "motokoBlindSha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e",
+  "motokoV092R2Sha256": "5c53c78735a05d81bc6a51bb813a003a6f181e604d334f1a6972203a6913315d",
+  "motokoV092Sha256": "d6c4e55650c03e5382abfe2caa77c8bc56ab2514d2f366d71526ee40e96311d3",
+  "rustResponseFiles": {
+   "challenge-identities.responses.ndjson": "510d51cddf8273d2cc1f2160dc2242a435564591349e5d5e11e2f31d1ae8f253",
+   "challenge-records.responses.ndjson": "b3842f1af376dfcb630ba670a5266d6d43230e1feefe0a8c296371b5c796f269",
+   "challenge-selection.responses.ndjson": "82d55b44c15bdb7a13094aeff4293bf7e0c1e4014bd7f791a72b78bec83ff605",
+   "challenge-verify.responses.ndjson": "88bd1938c057e0a87a66ea35cad907b2e9089c38638da9e52c283c21e28f4c8b"
+  }
+ },
+ "identityRefResolution": {
+  "motoko": [
+   {
+    "caseId": "challenge-carol-migrates",
+    "checks": {
+     "successor": {
+      "identityRef": "dave",
+      "matchesOwnDerivation": true,
+      "resolvedDid": "did:flw:zQmWAPBt9raTX83sPZYuR9aGdsNMUbthEzNp99isrz1uWsn"
+     }
+    },
+    "participant": "motoko",
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-dave-continues",
+    "checks": {
+     "predecessor": {
+      "identityRef": "carol",
+      "matchesOwnDerivation": true,
+      "resolvedDid": "did:flw:zQmTdTo1ocU12HW9MATs3mUWLXyaM3NKQJQGDJgE2PSk6Vi"
+     }
+    },
+    "participant": "motoko",
+    "verdict": "match"
+   }
+  ],
+  "rust": [
+   {
+    "caseId": "challenge-carol-migrates",
+    "checks": {
+     "successor": {
+      "identityRef": "dave",
+      "matchesOwnDerivation": true,
+      "resolvedDid": "did:flw:zQmWAPBt9raTX83sPZYuR9aGdsNMUbthEzNp99isrz1uWsn"
+     }
+    },
+    "participant": "rust",
+    "verdict": "match"
+   },
+   {
+    "caseId": "challenge-dave-continues",
+    "checks": {
+     "predecessor": {
+      "identityRef": "carol",
+      "matchesOwnDerivation": true,
+      "resolvedDid": "did:flw:zQmTdTo1ocU12HW9MATs3mUWLXyaM3NKQJQGDJgE2PSk6Vi"
+     }
+    },
+    "participant": "rust",
+    "verdict": "match"
+   }
+  ]
+ },
+ "labelAlignment": {
+  "mapping": {
+   "challenge-carol-empty/verify": "challenge-carol-empty-verify",
+   "challenge-carol-migrates/verify": "challenge-carol-migrates-verify",
+   "challenge-carol-revoked/verify": "challenge-carol-revoked-verify",
+   "challenge-carol-root-full/verify": "challenge-carol-root-full-verify",
+   "challenge-carol-trio-a/verify": "challenge-carol-trio-a-verify",
+   "challenge-carol-trio-b/verify": "challenge-carol-trio-b-verify",
+   "challenge-carol-trio-c/verify": "challenge-carol-trio-c-verify",
+   "challenge-dave-continues/verify": "challenge-dave-continues-verify",
+   "challenge-dave-early/verify": "challenge-dave-early-verify",
+   "challenge-erin-revoked-empty/verify": "challenge-erin-revoked-empty-verify",
+   "challenge-erin-valid-until-boundary/verify": "challenge-erin-valid-until-boundary-verify"
+  },
+  "note": "self-verify case labels are participant-local: Rust chose `<case>-verify`, Motoko `<case>/verify`; file ordering is grouped-by-operation versus interleaved. Labels are aligned here; no value is mapped."
+ },
+ "permutationInvariance": {
+  "motoko": [
+   {
+    "group": "carol-authority",
+    "invariant": true,
+    "outcomes": [
+     [
+      "457406325201e808689e891778193f78600d9ceb2820bd5b927da597802ffeb0",
+      "rootRevoked"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "carol-trio",
+    "invariant": true,
+    "outcomes": [
+     [
+      "44011539e6a3e5f855b19fe781a2236cc3cd2f6c77b586d6a438963fa553d068",
+      "root"
+     ]
+    ],
+    "permutations": 6
+   },
+   {
+    "group": "dave-timestamps",
+    "invariant": true,
+    "outcomes": [
+     [
+      "bfdba84df905bea92288e88c853536c828bd5099dbbdf88968d78774c3b2ccc2",
+      "root"
+     ]
+    ],
+    "permutations": 2
+   }
+  ],
+  "rust": [
+   {
+    "group": "carol-authority",
+    "invariant": true,
+    "outcomes": [
+     [
+      "457406325201e808689e891778193f78600d9ceb2820bd5b927da597802ffeb0",
+      "rootRevoked"
+     ]
+    ],
+    "permutations": 2
+   },
+   {
+    "group": "carol-trio",
+    "invariant": true,
+    "outcomes": [
+     [
+      "44011539e6a3e5f855b19fe781a2236cc3cd2f6c77b586d6a438963fa553d068",
+      "root"
+     ]
+    ],
+    "permutations": 6
+   },
+   {
+    "group": "dave-timestamps",
+    "invariant": true,
+    "outcomes": [
+     [
+      "bfdba84df905bea92288e88c853536c828bd5099dbbdf88968d78774c3b2ccc2",
+      "root"
+     ]
+    ],
+    "permutations": 2
+   }
+  ]
+ },
+ "phase": 2,
+ "pins": {
+  "authoringAggregateR1Sha256": "cec54f10520535b405c2eb11952cbe2e14976be3962cb26cacff29031c89ae6b",
+  "authoringAggregateR2Sha256": "1b6514da0c1a0c5289e0909b648b5de73a302e91b346440624badacf5747855e",
+  "motokoBlindChallengeSha256": "e73c5697de68df7ec0f693834165bff7a1753a077959c9d9be50553b5722478e",
+  "motokoCommit": "bb0b0782e96bea9169ddb723815d191b58de65d7",
+  "motokoRepository": "https://github.com/followee-protocol/followee-motoko.git",
+  "motokoTag": "motoko-v0.9.2-r2-maintained-freeze",
+  "motokoTagObject": "527b3f0c0618d96b484f21ee641a59fec1e3ebc6",
+  "motokoV092ChallengeSha256": "d6c4e55650c03e5382abfe2caa77c8bc56ab2514d2f366d71526ee40e96311d3",
+  "motokoV092R2ChallengeSha256": "5c53c78735a05d81bc6a51bb813a003a6f181e604d334f1a6972203a6913315d",
+  "protocolRepoCommit": "ac5a794f2fdadc13cddf5367fa3e047617e3e950",
+  "protocolRepoTag": "v0.9.2-reviewed",
+  "rustCommit": "d865dc3fae52b3e2a54d573c298de7b01a1539c9",
+  "rustRepository": "https://github.com/followee-protocol/followee-rs.git",
+  "rustTag": "rust-v0.9.2-maintained-freeze",
+  "rustTagObject": "165533f54839aba9c25e6a37e58c85a406f9a8cb",
+  "specificationSha256": "47af5fbf0c4505386b4e04d948ef89d013f878ea820fb02522817661d633633a"
+ },
+ "totals": {
+  "byOperation": {
+   "authorRecord": {
+    "match": 11
+   },
+   "deriveIdentity": {
+    "match": 3
+   },
+   "selectCurrent": {
+    "match": 11
+   },
+   "verifyRecord": {
+    "match": 11
+   }
+  },
+  "crossVerification": {
+   "match": 11
+  },
+  "motokoVsCoordinator": {
+   "match": 14
+  },
+  "motokoVsRust": {
+   "match": 36
+  },
+  "rustVsCoordinator": {
+   "match": 14
+  }
+ }
+}

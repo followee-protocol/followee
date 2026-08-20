@@ -130,6 +130,21 @@ specification v0.9.2 resolves that ambiguity and this bundle now
 classifies the observed variation as permitted. The Campaign 1 archive
 itself is immutable historical evidence and is not rewritten.
 
+## Campaign 2 execution
+
+Campaign 2 has been executed against this bundle at authoring
+revision 2, between the recorded freezes
+`rust-v0.9.2-maintained-freeze` (`d865dc3f…`) and
+`motoko-v0.9.2-r2-maintained-freeze` (`bb0b0782…`); the freeze pins
+are recorded in `evidence/EVIDENCE.md` and the complete campaign
+deliverable — phase reports, executable gate results, raw exchanges,
+classifications, and the deterministic archive — lives in
+`../campaign-2/` (`CAMPAIGN.md`). All three phases and all three
+pre-Phase-3 gates completed with zero unexplained disagreements; the
+run report states its Section 20.4 conclusion, its coverage boundary,
+and the maintained-participant framing there. This bundle itself still
+asserts no interoperability claim.
+
 ## Verifying the bundle
 
 From this directory:
